@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Device 1
-========
+AQT Simulator Devices
+=====================
 
 **Module name:** :mod:`pennylane_aqt.simulator`
 

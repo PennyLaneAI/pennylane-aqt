@@ -25,7 +25,10 @@ Classes
 -------
 
 .. autosummary::
+   submit
    join_path
+   valid_status_code
+   raise_invalid_status_exception
 
 Code details
 ~~~~~~~~~~~~
@@ -64,7 +67,7 @@ def valid_status_code(response):
 
 def raise_invalid_status_exception(response):
     """
-    Raise appropriate errors from HTTP error codes.
+    Raise appropriate exceptions from HTTP error codes.
 
     Args:
         response[requests.model.Response]: the response containing the error

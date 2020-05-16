@@ -19,23 +19,6 @@ Custom operations
 
 .. currentmodule:: pennylane_aqt.ops
 
-Sometimes the Target Framework may accept more operations
-than available by core PennyLane. The plugin can define
-these operations such that PennyLane can understand/apply them,
-and even differentiate them.
-
-This module contains some example PennyLane qubit operations.
-
-The user would import them via
-
-.. code-block:: python
-
-    from plugin_name.ops import S, T, CCNOT
-
-To see more details about defining custom PennyLane operations,
-including more advanced cases such as defining gradient rules,
-see https://pennylane.readthedocs.io/en/latest/API/overview.html
-
 Operations
 ----------
 
