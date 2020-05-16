@@ -1,0 +1,100 @@
+# Copyright 2020 Xanadu Quantum Technologies Inc.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+"""
+Custom operations
+=================
+
+**Module name:** :mod:`pennylane_aqt.ops`
+
+.. currentmodule:: pennylane_aqt.ops
+
+Sometimes the Target Framework may accept more operations
+than available by core PennyLane. The plugin can define
+these operations such that PennyLane can understand/apply them,
+and even differentiate them.
+
+This module contains some example PennyLane qubit operations.
+
+The user would import them via
+
+.. code-block:: python
+
+    from plugin_name.ops import S, T, CCNOT
+
+To see more details about defining custom PennyLane operations,
+including more advanced cases such as defining gradient rules,
+see https://pennylane.readthedocs.io/en/latest/API/overview.html
+
+Operations
+----------
+
+.. autosummary::
+    R
+    MS
+
+
+Code details
+~~~~~~~~~~~~
+"""
+from pennylane.operation import Operation
+
+
+class R(Operation):
+    r"""R(wires)
+    Alpine Quantum Technologies R gate.
+
+    .. math:: R(t,p) = \begin{bmatrix}
+                           \cos(t\tfrac{\pi}{2}) & -i e^{-ip\pi}\sin(t\tfrac{\pi}{2}) \\
+                           -i e^{ip\pi}\sin(t\tfrac{\pi}{2}) & \cos(t\tfrac{\pi}{2})
+                       \end{bmatrix}
+
+    **Details:**
+
+    * Number of wires: 1
+    * Number of parameters: 1
+
+    Args:
+        wires (int): the subsystem the gate acts on
+    """
+    num_params = 2
+    num_wires = 1
+    par_domain = "R"
+    grad_method = None
+    grad_recipe = None
+
+
+class MS(Operation):
+    r"""MS(wires)
+    Mølmer-Sørenson-type.
+
+    .. math:: MS(t) = \begin{bmatrix}
+                          \cos(t\tfrac{\pi}{2}) & 0 & 0 & -i\sin(t\tfrac{\pi}{2}) \\
+                          0 & \cos(t\tfrac{\pi}{2}) & -i\sin(t\tfrac{\pi}{2}) & 0 \\
+                          0 & -i\sin(t\tfrac{\pi}{2}) & \cos(t\tfrac{\pi}{2}) & 0 \\
+                          -i\sin(t\tfrac{\pi}{2}) & 0 & 0 & \cos(t\tfrac{\pi}{2})
+                      \end{bmatrix}
+
+    **Details:**
+
+    * Number of wires: 2
+    * Number of parameters: 1
+
+    Args:
+        wires (int): the subsystem the gate acts on
+    """
+    num_params = 1
+    num_wires = 2
+    par_domain = "R"
+    grad_method = None
+    grad_recipe = None
