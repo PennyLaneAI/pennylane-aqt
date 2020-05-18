@@ -186,12 +186,24 @@ class AQTDevice(QubitDevice):
             par = operation.parameters[0]
         elif len(operation.parameters) == 2:
             par = operation.parameters
+        else:
+            par = None
         wires = operation.wires
 
+        name_parts = op_name.split(".")
+        if len(name_parts) == 1:
+            op_name = name_parts[0]
+            inv = False
+        elif len(name_parts) == 2 and name_parts[1] == "inv":
+            op_name = name_parts[0]
+            inv = True
+
         if op_name == "R":
+            if inv:
+                par = [-p for p in par]
             self.circuit.append([op_name, par[0], par[1], wires])
             return
-        if operation.name == "BasisState":
+        if op_name == "BasisState":
             for bit, wire in zip(par, wires):
                 if bit == 1:
                     self._append_op_to_queue("RX", np.pi, wires=[wire])
@@ -205,6 +217,9 @@ class AQTDevice(QubitDevice):
             par = np.pi
         elif op_name == "MS":
             par *= np.pi
+
+        if inv:
+            par *= -1
 
         self._append_op_to_queue(op_name, par, wires)
 

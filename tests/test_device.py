@@ -213,10 +213,9 @@ class TestAQTDevice:
             (qml.RZ, 1.77, [0], "Z"),
         ],
     )
-    def test_apply_operation_only_rotation_provided(self, op, par, wires, aqt_name):
+    def test_apply_operation_rotations(self, op, par, wires, aqt_name):
         """Tests that the _apply_operation method correctly populates the circuit
-        queue when a PennyLane RX, RY, or RZ operation is provided, and no separate
-        parameters or wires."""
+        queue when a PennyLane RX, RY, or RZ operation is provided."""
 
         dev = AQTDevice(3, api_key=SOME_API_KEY)
         assert dev.circuit == []
@@ -258,6 +257,45 @@ class TestAQTDevice:
         for bit, wire in zip(state, wires):
             if bit == 1:
                 expected_circuit.append(["X", 1.0, [wire]])
+
+        assert dev.circuit == expected_circuit
+
+    @pytest.mark.parametrize(
+        "op, wires, expected_circuit",
+        [
+            (qml.PauliX, [0], [["X", -1.0, [0]]]),
+            (qml.PauliY, [1], [["Y", -1.0, [1]]]),
+            (qml.PauliZ, [1], [["Z", -1.0, [1]]]),
+            (qml.Hadamard, [0], [["Y", -0.5, [0]]]),
+        ],
+    )
+    def test_apply_unparametrized_operation_inverse(self, op, wires, expected_circuit):
+        """Tests that inverse operations get recognized and converted to correct parameters for
+        unparametrized ops."""
+
+        dev = AQTDevice(2, api_key=SOME_API_KEY)
+        dev._apply_operation(op(wires=wires).inv())
+
+        assert dev.circuit == expected_circuit
+
+    @pytest.mark.parametrize(
+        "op, pars, wires, expected_circuit",
+        [
+            (qml.RX, [0.5], [0], [["X", -0.5 / np.pi, [0]]]),
+            (qml.RY, [1.3], [1], [["Y", -1.3 / np.pi, [1]]]),
+            (qml.RZ, [2.2], [0], [["Z", -2.2 / np.pi, [0]]]),
+            (ops.MS, [0.1], [0, 1], [["MS", -0.1, [0, 1]]]),
+            (ops.R, [0.3, 0.4], [0], [["R", -0.3, -0.4, [0]]]),
+            (qml.BasisState, [np.array([1, 1])], [0, 1], [["X", 1.0, [0]], ["X", 1.0, [1]]]),
+            (qml.BasisState, [np.array([0, 1])], [0, 1], [["X", 1.0, [1]]]),
+        ],
+    )
+    def test_apply_parametrized_operation_inverse(self, op, pars, wires, expected_circuit):
+        """Tests that inverse operations get recognized and converted to correct parameters for
+        parametrized ops."""
+
+        dev = AQTDevice(2, api_key=SOME_API_KEY)
+        dev._apply_operation(op(*pars, wires=wires).inv())
 
         assert dev.circuit == expected_circuit
 
