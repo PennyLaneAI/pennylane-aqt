@@ -23,6 +23,7 @@ Code details
 import os
 import json
 import urllib
+from time import sleep
 
 import numpy as np
 from pennylane import QubitDevice, DeviceError
