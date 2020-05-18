@@ -93,7 +93,7 @@ class TestAQTDevice:
         assert dev.circuit == []
         assert dev.circuit_json == ""
         assert dev.samples == None
-        assert dev.shots == 200
+        assert dev.shots == 55  # should not be reset
 
     def test_set_api_configs(self):
         """Tests that the ``set_api_configs`` method properly (re)sets the API configs."""
@@ -214,79 +214,6 @@ class TestAQTDevice:
         aqt_par = par / np.pi
 
         assert dev.circuit == [[aqt_name, aqt_par, wires]]
-
-    @pytest.mark.parametrize(
-        "op,par,wires,aqt_name",
-        [
-            (qml.RX, 0.51, [0], "X"),
-            (qml.RX, 0.22, [1], "X"),
-            (qml.RY, 0.35, [1], "Y"),
-            (qml.RY, 0.17, [2], "Y"),
-            (qml.RZ, 2.25, [0], "Z"),
-            (qml.RZ, 1.77, [0], "Z"),
-        ],
-    )
-    def test_apply_operation_rotation_with_separate_par(self, op, par, wires, aqt_name):
-        """Tests that the _apply_operation method correctly populates the circuit
-        queue when a PennyLane operation is provided with a separate par."""
-
-        dev = AQTDevice(3, api_key=SOME_API_KEY)
-        assert dev.circuit == []
-
-        new_par = 2 * par + 0.1
-        dev._apply_operation(op(par, wires=wires), new_par)
-        aqt_par = new_par / np.pi
-
-        assert dev.circuit == [[aqt_name, aqt_par, wires]]
-
-    @pytest.mark.parametrize(
-        "op,par,wires,aqt_name",
-        [
-            (qml.RX, 0.51, [0], "X"),
-            (qml.RX, 0.22, [1], "X"),
-            (qml.RY, 0.35, [1], "Y"),
-            (qml.RY, 0.17, [2], "Y"),
-            (qml.RZ, 2.25, [0], "Z"),
-            (qml.RZ, 1.77, [0], "Z"),
-        ],
-    )
-    def test_apply_operation_rotation_with_separate_wires(self, op, par, wires, aqt_name):
-        """Tests that the _apply_operation method correctly populates the circuit
-        queue when a PennyLane operation is provided with a separate list of wires."""
-
-        dev = AQTDevice(3, api_key=SOME_API_KEY)
-        assert dev.circuit == []
-
-        new_wires = [1] if wires != [1] else [0]
-        dev._apply_operation(op(par, wires=wires), wires=new_wires)
-        aqt_par = par / np.pi
-
-        assert dev.circuit == [[aqt_name, aqt_par, new_wires]]
-
-    @pytest.mark.parametrize(
-        "op,par,wires,aqt_name",
-        [
-            (qml.RX, 0.51, [0], "X"),
-            (qml.RX, 0.22, [1], "X"),
-            (qml.RY, 0.35, [1], "Y"),
-            (qml.RY, 0.17, [2], "Y"),
-            (qml.RZ, 2.25, [0], "Z"),
-            (qml.RZ, 1.77, [0], "Z"),
-        ],
-    )
-    def test_apply_operation_rotation_with_separate_par_and_wires(self, op, par, wires, aqt_name):
-        """Tests that the _apply_operation method correctly populates the circuit
-        queue when a PennyLane operation is provided with separate parameters and wires."""
-
-        dev = AQTDevice(3, api_key=SOME_API_KEY)
-        assert dev.circuit == []
-
-        new_par = 2 * par + 0.1
-        new_wires = [1] if wires != [1] else [0]
-        dev._apply_operation(op(par, wires=wires), new_par, new_wires)
-        aqt_par = new_par / np.pi
-
-        assert dev.circuit == [[aqt_name, aqt_par, new_wires]]
 
     @pytest.mark.parametrize(
         "wires,state",

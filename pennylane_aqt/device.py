@@ -15,17 +15,7 @@
 Alpine Quantum Technologies device class
 ========================================
 
-**Module name:** :mod:`pennylane_aqt.AQTDevice`
-
-.. currentmodule:: pennylane_aqt.AQTDevice
-
-An abstract base class for constructing AQT devices for PennyLane.
-
-Classes
--------
-
-.. autosummary::
-   AQTDevice
+This module contains an abstract base class for constructing AQT devices for PennyLane.
 
 Code details
 ~~~~~~~~~~~~
@@ -53,7 +43,7 @@ class AQTDevice(QubitDevice):
         api_key (str): The AQT API key. If not provided, the environment
             variable ``AQT_TOKEN`` is used.
     """
-    #pylint: disable=too-many-instance-attributes
+    # pylint: disable=too-many-instance-attributes
     name = "AQT Simulator PennyLane plugin"
     pennylane_requires = ">=0.9.0"
     version = __version__
@@ -87,20 +77,16 @@ class AQTDevice(QubitDevice):
 
     def __init__(self, wires, shots=BASE_SHOTS, api_key=None):
         super().__init__(wires=wires, shots=shots, analytic=False)
-        self._initial_shots = shots
+        self.shots = shots
         self._api_key = api_key
-        self.circuit = []
-        self.circuit_json = ""
-        self.samples = None
         self.set_api_configs()
+        self.reset()
 
     def reset(self):
         """Reset the device and reload configurations."""
-        self.shots = self._initial_shots
         self.circuit = []
         self.circuit_json = ""
         self.samples = None
-        self.set_api_configs()
 
     def set_api_configs(self):
         """
@@ -154,24 +140,19 @@ class AQTDevice(QubitDevice):
 
         self.samples = job["samples"]
 
-    def _apply_operation(self, operation, par=None, wires=None):
+    def _apply_operation(self, operation):
         """
         Add the specified operation to ``self.circuit`` with the native AQT op name.
 
-        If ``par`` or ``wires`` are not explicitly specified, they are pulled from
-        the attributes of ``operation``.
-
         Args:
             operation[pennylane.operation.Operation]: the operation instance to be applied
-            par[float, None]: the numerical parameter of the operation
-            wires[list[int], None]: which wires to apply the operation to
         """
         op_name = operation.name
         if len(operation.parameters) == 1:
-            par = par or operation.parameters[0]
+            par = operation.parameters[0]
         elif len(operation.parameters) == 2:
-            par = par or operation.parameters
-        wires = wires or operation.wires
+            par = operation.parameters
+        wires = operation.wires
 
         if op_name == "R":
             self.circuit.append([op_name, par[0], par[1], wires])
@@ -212,7 +193,8 @@ class AQTDevice(QubitDevice):
         Serialize ``circuit`` to a valid AQT-formatted JSON string.
 
         Args:
-             circuit[list[list]]: a list of lists of the form [["X", 0.3, [0]], ["Z", 0.1, [2]], ...]
+             circuit[list[list]]: a list of lists of the form
+                 [["X", 0.3, [0]], ["Z", 0.1, [2]], ...]
         """
         return json.dumps(circuit)
 
