@@ -37,6 +37,7 @@ import requests
 
 SUPPORTED_HTTP_REQUESTS = ["PUT", "POST"]
 VALID_STATUS_CODES = [200, 201, 202]
+DEFAULT_TIMEOUT = 1.0
 
 
 def verify_valid_status(response):
@@ -71,6 +72,6 @@ def submit(request_type, url, request, headers):
     if request_type not in SUPPORTED_HTTP_REQUESTS:
         raise ValueError("""Invalid HTTP request method provided. Options are "PUT" or "POST".""")
     if request_type == "PUT":
-        return requests.put(url, request, headers=headers)
+        return requests.put(url, request, headers=headers, timeout=DEFAULT_TIMEOUT)
     if request_type == "POST":
-        return requests.post(url, request, headers=headers)
+        return requests.post(url, request, headers=headers, timeout=DEFAULT_TIMEOUT)

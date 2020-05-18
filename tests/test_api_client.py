@@ -68,7 +68,7 @@ class TestAPIClient:
 
         response = api_client.submit("PUT", SOME_URL, SOME_PAYLOAD, SOME_HEADER)
         assert response.args == (SOME_URL, SOME_PAYLOAD)
-        assert response.kwargs == ({"headers": SOME_HEADER})
+        assert response.kwargs == ({"headers": SOME_HEADER, "timeout": 1.0})
 
     def test_submit_post_request(self, monkeypatch):
         """Tests that passing the arg "POST" creates a response via ``requests.post``"""
@@ -80,4 +80,4 @@ class TestAPIClient:
 
         response = api_client.submit("POST", SOME_URL, SOME_PAYLOAD, SOME_HEADER)
         assert response.args == (SOME_URL, SOME_PAYLOAD)
-        assert response.kwargs == ({"headers": SOME_HEADER})
+        assert response.kwargs == ({"headers": SOME_HEADER, "timeout": 1.0})

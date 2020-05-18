@@ -42,6 +42,9 @@ class AQTDevice(QubitDevice):
             to estimate expectation values of observables.
         api_key (str): The AQT API key. If not provided, the environment
             variable ``AQT_TOKEN`` is used.
+        retry_delay (float): The time (in seconds) to wait between requests
+            to the remote server when checking for completion of circuit
+            execution.
     """
     # pylint: disable=too-many-instance-attributes
     name = "AQT Simulator PennyLane plugin"
@@ -75,11 +78,14 @@ class AQTDevice(QubitDevice):
     TARGET_PATH = ""
     HTTP_METHOD = "PUT"
 
-    def __init__(self, wires, shots=BASE_SHOTS, api_key=None):
+    def __init__(self, wires, shots=BASE_SHOTS, api_key=None, retry_delay=0.05):
         super().__init__(wires=wires, shots=shots, analytic=False)
         self.shots = shots
+        self._retry_delay = retry_delay
+
         self._api_key = api_key
         self.set_api_configs()
+
         self.reset()
 
     def reset(self):
@@ -98,6 +104,33 @@ class AQTDevice(QubitDevice):
         self.header = {"Ocp-Apim-Subscription-Key": self._api_key}
         self.data = {"access_token": self._api_key, "no_qubits": self.num_wires}
         self.hostname = urllib.parse.urljoin("{}/".format(self.BASE_HOSTNAME), self.TARGET_PATH)
+
+    @property
+    def retry_delay(self):
+        """
+        The time (in seconds) to wait between requests
+        to the remote server when checking for completion of circuit
+        execution.
+
+        """
+        return self._retry_delay
+
+    @retry_delay.setter
+    def retry_delay(self, time):
+        """Changes the devices's ``retry_delay`` property.
+
+        Args:
+            time (float): time (in s) to wait between calls to remote server
+
+        Raises:
+            DeviceError: if the retry delay is not a positive number
+        """
+        if time <=0:
+            raise DeviceError(
+                "The specified retry delay needs to be positive. Got {}.".format(time)
+            )
+
+        self._retry_delay = float(time)
 
     @property
     def operations(self):
@@ -135,8 +168,8 @@ class AQTDevice(QubitDevice):
         job = response.json()
         job_query_data = {"id": job["id"], "access_token": self._api_key}
         while job["status"] != "finished":
-            # TODO: add timeout
             job = submit(self.HTTP_METHOD, self.hostname, job_query_data, self.header).json()
+            sleep(self.retry_delay)
 
         self.samples = job["samples"]
 

@@ -61,13 +61,15 @@ class TestAQTDevice:
 
     @pytest.mark.parametrize("num_wires", [1, 3])
     @pytest.mark.parametrize("shots", [1, 100])
-    def test_default_init(self, num_wires, shots):
+    @pytest.mark.parametrize("retry_delay", [0.1, 1.0])
+    def test_default_init(self, num_wires, shots, retry_delay):
         """Tests that the device is properly initialized."""
 
-        dev = AQTDevice(num_wires, shots, SOME_API_KEY)
+        dev = AQTDevice(num_wires, shots, SOME_API_KEY, retry_delay)
 
         assert dev.num_wires == num_wires
         assert dev.shots == shots
+        assert dev.retry_delay == retry_delay
         assert dev.analytic == False
         assert dev.circuit == []
         assert dev.circuit_json == ""
@@ -94,6 +96,15 @@ class TestAQTDevice:
         assert dev.circuit_json == ""
         assert dev.samples == None
         assert dev.shots == 55  # should not be reset
+
+    def test_retry_delay(self):
+        """Tests that the ``retry_delay`` property can be set manually."""
+
+        dev = AQTDevice(3, api_key=SOME_API_KEY, retry_delay=2.5)
+        assert dev.retry_delay == 2.5
+
+        dev.retry_delay = 1.0
+        assert dev.retry_delay == 1.0
 
     def test_set_api_configs(self):
         """Tests that the ``set_api_configs`` method properly (re)sets the API configs."""
