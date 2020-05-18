@@ -33,39 +33,22 @@ class MockResponse:
 class TestAPIClient:
     """Tests for the api_client module."""
 
-    @pytest.mark.parametrize(
-        "left_path, right_path, joined_path",
-        [
-            (
-                "http://subdomain.domain.com",
-                "api/endpoint",
-                "http://subdomain.domain.com/api/endpoint",
-            ),
-            ("https://abc.com/", "/v1/web/app", "https://abc.com/v1/web/app"),
-            ("www.youtube.com", "watch?v=oHg5SJYRHA0", "www.youtube.com/watch?v=oHg5SJYRHA0"),
-        ],
-    )
-    def test_join_path(self, left_path, right_path, joined_path):
-        """Tests that the ``join_path`` function correctly merges paths."""
-        print(api_client.join_path(left_path, right_path), joined_path)
-        assert api_client.join_path(left_path, right_path) == joined_path
-
     @pytest.mark.parametrize("status_code", [200, 201, 202])
-    def test_valid_status_codes(self, status_code):
-        """Tests that the function ``valid_status_codes`` returns True
-        for responses with valid status codes."""
+    def test_verify_valid_status_codes(self, status_code):
+        """Tests that the function ``verify_valid_status` returns does not raise
+        exceptions for responses with valid status codes."""
         resp = requests.Response()
         resp.status_code = status_code
-        assert api_client.valid_status_code(resp)
+        api_client.verify_valid_status(resp)
 
     @pytest.mark.parametrize("status_code", [404, 123, 400])
     def test_raise_invalid_status_exception(self, status_code):
-        """Tests that the function ``raise_invalid_status_exception`` raises
+        """Tests that the function ``verify_valid_status`` raises
         HTTPError exceptions for bad status codes."""
         resp = requests.Response()
         resp.status_code = status_code
         with pytest.raises(requests.HTTPError):
-            api_client.raise_invalid_status_exception(resp)
+            api_client.verify_valid_status(resp)
 
     @pytest.mark.parametrize("method", ["PUSH", "GET", "BREAD", "CHOCOLATE"])
     def test_submit_invalid_method(self, method):

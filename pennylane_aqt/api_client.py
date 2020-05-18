@@ -26,9 +26,7 @@ Classes
 
 .. autosummary::
    submit
-   join_path
-   valid_status_code
-   raise_invalid_status_exception
+   verify_valid_status
 
 Code details
 ~~~~~~~~~~~~
@@ -41,39 +39,22 @@ SUPPORTED_HTTP_REQUESTS = ["PUT", "POST"]
 VALID_STATUS_CODES = [200, 201, 202]
 
 
-def join_path(base_path, path):
+def verify_valid_status(response):
     """
-    Joins two paths, a base path and another path, and returns a string.
-
-    Args:
-        base_path (str): the left side of the joined path
-        path (str): the right side of the joined path
-
-    Returns:
-        str: the joined path
-    """
-    return urllib.parse.urljoin("{}/".format(base_path), path)
-
-
-def valid_status_code(response):
-    """
-    Check a HTTP response for valid status codes.
-
-    Returns:
-        bool: whether the response has an acceptable HTTP status code
-    """
-    return response.status_code in VALID_STATUS_CODES
-
-
-def raise_invalid_status_exception(response):
-    """
-    Raise appropriate exceptions from HTTP error codes.
+    Check a HTTP response for valid status codes, and raise an exception if
+    the code is invalid
 
     Args:
         response[requests.model.Response]: the response containing the error
-    """
-    raise requests.HTTPError
 
+    Returns:
+        bool: whether the response has an acceptable HTTP status code
+
+    Raises:
+        requests.HTTPError: if the status is not valid
+    """
+    if response.status_code not in VALID_STATUS_CODES:
+        raise requests.HTTPError
 
 def submit(request_type, url, request, headers):
     """Submit a request to AQT's API.
@@ -88,7 +69,7 @@ def submit(request_type, url, request, headers):
         requests.models.Response: the response from the API
     """
     if request_type not in SUPPORTED_HTTP_REQUESTS:
-        raise ValueError("Invalid HTTP request method provided." """Options are "PUT" or "POST""")
+        raise ValueError("""Invalid HTTP request method provided. Options are "PUT" or "POST".""")
     if request_type == "PUT":
         return requests.put(url, request, headers=headers)
     if request_type == "POST":

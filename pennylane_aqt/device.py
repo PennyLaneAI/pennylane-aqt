@@ -32,12 +32,13 @@ Code details
 """
 import os
 import json
+import urllib
 
 import numpy as np
 from pennylane import QubitDevice, DeviceError
 
 from ._version import __version__
-from .api_client import join_path, submit, valid_status_code, raise_invalid_status_exception
+from .api_client import verify_valid_status, submit
 
 BASE_SHOTS = 200
 
@@ -80,8 +81,6 @@ class AQTDevice(QubitDevice):
         "MS": "MS",
     }
 
-    observables = {"PauliX", "PauliY", "PauliZ", "Identity", "Hadamard", "Hermitian"}
-
     BASE_HOSTNAME = "https://gateway.aqt.eu/marmot"
     TARGET_PATH = ""
     HTTP_METHOD = "PUT"
@@ -112,7 +111,7 @@ class AQTDevice(QubitDevice):
             raise ValueError("No valid api key for AQT platform found.")
         self.header = {"Ocp-Apim-Subscription-Key": self._api_key}
         self.data = {"access_token": self._api_key, "no_qubits": self.num_wires}
-        self.hostname = join_path(self.BASE_HOSTNAME, self.TARGET_PATH)
+        self.hostname = urllib.parse.urljoin("{}/".format(self.BASE_HOSTNAME), self.TARGET_PATH)
 
     @property
     def operations(self):
@@ -146,8 +145,7 @@ class AQTDevice(QubitDevice):
         response = submit(self.HTTP_METHOD, self.hostname, job_submission, self.header)
 
         # poll for completed job
-        if not valid_status_code(response):
-            raise_invalid_status_exception(response)
+        verify_valid_status(response)
         job = response.json()
         job_query_data = {"id": job["id"], "access_token": self._api_key}
         while job["status"] != "finished":
