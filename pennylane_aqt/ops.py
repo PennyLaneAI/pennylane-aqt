@@ -42,6 +42,8 @@ class R(Operation):
                            -i e^{ip\pi}\sin(t\tfrac{\pi}{2}) & \cos(t\tfrac{\pi}{2})
                        \end{bmatrix}
 
+    For further details, see the `AQT API docs <https://www.aqt.eu/aqt-gate-definitions/>`_
+
     **Details:**
 
     * Number of wires: 1
@@ -59,7 +61,7 @@ class R(Operation):
 
 class MS(Operation):
     r"""MS(wires)
-    Mølmer-Sørenson-type.
+    Mølmer-Sørenson gate.
 
     .. math:: MS(t) = \begin{bmatrix}
                           \cos(t\tfrac{\pi}{2}) & 0 & 0 & -i\sin(t\tfrac{\pi}{2}) \\
@@ -67,6 +69,8 @@ class MS(Operation):
                           0 & -i\sin(t\tfrac{\pi}{2}) & \cos(t\tfrac{\pi}{2}) & 0 \\
                           -i\sin(t\tfrac{\pi}{2}) & 0 & 0 & \cos(t\tfrac{\pi}{2})
                       \end{bmatrix}
+
+    For further details, see the `AQT API docs <https://www.aqt.eu/aqt-gate-definitions/>`_
 
     **Details:**
 
