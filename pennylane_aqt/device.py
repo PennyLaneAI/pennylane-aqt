@@ -121,7 +121,7 @@ class AQTDevice(QubitDevice):
         """Changes the devices's ``retry_delay`` property.
 
         Args:
-            time (float): time (in s) to wait between calls to remote server
+            time (float): time (in seconds) to wait between calls to remote server
 
         Raises:
             DeviceError: if the retry delay is not a positive number
