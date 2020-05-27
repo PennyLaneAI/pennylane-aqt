@@ -35,14 +35,14 @@ from pennylane.operation import Operation
 
 class R(Operation):
     r"""R(wires)
-    Alpine Quantum Technologies R gate.
+    Alpine Quantum Technologies R-gate.
 
     .. math:: R(t,p) = \begin{bmatrix}
                            \cos(t\tfrac{\pi}{2}) & -i e^{-ip\pi}\sin(t\tfrac{\pi}{2}) \\
                            -i e^{ip\pi}\sin(t\tfrac{\pi}{2}) & \cos(t\tfrac{\pi}{2})
                        \end{bmatrix}
 
-    For further details, see the `AQT API docs <https://www.aqt.eu/aqt-gate-definitions/>`_
+    For further details, see the `AQT API docs <https://www.aqt.eu/aqt-gate-definitions/>`_.
 
     **Details:**
 
@@ -70,7 +70,7 @@ class MS(Operation):
                           -i\sin(t\tfrac{\pi}{2}) & 0 & 0 & \cos(t\tfrac{\pi}{2})
                       \end{bmatrix}
 
-    For further details, see the `AQT API docs <https://www.aqt.eu/aqt-gate-definitions/>`_
+    For further details, see the `AQT API docs <https://www.aqt.eu/aqt-gate-definitions/>`_.
 
     **Details:**
 

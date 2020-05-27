@@ -383,7 +383,7 @@ texinfo_documents = [
      'PennyLane-AQT',
      'PennyLane-AQT Documentation',
      author, 'PennyLane-AQT',
-     'Strawberry Fields plugin for the PennyLane quantum machine learning library.',
+     'Alpine Quantum Technologies plugin for the PennyLane quantum machine learning library.',
      'Miscellaneous'),
 ]
 

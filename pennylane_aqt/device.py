@@ -37,8 +37,8 @@ class AQTDevice(QubitDevice):
 
     Args:
         wires (int): the number of wires to initialize the device with
-        shots (int): Number of circuit evaluations/random samples used
-            to estimate expectation values of observables.
+        shots (int): number of circuit evaluations/random samples used
+            to estimate expectation values of observables
         api_key (str): The AQT API key. If not provided, the environment
             variable ``AQT_TOKEN`` is used.
         retry_delay (float): The time (in seconds) to wait between requests

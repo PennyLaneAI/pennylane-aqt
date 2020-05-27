@@ -8,7 +8,7 @@ PennyLane-AQT Plugin
   :end-before: header-end-inclusion-marker-do-not-remove
 
 
-Once the PennyLane-AQT plugin is installed, the two provided Strawberry Fields devices can be accessed
+Once the PennyLane-AQT plugin is installed, the two provided AQT devices can be accessed
 straight away in PennyLane, without the need to import any additional packages.
 
 Devices
@@ -19,12 +19,12 @@ PennyLane-AQT provides two AQT devices for PennyLane:
 .. devicegalleryitem::
     :name: 'aqt.sim'
     :description: Ideal noiseless ion-trap simulator.
-    :link: devices/sim.html
+    :link: devices.html#sim
 
 .. devicegalleryitem::
     :name: 'aqt.noisy_sim'
     :description: Noisy ion-trap simulator.
-    :link: devices/noisy_sim.html
+    :link: devices.html#noisy_sim
 
 .. raw:: html
 
@@ -32,7 +32,16 @@ PennyLane-AQT provides two AQT devices for PennyLane:
     </br>
 
 Both devices support the same operations, including AQT's
-custom rotation and Mølmer-Sørenson-type gates
+custom rotation and Mølmer-Sørenson-type gates.
+
+Remote backend access
+=====================
+
+The user will need access credentials for the AQT platform in order to
+use these remote devices. These credentials should be provided to PennyLane via a
+`configuration file or environment variable <https://pennylane.readthedocs.io/en/stable/introduction/configuration.html>`_.
+Specifically, the variable ``AQT_TOKEN`` must contain a valid access key for AQT's online platform.
+
 
 .. toctree::
    :maxdepth: 2
@@ -47,9 +56,7 @@ custom rotation and Mølmer-Sørenson-type gates
    :caption: Usage
    :hidden:
 
-   devices/sim
-   devices/noisy_sim
-   devices/ops
+   devices
 
 .. toctree::
    :maxdepth: 1
