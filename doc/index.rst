@@ -8,7 +8,7 @@ PennyLane-AQT Plugin
   :end-before: header-end-inclusion-marker-do-not-remove
 
 
-Once the PennyLane-SF plugin is installed, the two provided Strawberry Fields devices can be accessed
+Once the PennyLane-AQT plugin is installed, the two provided Strawberry Fields devices can be accessed
 straight away in PennyLane, without the need to import any additional packages.
 
 Devices
@@ -19,10 +19,12 @@ PennyLane-AQT provides two AQT devices for PennyLane:
 .. devicegalleryitem::
     :name: 'aqt.sim'
     :description: Ideal noiseless ion-trap simulator.
+    :link: devices/sim.html
 
 .. devicegalleryitem::
     :name: 'aqt.noisy_sim'
     :description: Noisy ion-trap simulator.
+    :link: devices/noisy_sim.html
 
 .. raw:: html
 
@@ -45,7 +47,8 @@ custom rotation and Mølmer-Sørenson-type gates
    :caption: Usage
    :hidden:
 
-   devices/aqt_devices
+   devices/sim
+   devices/noisy_sim
    devices/ops
 
 .. toctree::

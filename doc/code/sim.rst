@@ -1,4 +1,4 @@
-.. automodule:: plugin_name.Device1
+.. automodule:: pennylane_aqt.AQTSimulatorDevice
    :members:
    :private-members:
    :inherited-members:

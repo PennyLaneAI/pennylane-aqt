@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# PluginName documentation build configuration file, created by
-# sphinx-quickstart on Tue Apr 17 11:43:51 2018.
+# PennyLane-AQT documentation build configuration file.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -14,12 +13,52 @@
 # serve to show the default.
 
 import sys, os, re
+from unittest.mock import MagicMock
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 sys.path.insert(0, os.path.abspath('..'))
 sys.path.insert(0, os.path.abspath('_ext'))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath('.')), 'doc'))
+
+#-------------------------------------------------------------------------
+# Mock out all modules that aren't required for compiling of documentation
+class Mock(MagicMock):
+    __name__ = 'foo'
+
+    @classmethod
+    def __getattr__(cls, name):
+        return MagicMock()
+
+class TypeMock(type):
+    pass
+
+MOCK_MODULES = [
+    'tensorflow'
+    ]
+
+mock_math_fn = Mock(__name__='foo')
+mock_fns = {"sin": mock_math_fn,
+               "cos": mock_math_fn,
+               "exp": mock_math_fn,
+               "sqrt": mock_math_fn,
+               "arctan": mock_math_fn,
+               "arccosh": mock_math_fn,
+               "sign": mock_math_fn,
+               "arctan2": mock_math_fn,
+               "arcsinh": mock_math_fn,
+               "cosh": mock_math_fn,
+               "tanh": mock_math_fn,
+               "log": mock_math_fn,
+               "matmul": mock_math_fn,
+               "Tensor": list,
+               "Variable": list,
+               "ndarray": list}
+
+mock = Mock(**mock_fns)
+for mod_name in MOCK_MODULES:
+    sys.modules[mod_name] = mock
 
 # -- General configuration ------------------------------------------------
 
@@ -30,15 +69,35 @@ needs_sphinx = '1.6'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.napoleon',
-    'sphinx.ext.inheritance_diagram',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.todo",
+    "sphinx.ext.coverage",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.napoleon",
+    "sphinx.ext.inheritance_diagram",
+    "sphinx.ext.intersphinx",
     'sphinx.ext.viewcode',
+    "sphinx_automodapi.automodapi"
 ]
+
+intersphinx_mapping = {"https://pennylane.readthedocs.io/en/stable/": None}
+
+# nbsphinx settings
+
+exclude_patterns = ['_build', '**.ipynb_checkpoints', 'tutorials/.ipynb_checkpoints', '*-checkpoint.ipynb']
+nbsphinx_execute = 'never'
+nbsphinx_epilog = """
+.. note:: :download:`Click here <../{{env.docname}}.ipynb>` to download this gallery page as an interactive Jupyter notebook.
+"""
+
+autosummary_generate = True
+autosummary_imported_members = False
+automodapi_toctreedirnm = "code/api"
+automodsumm_inherited_members = True
+
+# Add any paths that contain templates here, relative to this directory.
+templates_path = ['_templates', 'xanadu_theme']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
@@ -50,9 +109,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'PluginName'
-copyright = "Copyright 2020."
-author = 'Xanadu'
+project = 'PennyLane-AQT'
+copyright = "Copyright 2020"
+author = 'Xanadu Inc.'
 
 add_module_names = False
 
@@ -98,7 +157,7 @@ todo_include_todos = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = "sphinx_rtd_theme"
+# html_theme = 'nature'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -122,12 +181,12 @@ html_theme = "sphinx_rtd_theme"
 # The name of an image file (relative to this directory) to use as a favicon of
 # the docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
-# html_favicon = '_static/favicon.ico'
+html_favicon = '_static/favicon.ico'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-# html_static_path = ['_static']
+html_static_path = ['_static']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -209,13 +268,63 @@ html_sidebars = {
 # implements a search results scorer. If empty, the default will be used.
 #html_search_scorer = 'scorer.js'
 
-# Output file base name for HTML help builder.
-htmlhelp_basename = 'PluginNamedoc'
+
+# -- Xanadu theme ---------------------------------------------------------
+html_theme = 'xanadu_theme'
+html_theme_path = ['.']
+
+# Register the theme as an extension to generate a sitemap.xml
+# extensions.append("guzzle_sphinx_theme")
+
+# xanadu theme options (see theme.conf for more information)
+html_theme_options = {
+
+    # Set the path to a special layout to include for the homepage
+    # "index_template": "special_index.html",
+
+    # Set the name of the project to appear in the left sidebar.
+    "project_nav_name": "PennyLane-AQT",
+
+    # Set your Disqus short name to enable comments
+    # "disqus_comments_shortname": "pennylane-1",
+
+    # Set you GA account ID to enable tracking
+    "google_analytics_account": "UA-130507810-2",
+
+    # Path to a touch icon
+    "touch_icon": "logo_new.png",
+
+    # Specify a base_url used to generate sitemap.xml links. If not
+    # specified, then no sitemap will be built.
+    # "base_url": ""
+
+    # Allow a separate homepage from the master_doc
+    # "homepage": "index",
+
+    # Allow the project link to be overriden to a custom URL.
+    # "projectlink": "http://myproject.url",
+
+    "large_toc": True,
+    # colors
+    "navigation_button": "#19b37b",
+    "navigation_button_hover": "#0e714d",
+    "toc_caption": "#19b37b",
+    "toc_hover": "#19b37b",
+    "table_header_bg": "#edf7f4",
+    "table_header_border": "#19b37b",
+    "download_button": "#19b37b",
+    # gallery options
+    # "github_repo": "XanaduAI/PennyLane",
+    # "gallery_dirs": "tutorials",
+}
+
+edit_on_github_project = 'XanaduAI/pennylane-aqt'
+edit_on_github_branch = 'master/doc'
 
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'PluginNamedoc'
+htmlhelp_basename = 'PennyLaneAQTdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -244,8 +353,11 @@ latex_additional_files = ['macros.tex']
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'PluginName.tex', 'PluginName Documentation',
-     'Xanadu Inc.', 'manual'),
+    (master_doc,
+     'PennyLane-AQT.tex',
+     'PennyLane-AQT Documentation',
+     'Xanadu Inc.',
+     'manual'),
 ]
 
 
@@ -254,7 +366,9 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'PluginName', 'PluginName Documentation',
+    (master_doc,
+     'pennylane-aqt',
+     'PennyLane-AQT Documentation',
      [author], 1)
 ]
 
@@ -265,8 +379,11 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'PluginName', 'PluginName Documentation',
-     author, 'PluginName', 'Plugin for the PennyLane quantum machine learning library.',
+    (master_doc,
+     'PennyLane-AQT',
+     'PennyLane-AQT Documentation',
+     author, 'PennyLane-AQT',
+     'Strawberry Fields plugin for the PennyLane quantum machine learning library.',
      'Miscellaneous'),
 ]
 
@@ -275,3 +392,15 @@ texinfo_documents = [
 
 # the order in which autodoc lists the documented members
 autodoc_member_order = 'bysource'
+
+# inheritance_diagram graphviz attributes
+inheritance_node_attrs = dict(color='lightskyblue1', style='filled')
+
+#autodoc_default_flags = ['members']
+autosummary_generate = True
+
+from directives import CustomDeviceGalleryItemDirective
+
+def setup(app):
+    app.add_directive('devicegalleryitem', CustomDeviceGalleryItemDirective)
+
