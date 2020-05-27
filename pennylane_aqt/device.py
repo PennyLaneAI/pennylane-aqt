@@ -17,8 +17,6 @@ Alpine Quantum Technologies device class
 
 This module contains an abstract base class for constructing AQT devices for PennyLane.
 
-Code details
-~~~~~~~~~~~~
 """
 import os
 import json

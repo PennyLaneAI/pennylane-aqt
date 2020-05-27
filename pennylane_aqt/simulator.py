@@ -35,12 +35,16 @@ from .device import AQTDevice
 class AQTSimulatorDevice(AQTDevice):
     r"""AQTSimulatorDevice for PennyLane.
 
+    This device runs simulations on the backend provided at the address
+    https://gateway.aqt.eu/marmot/sim
+
     Args:
         wires (int): the number of wires to initialize the device with
         shots (int): Number of circuit evaluations/random samples used
             to estimate expectation values of observables.
         api_key (str): The AQT API key. If not provided, the environment
             variable ``AQT_TOKEN`` is used.
+
     """
     name = "AQT Simulator device for PennyLane"
     short_name = "pennylane_aqt.Simulator"
@@ -50,6 +54,9 @@ class AQTSimulatorDevice(AQTDevice):
 
 class AQTNoisySimulatorDevice(AQTDevice):
     r"""AQTNoisySimulatorDevice for PennyLane.
+
+    This device runs simulations on the backend provided at the address
+    https://gateway.aqt.eu/marmot/sim/noise-model-1
 
     Args:
         wires (int): the number of wires to initialize the device with

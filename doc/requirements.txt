@@ -1,2 +1,5 @@
 sphinxcontrib-bibtex
+ipykernel
+nbsphinx
 pygments-github-lexers
+sphinx-automodapi

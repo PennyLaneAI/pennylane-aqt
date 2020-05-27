@@ -1,81 +1,56 @@
-PennyLane Target Framework Plugin
-#################################
+PennyLane-AQT Plugin
+####################
 
 :Release: |release|
-:Date: |today|
+
+.. include:: ../README.rst
+  :start-after:	header-start-inclusion-marker-do-not-remove
+  :end-before: header-end-inclusion-marker-do-not-remove
 
 
-This PennyLane plugin allows the Target Framework simulators/hardware to be used as PennyLane devices.
+Once the PennyLane-SF plugin is installed, the two provided Strawberry Fields devices can be accessed
+straight away in PennyLane, without the need to import any additional packages.
 
-
-`Target framework <https://targetframework.readthedocs.io>`_ is a full-stack Python library
-for doing things.
-
-`PennyLane <https://pennylane.readthedocs.io>`_ is a machine learning library for optimization
-and automatic differentiation of hybrid quantum-classical computations.
-
-
-
-Features
-========
-
-* List the features provided by the plugin here. This can include:
-
-* The devices made available to PennyLane, as well as any special features of the devices
-
-* The core PennyLane operations and observables supported
-
-* Any additional operations and observables provided by the plugin
-
-
-To get started with the PennyLane Strawberry Fields plugin, follow the :ref:`installation steps <installation>`, then see the :ref:`usage <usage>` page.
-
-
-Authors
+Devices
 =======
 
-John Smith.
+PennyLane-AQT provides two AQT devices for PennyLane:
 
-If you are doing research using PennyLane, please cite our papers:
+.. devicegalleryitem::
+    :name: 'aqt.sim'
+    :description: Ideal noiseless ion-trap simulator.
 
-    Ville Bergholm, Josh Izaac, Maria Schuld, Christian Gogolin, and Nathan Killoran.
-    *PennyLane: Automatic differentiation of hybrid quantum-classical computations.* 2018.
-    `arXiv:1811.04968 <https://arxiv.org/abs/1811.04968>`_
+.. devicegalleryitem::
+    :name: 'aqt.noisy_sim'
+    :description: Noisy ion-trap simulator.
 
-    Maria Schuld, Ville Bergholm, Christian Gogolin, Josh Izaac, and Nathan Killoran.
-    *Evaluating analytic gradients on quantum hardware.* 2018.
-    `Phys. Rev. A 99, 032331 <https://journals.aps.org/pra/abstract/10.1103/PhysRevA.99.032331>`_
+.. raw:: html
 
+    <div style='clear:both'></div>
+    </br>
 
-Contents
-========
-
-.. rst-class:: contents local topic
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Getting started
-
-   installing
-   usage
-
-
-.. rst-class:: contents local topic
+Both devices support the same operations, including AQT's
+custom rotation and Mølmer-Sørenson-type gates
 
 .. toctree::
    :maxdepth: 2
-   :caption: Tutorials (external links)
+   :titlesonly:
+   :hidden:
 
-   Photon redirection <https://pennylane.readthedocs.io/en/latest/tutorials/plugins_hybrid.html>
-   Notebook downloads <https://pennylane.readthedocs.io/en/latest/tutorials/notebooks.html>
+   installation
+   support
 
-.. rst-class:: contents local topic
+.. toctree::
+   :maxdepth: 2
+   :caption: Usage
+   :hidden:
+
+   devices/aqt_devices
+   devices/ops
 
 .. toctree::
    :maxdepth: 1
-   :caption: Code details
+   :caption: API
+   :hidden:
 
-   code/ops
-   code/framework_device
-   code/device1
-   code/device2
+   code
