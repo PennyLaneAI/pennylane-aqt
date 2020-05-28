@@ -12,23 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Custom operations
-=================
-
-**Module name:** :mod:`pennylane_aqt.ops`
-
-.. currentmodule:: pennylane_aqt.ops
-
-Operations
-----------
-
-.. autosummary::
-    R
-    MS
-
-
-Code details
-~~~~~~~~~~~~
+Custom AQT operations
 """
 from pennylane.operation import Operation
 

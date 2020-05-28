@@ -32,7 +32,7 @@ PennyLane-AQT provides two AQT devices for PennyLane:
     </br>
 
 Both devices support the same operations, including AQT's
-custom rotation and Mølmer-Sørenson-type gates.
+custom :class:`rotation <.R>` and :class:`Mølmer-Sørenson-type <.MS>` gates.
 
 Remote backend access
 =====================

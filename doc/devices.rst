@@ -31,7 +31,6 @@ directly in PennyLane:
         ops.MS(z, wires=[0,1]
         return qml.expval(qml.PauliZ(0))
 
-
 .. raw::html
     </section>
     <section id="noisy_sim">
@@ -58,6 +57,18 @@ type of simulation they carry out (noiseless vs noisy).
 
 .. raw::html
     </section>
+
+AQT Operations
+--------------
+
+PennyLane-AQT provides two gates specific to AQT's ion-trap API:
+
+.. autosummary::
+
+    ~pennylane_aqt.R
+    ~pennylane_aqt.MS
+
+These two gates can be imported from ``pennylane_aqt.ops``.
 
 Remote backend access
 ---------------------

@@ -1,27 +1,23 @@
 PennyLane-AQT Plugin
 ####################
 
-.. image:: https://img.shields.io/travis/com/XanaduAI/pennylane-aqt/master.svg?style=for-the-badge
+.. image:: https://img.shields.io/travis/com/XanaduAI/pennylane-aqt/master.svg?style=popout-square
     :alt: Travis
     :target: https://travis-ci.com/XanaduAI/pennylane-aqt
 
-.. image:: https://img.shields.io/codecov/c/github/xanaduai/pennylane-aqt/master.svg?style=for-the-badge
+.. image:: https://img.shields.io/codecov/c/github/xanaduai/pennylane-aqt/master.svg?style=popout-square
     :alt: Codecov coverage
     :target: https://codecov.io/gh/XanaduAI/pennylane-aqt
 
-.. image:: https://img.shields.io/codacy/grade/33d12f7d2d0644968087e33966ed904e.svg?style=for-the-badge
-    :alt: Codacy grade
-    :target: https://app.codacy.com/app/XanaduAI/pennylane-aqt?utm_source=github.com&utm_medium=referral&utm_content=XanaduAI/pennylane-aqt&utm_campaign=badger
-
-.. image:: https://img.shields.io/readthedocs/pennylane-aqt.svg?style=for-the-badge
+.. image:: https://img.shields.io/readthedocs/pennylane-aqt.svg?style=popout-square
     :alt: Read the Docs
     :target: https://pennylane-aqt.readthedocs.io
 
-.. image:: https://img.shields.io/pypi/v/PennyLane-AQT.svg?style=for-the-badge
+.. image:: https://img.shields.io/pypi/v/PennyLane-AQT.svg?style=popout-square
     :alt: PyPI
     :target: https://pypi.org/project/PennyLane-AQT
 
-.. image:: https://img.shields.io/pypi/pyversions/PennyLane-AQT.svg?style=for-the-badge
+.. image:: https://img.shields.io/pypi/pyversions/PennyLane-AQT.svg?style=popout-square
     :alt: PyPI - Python Version
     :target: https://pypi.org/project/PennyLane-AQT
 
