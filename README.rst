@@ -125,7 +125,7 @@ projects or applications built on PennyLane and AQT.
 Contributors
 ============
 
-Nathan Killoran, Josh Izaac.
+PennyLane-AQT is the work of many [contributors](https://github.com/XanaduAI/pennylane-aqt/graphs/contributors).
 
 If you are doing research using PennyLane, please cite our papers:
 

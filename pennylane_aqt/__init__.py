@@ -16,5 +16,4 @@ Plugin overview
 ===============
 """
 from .simulator import AQTSimulatorDevice, AQTNoisySimulatorDevice
-from .ops import MS, R
 from ._version import __version__

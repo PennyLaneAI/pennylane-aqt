@@ -19,7 +19,7 @@ from pennylane.operation import Operation
 
 class R(Operation):
     r"""R(wires)
-    Alpine Quantum Technologies R-gate.
+    Two-parameter rotation gate.
 
     .. math:: R(t,p) = \begin{bmatrix}
                            \cos(t\tfrac{\pi}{2}) & -i e^{-ip\pi}\sin(t\tfrac{\pi}{2}) \\

@@ -19,12 +19,12 @@ PennyLane-AQT provides two AQT devices for PennyLane:
 .. devicegalleryitem::
     :name: 'aqt.sim'
     :description: Ideal noiseless ion-trap simulator.
-    :link: devices.html#sim
+    :link: devices.html#ideal-ion-trap-simulator
 
 .. devicegalleryitem::
     :name: 'aqt.noisy_sim'
     :description: Noisy ion-trap simulator.
-    :link: devices.html#noisy_sim
+    :link: devices.html#noisy-ion-trap-simulator
 
 .. raw:: html
 
@@ -32,7 +32,7 @@ PennyLane-AQT provides two AQT devices for PennyLane:
     </br>
 
 Both devices support the same operations, including AQT's
-custom :class:`rotation <.R>` and :class:`Mølmer-Sørenson-type <.MS>` gates.
+custom :class:`rotation <.ops.R>` and :class:`Mølmer-Sørenson-type <.ops.MS>` gates.
 
 Remote backend access
 =====================

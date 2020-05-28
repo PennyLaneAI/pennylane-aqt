@@ -15,7 +15,7 @@ Ideal ion-trap simulator
 
 This device provides an idea noiseless ion-trap simulation.
 Once the plugin has been installed, you can use this device
-directly in PennyLane:
+directly in PennyLane by specifying ``"aqt.sim"``:
 
 .. code-block:: python
 
@@ -37,6 +37,10 @@ directly in PennyLane:
 
 Noisy ion-trap simulator
 ------------------------
+
+This device provides an more realistic noisy ion-trap simulation.
+Once the plugin has been installed, you can use this device
+directly in PennyLane by specifying ``"aqt.noisy_sim"``:
 
 .. code-block:: python
 
@@ -65,10 +69,10 @@ PennyLane-AQT provides two gates specific to AQT's ion-trap API:
 
 .. autosummary::
 
-    ~pennylane_aqt.R
-    ~pennylane_aqt.MS
+    ~pennylane_aqt.ops.R
+    ~pennylane_aqt.ops.MS
 
-These two gates can be imported from ``pennylane_aqt.ops``.
+These two gates can be imported from :mod:`pennylane_aqt.ops <~.ops>`.
 
 Remote backend access
 ---------------------
