@@ -1,81 +1,67 @@
-PennyLane Target Framework Plugin
-#################################
+PennyLane-AQT Plugin
+####################
 
 :Release: |release|
-:Date: |today|
+
+.. include:: ../README.rst
+  :start-after:	header-start-inclusion-marker-do-not-remove
+  :end-before: header-end-inclusion-marker-do-not-remove
 
 
-This PennyLane plugin allows the Target Framework simulators/hardware to be used as PennyLane devices.
+Once the PennyLane-AQT plugin is installed, the two provided AQT devices can be accessed
+straight away in PennyLane, without the need to import any additional packages.
 
-
-`Target framework <https://targetframework.readthedocs.io>`_ is a full-stack Python library
-for doing things.
-
-`PennyLane <https://pennylane.readthedocs.io>`_ is a machine learning library for optimization
-and automatic differentiation of hybrid quantum-classical computations.
-
-
-
-Features
-========
-
-* List the features provided by the plugin here. This can include:
-
-* The devices made available to PennyLane, as well as any special features of the devices
-
-* The core PennyLane operations and observables supported
-
-* Any additional operations and observables provided by the plugin
-
-
-To get started with the PennyLane Strawberry Fields plugin, follow the :ref:`installation steps <installation>`, then see the :ref:`usage <usage>` page.
-
-
-Authors
+Devices
 =======
 
-John Smith.
+PennyLane-AQT provides two AQT devices for PennyLane:
 
-If you are doing research using PennyLane, please cite our papers:
+.. devicegalleryitem::
+    :name: 'aqt.sim'
+    :description: Ideal noiseless ion-trap simulator.
+    :link: devices.html#ideal-ion-trap-simulator
 
-    Ville Bergholm, Josh Izaac, Maria Schuld, Christian Gogolin, and Nathan Killoran.
-    *PennyLane: Automatic differentiation of hybrid quantum-classical computations.* 2018.
-    `arXiv:1811.04968 <https://arxiv.org/abs/1811.04968>`_
+.. devicegalleryitem::
+    :name: 'aqt.noisy_sim'
+    :description: Noisy ion-trap simulator.
+    :link: devices.html#noisy-ion-trap-simulator
 
-    Maria Schuld, Ville Bergholm, Christian Gogolin, Josh Izaac, and Nathan Killoran.
-    *Evaluating analytic gradients on quantum hardware.* 2018.
-    `Phys. Rev. A 99, 032331 <https://journals.aps.org/pra/abstract/10.1103/PhysRevA.99.032331>`_
+.. raw:: html
 
+    <div style='clear:both'></div>
+    </br>
 
-Contents
-========
+Both devices support the same operations, including AQT's
+custom :class:`rotation <.ops.R>` and :class:`Mølmer-Sørenson-type <.ops.MS>` gates.
 
-.. rst-class:: contents local topic
+Remote backend access
+=====================
+
+The user will need access credentials for the AQT platform in order to
+use these remote devices. These credentials should be provided to PennyLane via a
+`configuration file or environment variable <https://pennylane.readthedocs.io/en/stable/introduction/configuration.html>`_.
+Specifically, the variable ``AQT_TOKEN`` must contain a valid access key for AQT's online platform.
+
 
 .. toctree::
    :maxdepth: 2
-   :caption: Getting started
+   :titlesonly:
+   :hidden:
 
-   installing
-   usage
-
-
-.. rst-class:: contents local topic
+   installation
+   support
 
 .. toctree::
    :maxdepth: 2
-   :caption: Tutorials (external links)
+   :caption: Usage
+   :hidden:
 
-   Photon redirection <https://pennylane.readthedocs.io/en/latest/tutorials/plugins_hybrid.html>
-   Notebook downloads <https://pennylane.readthedocs.io/en/latest/tutorials/notebooks.html>
-
-.. rst-class:: contents local topic
+   devices
 
 .. toctree::
    :maxdepth: 1
-   :caption: Code details
+   :caption: API
+   :hidden:
 
+   code/__init__
    code/ops
-   code/framework_device
-   code/device1
-   code/device2
