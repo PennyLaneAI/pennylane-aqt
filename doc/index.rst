@@ -63,4 +63,5 @@ Specifically, the variable ``AQT_TOKEN`` must contain a valid access key for AQT
    :caption: API
    :hidden:
 
-   code
+   code/__init__
+   code/ops

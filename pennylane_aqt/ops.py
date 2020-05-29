@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """
-Custom AQT operations
+This module contains custom AQT operations, designed to be used in PennyLane
+QNodes when using the PennyLane-AQT devices.
 """
 from pennylane.operation import Operation
 

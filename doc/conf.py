@@ -38,7 +38,8 @@ extensions = [
     "sphinx.ext.inheritance_diagram",
     "sphinx.ext.intersphinx",
     'sphinx.ext.viewcode',
-    "sphinx_automodapi.automodapi"
+    "sphinx_automodapi.automodapi",
+    'sphinx_automodapi.smart_resolver'
 ]
 
 intersphinx_mapping = {"https://pennylane.readthedocs.io/en/stable/": None}
