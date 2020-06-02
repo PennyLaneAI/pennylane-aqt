@@ -39,7 +39,7 @@ The plugin documentation can be found here: `PennyLane-AQT <https://pennylane-aq
 Features
 ========
 
-* Provides two devices which can be used with AQT's online API: "aqt.sim" and "aqt.noisy_sim".
+* Provides two devices which can be used with AQT's online API: ``"aqt.sim"`` and ``"aqt.noisy_sim"``.
   These provide access to an ideal ion-trap simulator and a noisy ion-trap simulator, respectively.
 
 * The plugin provides additional support for the AQT's custom rotation and Mølmer-Sørenson-type gates.
