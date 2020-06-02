@@ -125,7 +125,7 @@ projects or applications built on PennyLane and AQT.
 Contributors
 ============
 
-PennyLane-AQT is the work of many [contributors](https://github.com/XanaduAI/pennylane-aqt/graphs/contributors).
+PennyLane-AQT is the work of many `contributors <https://github.com/XanaduAI/pennylane-aqt/graphs/contributors>`_.
 
 If you are doing research using PennyLane, please cite our papers:
 
