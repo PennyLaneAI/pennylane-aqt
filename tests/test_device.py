@@ -106,6 +106,9 @@ class TestAQTDevice:
         dev.retry_delay = 1.0
         assert dev.retry_delay == 1.0
 
+        with pytest.raises(qml.DeviceError, match="needs to be positive"):
+            dev.retry_delay = -5
+
     def test_set_api_configs(self):
         """Tests that the ``set_api_configs`` method properly (re)sets the API configs."""
 
@@ -116,7 +119,8 @@ class TestAQTDevice:
         dev.TARGET_PATH = "some/path"
         dev.set_api_configs()
 
-        assert dev.header == {"Ocp-Apim-Subscription-Key": new_api_key}
+        assert dev.header == {"Ocp-Apim-Subscription-Key": new_api_key,
+                              "SDK": "pennylane"}
         assert dev.data == {"access_token": new_api_key, "no_qubits": dev.num_wires}
         assert dev.hostname == "https://server.someaddress.com/some/path"
 

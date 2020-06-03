@@ -139,6 +139,7 @@ class AQTDevice(QubitDevice):
         Returns:
             set[str]: the set of PennyLane operation names the device supports
         """
+        # pragma: no cover
         return set(self._operation_map.keys())
 
     def apply(self, operations, **kwargs):
