@@ -100,7 +100,8 @@ class AQTDevice(QubitDevice):
         self._api_key = self._api_key or os.getenv("AQT_TOKEN")
         if not self._api_key:
             raise ValueError("No valid api key for AQT platform found.")
-        self.header = {"Ocp-Apim-Subscription-Key": self._api_key}
+        self.header = {"Ocp-Apim-Subscription-Key": self._api_key,
+                       "SDK": "pennylane"}
         self.data = {"access_token": self._api_key, "no_qubits": self.num_wires}
         self.hostname = urllib.parse.urljoin("{}/".format(self.BASE_HOSTNAME), self.TARGET_PATH)
 
