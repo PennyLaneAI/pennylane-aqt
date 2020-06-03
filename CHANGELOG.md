@@ -22,4 +22,4 @@ Initial release.
 
 This release contains contributions from (in alphabetical order):
 
-Nathan Killoran
+Nathan Killoran, Josh Izaac
