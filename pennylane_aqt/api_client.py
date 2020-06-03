@@ -57,6 +57,7 @@ def verify_valid_status(response):
     if response.status_code not in VALID_STATUS_CODES:
         raise requests.HTTPError
 
+
 def submit(request_type, url, request, headers):
     """Submit a request to AQT's API.
 
