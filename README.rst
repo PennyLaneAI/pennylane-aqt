@@ -54,12 +54,13 @@ Installation
 PennyLane-AQT only requires PennyLane for use, no additional external frameworks are needed.
 The plugin can be installed via ``pip``:
 ::
+
     $ python3 -m pip install pennylane-aqt
 
 Alternatively, you can install PennyLane-AQT from the source code by navigating to the top directory and running
 ::
 
-	$ python3 setup.py install
+    $ python3 setup.py install
 
 
 If you currently do not have Python 3 installed,
@@ -73,7 +74,7 @@ To ensure that PennyLane-AQT is working correctly after installation, the test s
 run by navigating to the source code folder and running
 ::
 
-	$ make test
+    $ make test
 
 
 Documentation
