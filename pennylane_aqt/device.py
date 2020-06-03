@@ -46,7 +46,7 @@ class AQTDevice(QubitDevice):
             execution.
     """
     # pylint: disable=too-many-instance-attributes
-    name = "AQT Simulator PennyLane plugin"
+    name = "Alpine Quantum Technologies PennyLane plugin"
     pennylane_requires = ">=0.9.0"
     version = __version__
     author = "Xanadu Inc."
