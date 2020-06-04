@@ -28,7 +28,7 @@ directly in PennyLane by specifying ``"aqt.sim"``:
     def circuit(w, x, y, z):
         qml.RX(w, wires=0)
         ops.R(x, y, wires=1)
-        ops.MS(z, wires=[0,1]
+        ops.MS(z, wires=[0,1])
         return qml.expval(qml.PauliZ(0))
 
 .. raw::html
@@ -53,7 +53,7 @@ directly in PennyLane by specifying ``"aqt.noisy_sim"``:
     def circuit(w, x, y, z):
         qml.RX(w, wires=0)
         ops.R(x, y, wires=1)
-        ops.MS(z, wires=[0,1]
+        ops.MS(z, wires=[0,1])
         return qml.expval(qml.PauliZ(0))
 
 Both devices support the same set of operations. They differ only in the

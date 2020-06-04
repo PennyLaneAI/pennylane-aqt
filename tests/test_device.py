@@ -15,6 +15,7 @@
 import os
 import pytest
 import appdirs
+import requests
 
 import pennylane as qml
 import numpy as np
@@ -54,6 +55,8 @@ REF_SAMPLES_100 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 REF_SAMPLES_101 = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
 REF_SAMPLES_110 = [3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
 REF_SAMPLES_111 = [7, 7, 7, 7, 7, 7, 7, 7, 7, 7]
+
+MOCK_SAMPLES = [1, 0, 1, 3, 0, 2, 0, 1, 0, 3]
 
 
 class TestAQTDevice:
@@ -106,6 +109,9 @@ class TestAQTDevice:
         dev.retry_delay = 1.0
         assert dev.retry_delay == 1.0
 
+        with pytest.raises(qml.DeviceError, match="needs to be positive"):
+            dev.retry_delay = -5
+
     def test_set_api_configs(self):
         """Tests that the ``set_api_configs`` method properly (re)sets the API configs."""
 
@@ -116,7 +122,7 @@ class TestAQTDevice:
         dev.TARGET_PATH = "some/path"
         dev.set_api_configs()
 
-        assert dev.header == {"Ocp-Apim-Subscription-Key": new_api_key}
+        assert dev.header == {"Ocp-Apim-Subscription-Key": new_api_key, "SDK": "pennylane"}
         assert dev.data == {"access_token": new_api_key, "no_qubits": dev.num_wires}
         assert dev.hostname == "https://server.someaddress.com/some/path"
 
@@ -185,7 +191,19 @@ class TestAQTDevice:
 
         dev._apply_operation(qml.Hadamard(wires=wires))
 
-        assert dev.circuit == [["Y", 0.5, wires]]
+        assert dev.circuit == [["X", 1.0, wires], ["Y", -0.5, wires]]
+
+    @pytest.mark.parametrize("wires", [[0], [1], [2]])
+    def test_apply_operation_S(self, wires):
+        """Tests that the _apply_operation method correctly populates the circuit
+        queue when a PennyLane S operation is provided."""
+
+        dev = AQTDevice(3, api_key=SOME_API_KEY)
+        assert dev.circuit == []
+
+        dev._apply_operation(qml.S(wires=wires))
+
+        assert dev.circuit == [["Z", 0.5, wires]]
 
     @pytest.mark.parametrize("wires", [[0], [1], [2]])
     @pytest.mark.parametrize(
@@ -260,13 +278,33 @@ class TestAQTDevice:
 
         assert dev.circuit == expected_circuit
 
+    def test_apply_basisstate_not_first_exception(self):
+        """Tests that the apply method raises an exception when BasisState
+        is not the first operation."""
+
+        dev = AQTDevice(3, api_key=SOME_API_KEY)
+
+        with pytest.raises(qml.DeviceError, match="only supported at the beginning of a circuit"):
+            dev.apply([qml.RX(0.5, wires=1), qml.BasisState(np.array([1,1,1]), wires=[0,1,2])])
+
+    def test_apply_qubitstatevector_not_first_exception(self):
+        """Tests that the apply method raises an exception when QubitStateVector
+        is not the first operation."""
+
+        dev = AQTDevice(2, api_key=SOME_API_KEY)
+
+        state = np.ones(8) / np.sqrt(8)
+        with pytest.raises(qml.DeviceError, match="only supported at the beginning of a circuit"):
+            dev.apply([qml.RX(0.5, wires=1), qml.QubitStateVector(state, wires=[0,1,2])])
+
     @pytest.mark.parametrize(
         "op, wires, expected_circuit",
         [
             (qml.PauliX, [0], [["X", -1.0, [0]]]),
             (qml.PauliY, [1], [["Y", -1.0, [1]]]),
             (qml.PauliZ, [1], [["Z", -1.0, [1]]]),
-            (qml.Hadamard, [0], [["Y", -0.5, [0]]]),
+            (qml.Hadamard, [0], [["Y", 0.5, [0]], ["X", 1.0, [0]]]),
+            (qml.S, [1], [["Z", -0.5, [1]]]),
         ],
     )
     def test_apply_unparametrized_operation_inverse(self, op, wires, expected_circuit):
@@ -326,6 +364,14 @@ class TestAQTDevice:
 
         assert dev.circuit == [["R", par0, par1, wires]]
 
+    def test_unsupported_operation_exception(self):
+        """Tests whether an exception is raised if an unsupported operation
+        is attempted to be appended to queue."""
+
+        dev = AQTDevice(1, api_key=SOME_API_KEY)
+
+        with pytest.raises(qml.DeviceError, match="is not supported on AQT devices"):
+            dev._append_op_to_queue("BAD_GATE", 0.5, [0])
 
 class TestAQTDeviceIntegration:
     """Integration tests of AQTDevice base class with PennyLane"""
@@ -433,6 +479,40 @@ class TestAQTDeviceIntegration:
 
         assert API_HEADER_KEY in dev.header.keys()
         assert dev.header[API_HEADER_KEY] == NEW_API_KEY
+
+    def test_executes_with_online_api(self, monkeypatch):
+        """Tests that a PennyLane QNode successfully execures with a
+        mocked out online API."""
+
+        dev = qml.device("aqt.sim", wires=2, shots=10, api_key=SOME_API_KEY)
+
+        @qml.qnode(dev)
+        def circuit(x, y):
+            qml.RX(x, wires=0)
+            qml.RY(y, wires=1)
+            ops.R(x, y, wires=0)
+            ops.MS(0.5, wires=[0, 1])
+            return qml.expval(qml.PauliY(0))
+
+        class MockResponse:
+            def __init__(self):
+                self.status_code = 200
+                self.mock_json1 = {"id": "8c05f8aa-513d-4a04-b3ec-05f3a4c53fb6", "status": "queued"}
+                self.mock_json2 = {"samples": MOCK_SAMPLES, "status": "finished"}
+                self.num_calls = 0
+
+            def json(self):
+                if self.num_calls == 0:
+                    self.num_calls = 1
+                    return self.mock_json1
+                else:
+                    return self.mock_json2
+
+        mock_response = MockResponse()
+        monkeypatch.setattr(requests, "put", lambda *args, **kwargs: mock_response)
+
+        circuit(0.5, 1.2)
+        assert dev.samples == MOCK_SAMPLES
 
 
 class TestAQTSimulatorDevices:

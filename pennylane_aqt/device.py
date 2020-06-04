@@ -46,7 +46,7 @@ class AQTDevice(QubitDevice):
             execution.
     """
     # pylint: disable=too-many-instance-attributes
-    name = "AQT Simulator PennyLane plugin"
+    name = "Alpine Quantum Technologies PennyLane plugin"
     pennylane_requires = ">=0.9.0"
     version = __version__
     author = "Xanadu Inc."
@@ -68,6 +68,7 @@ class AQTDevice(QubitDevice):
         "PauliY": None,
         "PauliZ": None,
         "Hadamard": None,
+        "S": None,
         # additional operations not native to PennyLane but present in AQT
         "R": "R",
         "MS": "MS",
@@ -100,7 +101,7 @@ class AQTDevice(QubitDevice):
         self._api_key = self._api_key or os.getenv("AQT_TOKEN")
         if not self._api_key:
             raise ValueError("No valid api key for AQT platform found.")
-        self.header = {"Ocp-Apim-Subscription-Key": self._api_key}
+        self.header = {"Ocp-Apim-Subscription-Key": self._api_key, "SDK": "pennylane"}
         self.data = {"access_token": self._api_key, "no_qubits": self.num_wires}
         self.hostname = urllib.parse.urljoin("{}/".format(self.BASE_HOSTNAME), self.TARGET_PATH)
 
@@ -124,7 +125,7 @@ class AQTDevice(QubitDevice):
         Raises:
             DeviceError: if the retry delay is not a positive number
         """
-        if time <=0:
+        if time <= 0:
             raise DeviceError(
                 "The specified retry delay needs to be positive. Got {}.".format(time)
             )
@@ -206,9 +207,17 @@ class AQTDevice(QubitDevice):
                 if bit == 1:
                     self._append_op_to_queue("RX", np.pi, wires=[wire])
             return
-
         if op_name == "Hadamard":
-            op_name = "RY"
+            if inv:
+                self._append_op_to_queue("RY", np.pi / 2, wires)
+                self._append_op_to_queue("RX", np.pi, wires)
+            else:
+                self._append_op_to_queue("RX", np.pi, wires)
+                self._append_op_to_queue("RY", -np.pi / 2, wires)
+            return
+
+        if op_name == "S":
+            op_name = "RZ"
             par = 0.5 * np.pi
         elif op_name in ("PauliX", "PauliY", "PauliZ"):
             op_name = "R{}".format(op_name[-1])
@@ -230,6 +239,8 @@ class AQTDevice(QubitDevice):
             par[float]: the numeric parameter value for the op
             wires[list[int]]: the wires the op is to be applied on
         """
+        if not op_name in self.operations:
+            raise DeviceError("Operation {} is not supported on AQT devices.")
         par = par / np.pi  # AQT convention: all gates differ from PennyLane by factor of pi
         aqt_op_name = self._operation_map[op_name]
         self.circuit.append([aqt_op_name, par, wires])
