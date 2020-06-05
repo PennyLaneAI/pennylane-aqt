@@ -40,8 +40,7 @@ class R(Operation):
     num_params = 2
     num_wires = 1
     par_domain = "R"
-    grad_method = None
-    grad_recipe = None
+    grad_method = "A"
 
 
 class MS(Operation):
@@ -68,5 +67,4 @@ class MS(Operation):
     num_params = 1
     num_wires = 2
     par_domain = "R"
-    grad_method = None
-    grad_recipe = None
+    grad_method = "A"
