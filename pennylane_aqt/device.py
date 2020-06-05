@@ -77,7 +77,7 @@ class AQTDevice(QubitDevice):
     TARGET_PATH = ""
     HTTP_METHOD = "PUT"
 
-    def __init__(self, wires, shots=BASE_SHOTS, api_key=None, retry_delay=0.05):
+    def __init__(self, wires, shots=BASE_SHOTS, api_key=None, retry_delay=1):
         super().__init__(wires=wires, shots=shots, analytic=False)
         self.shots = shots
         self._retry_delay = retry_delay
