@@ -20,7 +20,6 @@ This module contains an abstract base class for constructing AQT devices for Pen
 """
 import os
 import json
-import urllib
 from time import sleep
 
 import numpy as np
@@ -78,7 +77,7 @@ class AQTDevice(QubitDevice):
     TARGET_PATH = ""
     HTTP_METHOD = "PUT"
 
-    def __init__(self, wires, shots=BASE_SHOTS, api_key=None, retry_delay=0.05):
+    def __init__(self, wires, shots=BASE_SHOTS, api_key=None, retry_delay=1):
         super().__init__(wires=wires, shots=shots, analytic=False)
         self.shots = shots
         self._retry_delay = retry_delay
@@ -103,7 +102,7 @@ class AQTDevice(QubitDevice):
             raise ValueError("No valid api key for AQT platform found.")
         self.header = {"Ocp-Apim-Subscription-Key": self._api_key, "SDK": "pennylane"}
         self.data = {"access_token": self._api_key, "no_qubits": self.num_wires}
-        self.hostname = urllib.parse.urljoin("{}/".format(self.BASE_HOSTNAME), self.TARGET_PATH)
+        self.hostname = "/".join([self.BASE_HOSTNAME, self.TARGET_PATH])
 
     @property
     def retry_delay(self):
