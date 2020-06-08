@@ -1,18 +1,20 @@
-# Release 0.10.0-dev
+# Release 0.9.1
 
 ### New features since last release
 
-### Breaking changes
+* Both of the native gates `R` and `MS` now support the parameter-shift differentiation
+  method in PennyLane. [(#4)](https://github.com/XanaduAI/pennylane-aqt/pull/4)
 
 ### Improvements
 
-### Documentation
-
-### Bug fixes
+* Lowered the retry timer so the plugin won't hammer the server for results.
+  [(#4)](https://github.com/XanaduAI/pennylane-aqt/pull/4)
 
 ### Contributors
 
 This release contains contributions from (in alphabetical order):
+
+Nathan Killoran
 
 ---
 
