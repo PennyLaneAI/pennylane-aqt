@@ -481,7 +481,7 @@ class TestAQTDeviceIntegration:
         assert dev.header[API_HEADER_KEY] == NEW_API_KEY
 
     def test_executes_with_online_api(self, monkeypatch):
-        """Tests that a PennyLane QNode successfully execures with a
+        """Tests that a PennyLane QNode successfully executes with a
         mocked out online API."""
 
         dev = qml.device("aqt.sim", wires=2, shots=10, api_key=SOME_API_KEY)
