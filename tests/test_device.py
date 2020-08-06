@@ -285,7 +285,7 @@ class TestAQTDevice:
         dev = AQTDevice(3, api_key=SOME_API_KEY)
 
         with pytest.raises(qml.DeviceError, match="only supported at the beginning of a circuit"):
-            dev.apply([qml.RX(0.5, wires=1), qml.BasisState(np.array([1,1,1]), wires=[0,1,2])])
+            dev.apply([qml.RX(0.5, wires=1), qml.BasisState(np.array([1, 1, 1]), wires=[0, 1, 2])])
 
     def test_apply_qubitstatevector_not_first_exception(self):
         """Tests that the apply method raises an exception when QubitStateVector
@@ -295,7 +295,7 @@ class TestAQTDevice:
 
         state = np.ones(8) / np.sqrt(8)
         with pytest.raises(qml.DeviceError, match="only supported at the beginning of a circuit"):
-            dev.apply([qml.RX(0.5, wires=1), qml.QubitStateVector(state, wires=[0,1,2])])
+            dev.apply([qml.RX(0.5, wires=1), qml.QubitStateVector(state, wires=[0, 1, 2])])
 
     @pytest.mark.parametrize(
         "op, wires, expected_circuit",
@@ -372,6 +372,7 @@ class TestAQTDevice:
 
         with pytest.raises(qml.DeviceError, match="is not supported on AQT devices"):
             dev._append_op_to_queue("BAD_GATE", 0.5, [0])
+
 
 class TestAQTDeviceIntegration:
     """Integration tests of AQTDevice base class with PennyLane"""
@@ -481,7 +482,7 @@ class TestAQTDeviceIntegration:
         assert dev.header[API_HEADER_KEY] == NEW_API_KEY
 
     def test_executes_with_online_api(self, monkeypatch):
-        """Tests that a PennyLane QNode successfully execures with a
+        """Tests that a PennyLane QNode successfully executes with a
         mocked out online API."""
 
         dev = qml.device("aqt.sim", wires=2, shots=10, api_key=SOME_API_KEY)

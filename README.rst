@@ -1,25 +1,29 @@
 PennyLane-AQT Plugin
 ####################
 
-.. image:: https://img.shields.io/travis/com/XanaduAI/pennylane-aqt/master.svg?style=popout-square
-    :alt: Travis
-    :target: https://travis-ci.com/XanaduAI/pennylane-aqt
+.. image:: https://img.shields.io/github/workflow/status/PennyLaneAI/pennylane-aqt/Tests/master?logo=github&style=flat-square
+    :alt: GitHub Workflow Status (branch)
+    :target: https://github.com/PennyLaneAI/pennylane-aqt/actions?query=workflow%3ATests
 
-.. image:: https://img.shields.io/codecov/c/github/xanaduai/pennylane-aqt/master.svg?style=popout-square
+.. image:: https://img.shields.io/codecov/c/github/PennyLaneAI/pennylane-aqt/master.svg?logo=codecov&style=flat-square
     :alt: Codecov coverage
-    :target: https://codecov.io/gh/XanaduAI/pennylane-aqt
+    :target: https://codecov.io/gh/PennyLaneAI/pennylane-aqt
 
-.. image:: https://img.shields.io/readthedocs/pennylane-aqt.svg?style=popout-square
+.. image:: https://img.shields.io/codefactor/grade/github/PennyLaneAI/pennylane-aqt/master?logo=codefactor&style=flat-square
+    :alt: CodeFactor Grade
+    :target: https://www.codefactor.io/repository/github/pennylaneai/pennylane-aqt
+
+.. image:: https://img.shields.io/readthedocs/pennylane-aqt.svg?logo=read-the-docs&style=flat-square
     :alt: Read the Docs
     :target: https://pennylane-aqt.readthedocs.io
 
-.. image:: https://img.shields.io/pypi/v/PennyLane-AQT.svg?style=popout-square
+.. image:: https://img.shields.io/pypi/v/PennyLane-aqt.svg?style=flat-square
     :alt: PyPI
-    :target: https://pypi.org/project/PennyLane-AQT
+    :target: https://pypi.org/project/PennyLane-aqt
 
-.. image:: https://img.shields.io/pypi/pyversions/PennyLane-AQT.svg?style=popout-square
+.. image:: https://img.shields.io/pypi/pyversions/PennyLane-aqt.svg?style=flat-square
     :alt: PyPI - Python Version
-    :target: https://pypi.org/project/PennyLane-AQT
+    :target: https://pypi.org/project/PennyLane-aqt
 
 .. header-start-inclusion-marker-do-not-remove
 
@@ -126,7 +130,7 @@ projects or applications built on PennyLane and AQT.
 Contributors
 ============
 
-PennyLane-AQT is the work of many `contributors <https://github.com/XanaduAI/pennylane-aqt/graphs/contributors>`_.
+PennyLane-AQT is the work of many `contributors <https://github.com/PennyLaneAI/pennylane-aqt/graphs/contributors>`_.
 
 If you are doing research using PennyLane, please cite our papers:
 
@@ -145,8 +149,8 @@ If you are doing research using PennyLane, please cite our papers:
 Support
 =======
 
-- **Source Code:** https://github.com/XanaduAI/pennylane-aqt
-- **Issue Tracker:** https://github.com/XanaduAI/pennylane-aqt/issues
+- **Source Code:** https://github.com/PennyLaneAI/pennylane-aqt
+- **Issue Tracker:** https://github.com/PennyLaneAI/pennylane-aqt/issues
 
 If you are having issues, please let us know by posting the issue on our GitHub issue tracker.
 

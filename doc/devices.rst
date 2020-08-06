@@ -13,7 +13,7 @@ a noisy ion-trap simulator.
 Ideal ion-trap simulator
 ------------------------
 
-This device provides an idea noiseless ion-trap simulation.
+This device provides an ideal noiseless ion-trap simulation.
 Once the plugin has been installed, you can use this device
 directly in PennyLane by specifying ``"aqt.sim"``:
 
