@@ -186,7 +186,10 @@ class AQTDevice(QubitDevice):
             par = operation.parameters
         else:
             par = None
-        registers = self.wire_map(operation.wires)
+
+        # translate operation wire labels to the one's used by the device
+        device_wires = self.map_wires(operation.wires)
+        device_wire_labels = device_wires.tolist()
 
         name_parts = op_name.split(".")
         if len(name_parts) == 1:
@@ -199,20 +202,20 @@ class AQTDevice(QubitDevice):
         if op_name == "R":
             if inv:
                 par = [-p for p in par]
-            self.circuit.append([op_name, par[0], par[1], registers])
+            self.circuit.append([op_name, par[0], par[1], device_wire_labels])
             return
         if op_name == "BasisState":
-            for bit, reg in zip(par, registers):
+            for bit, label in zip(par, device_wire_labels):
                 if bit == 1:
-                    self._append_op_to_queue("RX", np.pi, registers=[reg])
+                    self._append_op_to_queue("RX", np.pi, device_wire_labels=[label])
             return
         if op_name == "Hadamard":
             if inv:
-                self._append_op_to_queue("RY", np.pi / 2, registers)
-                self._append_op_to_queue("RX", np.pi, registers)
+                self._append_op_to_queue("RY", np.pi / 2, device_wire_labels)
+                self._append_op_to_queue("RX", np.pi, device_wire_labels)
             else:
-                self._append_op_to_queue("RX", np.pi, registers)
-                self._append_op_to_queue("RY", -np.pi / 2, registers)
+                self._append_op_to_queue("RX", np.pi, device_wire_labels)
+                self._append_op_to_queue("RY", -np.pi / 2, device_wire_labels)
             return
 
         if op_name == "S":
@@ -227,22 +230,22 @@ class AQTDevice(QubitDevice):
         if inv:
             par *= -1
 
-        self._append_op_to_queue(op_name, par, registers)
+        self._append_op_to_queue(op_name, par, device_wire_labels)
 
-    def _append_op_to_queue(self, op_name, par, registers):
+    def _append_op_to_queue(self, op_name, par, device_wire_labels):
         """
         Append the given operation to the circuit queue in the correct format for AQT API.
 
         Args:
             op_name[str]: the PennyLane name of the op
             par[float]: the numeric parameter value for the op
-            registers[list[int]]: registers the op is to be applied on
+            device_wire_labels[list[int]]: wire labels on the device which the op is to be applied on
         """
         if not op_name in self.operations:
             raise DeviceError("Operation {} is not supported on AQT devices.")
         par = par / np.pi  # AQT convention: all gates differ from PennyLane by factor of pi
         aqt_op_name = self._operation_map[op_name]
-        self.circuit.append([aqt_op_name, par, registers])
+        self.circuit.append([aqt_op_name, par, device_wire_labels])
 
     @staticmethod
     def serialize(circuit):
