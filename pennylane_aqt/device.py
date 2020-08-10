@@ -35,7 +35,9 @@ class AQTDevice(QubitDevice):
     r"""AQT device for PennyLane.
 
     Args:
-        wires (int): the number of wires to initialize the device with
+        wires (int or Iterable[Number, str]]): Number of subsystems represented by the device,
+            or iterable that contains unique labels for the subsystems as numbers (i.e., ``[-1, 0, 2]``)
+            or strings (``['ancilla', 'q1', 'q2']``).
         shots (int): number of circuit evaluations/random samples used
             to estimate expectation values of observables
         api_key (str): The AQT API key. If not provided, the environment
@@ -46,7 +48,7 @@ class AQTDevice(QubitDevice):
     """
     # pylint: disable=too-many-instance-attributes
     name = "Alpine Quantum Technologies PennyLane plugin"
-    pennylane_requires = ">=0.9.0"
+    pennylane_requires = ">=0.11.0"
     version = __version__
     author = "Xanadu Inc."
     _capabilities = {
