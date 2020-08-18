@@ -24,7 +24,7 @@ with open("pennylane_aqt/_version.py") as f:
 # Requirements should be as minimal as possible.
 # Avoid pinning, and use minimum version numbers
 # only where required.
-requirements = ["pennylane", "requests"]
+requirements = ["pennylane>=0.11", "requests"]
 
 info = {
     # 'name' is the name that will be used by pip for installation
