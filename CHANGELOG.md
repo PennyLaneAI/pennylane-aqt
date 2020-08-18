@@ -1,18 +1,14 @@
-# Release 0.10.0-dev
+# Release 0.11.0
 
 ### New features since last release
 
-### Breaking changes
-
-### Improvements
-
-### Documentation
-
-### Bug fixes
+* The AQT plugin now supports arbitrary wire labels when instantiating the device [(#8)](https://github.com/XanaduAI/pennylane-aqt/pull/8) [(#9)](https://github.com/XanaduAI/pennylane-aqt/pull/9)
 
 ### Contributors
 
 This release contains contributions from (in alphabetical order):
+
+Maria Schuld
 
 ---
 
