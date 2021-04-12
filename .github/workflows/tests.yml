@@ -34,6 +34,6 @@ jobs:
       - name: Run tests
         run: python -m pytest tests --cov=pennylane_aqt --cov-report=term-missing --cov-report=xml -p no:warnings --tb=native
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action
+        uses: codecov/codecov-action@v1.0.12
         with:
-          file: ./coverage.xml@v1.0.12
+          file: ./coverage.xml
