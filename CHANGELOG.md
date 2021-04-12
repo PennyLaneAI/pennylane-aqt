@@ -4,7 +4,7 @@
 
 * For compatibility with PennyLane v0.15, the `analytic` keyword argument
   has been removed from usage within the AQT device.
-  [(#5)](https://github.com/XanaduAI/pennylane-aqt/pull/5)
+  [(#12)](https://github.com/XanaduAI/pennylane-aqt/pull/12)
 
 ### Contributors
 
