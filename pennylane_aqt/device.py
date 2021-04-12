@@ -48,7 +48,7 @@ class AQTDevice(QubitDevice):
     """
     # pylint: disable=too-many-instance-attributes
     name = "Alpine Quantum Technologies PennyLane plugin"
-    pennylane_requires = ">=0.11.0"
+    pennylane_requires = ">=0.15.0"
     version = __version__
     author = "Xanadu Inc."
     _capabilities = {
@@ -80,7 +80,12 @@ class AQTDevice(QubitDevice):
     HTTP_METHOD = "PUT"
 
     def __init__(self, wires, shots=BASE_SHOTS, api_key=None, retry_delay=1):
-        super().__init__(wires=wires, shots=shots, analytic=False)
+        if shots is None:
+            raise ValueError(
+                "The aqt.base_device device does not support analytic expectation values"
+            )
+
+        super().__init__(wires=wires, shots=shots)
         self.shots = shots
         self._retry_delay = retry_delay
 
