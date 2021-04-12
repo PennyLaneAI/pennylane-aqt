@@ -515,6 +515,11 @@ class TestAQTDeviceIntegration:
         circuit(0.5, 1.2)
         assert dev.samples == MOCK_SAMPLES
 
+    def test_analytic_error(self):
+        """Test that instantiating the device with `shots=None` results in an error"""
+        with pytest.raises(ValueError, match="does not support analytic"):
+            dev = qml.device("aqt.sim", wires=2, shots=None)
+
 
 class TestAQTSimulatorDevices:
     """Tests for the AQT simulator device classes."""
