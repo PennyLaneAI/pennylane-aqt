@@ -203,8 +203,13 @@ class TestAQTDevice:
 
         dev._apply_operation(qml.CNOT(wires=wires))
 
-        assert dev.circuit == [["Y", 1 / 2, wires[0]], ["MS", 1 /4, wires], ["X", - 1 / 2, wires[0]],
-                               ["X", - 1 / 2, wires[1]], ["Y", - 1 / 2, wires[0]]]
+        assert dev.circuit == [
+            ["Y", 1 / 2, wires[0]],
+            ["MS", 1 / 4, wires],
+            ["X", -1 / 2, wires[0]],
+            ["X", -1 / 2, wires[1]],
+            ["Y", -1 / 2, wires[0]],
+        ]
 
     @pytest.mark.parametrize("wires", [[0], [1], [2]])
     def test_apply_operation_S(self, wires):
