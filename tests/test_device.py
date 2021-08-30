@@ -193,7 +193,7 @@ class TestAQTDevice:
 
         assert dev.circuit == [["X", 1.0, wires], ["Y", -0.5, wires]]
 
-    @pytest.mark.parametrize("wires", [[0, 1], [1, 0], [1, 2], [2, 1]])
+    @pytest.mark.parametrize("wires", [[0, 1], [1, 0], [1, 2], [2, 1], [0,2], [2,0]])
     def test_operation_cnot(self, wires):
         """Tests that the _apply_operation method correctly populates the circuit
         queue when a PennyLane CNOT operation is provided."""
