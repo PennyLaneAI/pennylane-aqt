@@ -2,7 +2,7 @@
 
 ### New features
 
-* Add the support for the `CNOT` gate by using a decomposition with the `MS` gate.
+* Add support for the `CNOT` gate by using a decomposition with the `MS` gate.
   [(#14)](https://github.com/XanaduAI/pennylane-aqt/pull/14)
   
 ### Improvements
