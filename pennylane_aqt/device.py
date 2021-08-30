@@ -70,6 +70,7 @@ class AQTDevice(QubitDevice):
         "PauliZ": None,
         "Hadamard": None,
         "S": None,
+        "CNOT": None,
         # additional operations not native to PennyLane but present in AQT
         "R": "R",
         "MS": "MS",
@@ -223,6 +224,14 @@ class AQTDevice(QubitDevice):
             else:
                 self._append_op_to_queue("RX", np.pi, device_wire_labels)
                 self._append_op_to_queue("RY", -np.pi / 2, device_wire_labels)
+            return
+
+        if op_name == "CNOT":
+            self._append_op_to_queue("RY", np.pi / 2, device_wire_labels[0])
+            self._append_op_to_queue("MS", np.pi / 4, device_wire_labels)
+            self._append_op_to_queue("RX", - np.pi / 2, device_wire_labels[0])
+            self._append_op_to_queue("RX", - np.pi / 2, device_wire_labels[1])
+            self._append_op_to_queue("RY", - np.pi / 2, device_wire_labels[0])
             return
 
         if op_name == "S":
