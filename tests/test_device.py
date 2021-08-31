@@ -203,6 +203,7 @@ class TestAQTDevice:
 
         dev._apply_operation(qml.CNOT(wires=wires))
 
+    # Note: the original parameters used in PennyLane are divided by pi as per AQT convetion
         assert dev.circuit == [
             ["Y", 1 / 2, wires[0]],
             ["MS", 1 / 4, wires],
