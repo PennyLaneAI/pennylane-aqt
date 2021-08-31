@@ -193,6 +193,25 @@ class TestAQTDevice:
 
         assert dev.circuit == [["X", 1.0, wires], ["Y", -0.5, wires]]
 
+    @pytest.mark.parametrize("wires", [[0, 1], [1, 0], [1, 2], [2, 1], [0,2], [2,0]])
+    def test_operation_cnot(self, wires):
+        """Tests that the _apply_operation method correctly populates the circuit
+        queue when a PennyLane CNOT operation is provided."""
+
+        dev = AQTDevice(3, api_key=SOME_API_KEY)
+        assert dev.circuit == []
+
+        dev._apply_operation(qml.CNOT(wires=wires))
+
+    # Note: the original parameters used in PennyLane are divided by pi as per AQT convetion
+        assert dev.circuit == [
+            ["Y", 1 / 2, wires[0]],
+            ["MS", 1 / 4, wires],
+            ["X", -1 / 2, wires[0]],
+            ["X", -1 / 2, wires[1]],
+            ["Y", -1 / 2, wires[0]],
+        ]
+
     @pytest.mark.parametrize("wires", [[0], [1], [2]])
     def test_apply_operation_S(self, wires):
         """Tests that the _apply_operation method correctly populates the circuit
