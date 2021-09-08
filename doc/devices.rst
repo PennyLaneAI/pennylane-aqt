@@ -38,7 +38,7 @@ directly in PennyLane by specifying ``"aqt.sim"``:
 Noisy ion-trap simulator
 ------------------------
 
-This device provides an more realistic noisy ion-trap simulation.
+This device provides a more realistic noisy ion-trap simulation.
 Once the plugin has been installed, you can use this device
 directly in PennyLane by specifying ``"aqt.noisy_sim"``:
 
