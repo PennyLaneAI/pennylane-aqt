@@ -1,21 +1,15 @@
-# Release 0.16.0-dev
+# Release 0.18.0
 
 ### New features
 
 * Add support for the `CNOT` gate by using a decomposition with the `MS` gate.
   [(#14)](https://github.com/XanaduAI/pennylane-aqt/pull/14)
   
-### Improvements
-
-### Bug fixes
-
 ### Breaking changes
 
 * Remove support for Python 3.5, 3.6 and add support for Python 3.8, 3.9.
   [(#14)](https://github.com/XanaduAI/pennylane-aqt/pull/14)
   
-### Documentation
-
 ### Contributors
 
 This release contains contributions from (in alphabetical order):
