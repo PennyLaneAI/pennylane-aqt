@@ -178,10 +178,12 @@ class AQTDevice(QubitDevice):
             job = submit(self.HTTP_METHOD, self.hostname, job_query_data, self.header).json()
             sleep(self.retry_delay)
 
-        error_msg = job.get('ERROR', None)
+        error_msg = job.get("ERROR", None)
 
         if error_msg:
-            raise ValueError(f"Something went wrong with the request, got the error message: {error_msg}")
+            raise ValueError(
+                f"Something went wrong with the request, got the error message: {error_msg}"
+            )
 
         self.samples = job["samples"]
 

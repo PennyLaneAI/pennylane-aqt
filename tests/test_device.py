@@ -194,7 +194,7 @@ class TestAQTDevice:
 
         assert dev.circuit == [["X", 1.0, wires], ["Y", -0.5, wires]]
 
-    @pytest.mark.parametrize("wires", [[0, 1], [1, 0], [1, 2], [2, 1], [0,2], [2,0]])
+    @pytest.mark.parametrize("wires", [[0, 1], [1, 0], [1, 2], [2, 1], [0, 2], [2, 0]])
     def test_operation_cnot(self, wires):
         """Tests that the _apply_operation method correctly populates the circuit
         queue when a PennyLane CNOT operation is provided."""
@@ -204,7 +204,7 @@ class TestAQTDevice:
 
         dev._apply_operation(qml.CNOT(wires=wires))
 
-    # Note: the original parameters used in PennyLane are divided by pi as per AQT convetion
+        # Note: the original parameters used in PennyLane are divided by pi as per AQT convetion
         assert dev.circuit == [
             ["Y", 1 / 2, wires[0]],
             ["MS", 1 / 4, wires],
@@ -326,12 +326,11 @@ class TestAQTDevice:
         some_error_msg = "Error happened."
 
         class MockResponse:
-
             def __init__(self):
                 self.status_code = 200
 
             def json(self):
-                return {"ERROR": some_error_msg, 'status': 'finished', "id" : 1}
+                return {"ERROR": some_error_msg, "status": "finished", "id": 1}
 
         monkeypatch.setattr(pennylane_aqt.device, "submit", lambda *args, **kwargs: MockResponse())
         with pytest.raises(ValueError, match="Something went wrong with the request"):
@@ -607,7 +606,7 @@ class TestAQTSimulatorDevices:
 
         @qml.qnode(dev)
         def circuit():
-            qml.CNOT(wires=[0,1])
+            qml.CNOT(wires=[0, 1])
             return qml.expval(qml.PauliZ(0))
 
         assert circuit() == 1
