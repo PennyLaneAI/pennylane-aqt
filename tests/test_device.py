@@ -600,7 +600,7 @@ class TestAQTSimulatorDevices:
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
 
     @pytest.mark.skip("API key needs to be inputted")
-    def test_simulator_default_init(self, num_wires, shots):
+    def test_simulator_cnot(self):
         """Test that the CNOT operation is decomposed correctly."""
         dev = qml.device("aqt.sim", wires=2, api_key="<Insert API Key here>")
 
