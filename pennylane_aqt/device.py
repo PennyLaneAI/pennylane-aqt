@@ -178,6 +178,13 @@ class AQTDevice(QubitDevice):
             job = submit(self.HTTP_METHOD, self.hostname, job_query_data, self.header).json()
             sleep(self.retry_delay)
 
+        error_msg = job.get("ERROR", None)
+
+        if error_msg:
+            raise ValueError(
+                f"Something went wrong with the request, got the error message: {error_msg}"
+            )
+
         self.samples = job["samples"]
 
     def _apply_operation(self, operation):
@@ -227,11 +234,11 @@ class AQTDevice(QubitDevice):
             return
 
         if op_name == "CNOT":
-            self._append_op_to_queue("RY", np.pi / 2, device_wire_labels[0])
+            self._append_op_to_queue("RY", np.pi / 2, [device_wire_labels[0]])
             self._append_op_to_queue("MS", np.pi / 4, device_wire_labels)
-            self._append_op_to_queue("RX", -np.pi / 2, device_wire_labels[0])
-            self._append_op_to_queue("RX", -np.pi / 2, device_wire_labels[1])
-            self._append_op_to_queue("RY", -np.pi / 2, device_wire_labels[0])
+            self._append_op_to_queue("RX", -np.pi / 2, [device_wire_labels[0]])
+            self._append_op_to_queue("RX", -np.pi / 2, [device_wire_labels[1]])
+            self._append_op_to_queue("RY", -np.pi / 2, [device_wire_labels[0]])
             return
 
         if op_name == "S":
