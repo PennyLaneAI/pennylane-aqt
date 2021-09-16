@@ -20,6 +20,7 @@ import requests
 import pennylane as qml
 import numpy as np
 
+import pennylane_aqt.device
 from pennylane_aqt import ops
 from pennylane_aqt.device import AQTDevice
 from pennylane_aqt.simulator import AQTSimulatorDevice, AQTNoisySimulatorDevice
@@ -316,6 +317,26 @@ class TestAQTDevice:
         with pytest.raises(qml.DeviceError, match="only supported at the beginning of a circuit"):
             dev.apply([qml.RX(0.5, wires=1), qml.QubitStateVector(state, wires=[0, 1, 2])])
 
+    def test_apply_raises_for_error(self, monkeypatch):
+        """Tests that the apply method raises an exception an Error has been
+        recorded in the response."""
+
+        dev = AQTDevice(3, api_key=SOME_API_KEY)
+
+        some_error_msg = "Error happened."
+
+        class MockResponse:
+
+            def __init__(self):
+                self.status_code = 200
+
+            def json(self):
+                return {"ERROR": some_error_msg, 'status': 'finished', "id" : 1}
+
+        monkeypatch.setattr(pennylane_aqt.device, "submit", lambda *args, **kwargs: MockResponse())
+        with pytest.raises(ValueError, match="Something went wrong with the request"):
+            dev.apply([])
+
     @pytest.mark.parametrize(
         "op, wires, expected_circuit",
         [
@@ -578,3 +599,15 @@ class TestAQTSimulatorDevices:
         assert dev.HTTP_METHOD == HTTP_METHOD
         assert API_HEADER_KEY in dev.header.keys()
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
+
+    @pytest.mark.skip("API key needs to be inputted")
+    def test_simulator_default_init(self, num_wires, shots):
+        """Test that the CNOT operation is decomposed correctly."""
+        dev = qml.device("aqt.sim", wires=2, api_key="<Insert API Key here>")
+
+        @qml.qnode(dev)
+        def circuit():
+            qml.CNOT(wires=[0,1])
+            return qml.expval(qml.PauliZ(0))
+
+        assert circuit() == 1
