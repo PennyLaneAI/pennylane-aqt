@@ -318,8 +318,8 @@ class TestAQTDevice:
             dev.apply([qml.RX(0.5, wires=1), qml.QubitStateVector(state, wires=[0, 1, 2])])
 
     def test_apply_raises_for_error(self, monkeypatch):
-        """Tests that the apply method raises an exception an Error has been
-        recorded in the response."""
+        """Tests that the apply method raises an exception when an Error has
+        been recorded in the response."""
 
         dev = AQTDevice(3, api_key=SOME_API_KEY)
 
