@@ -9,7 +9,7 @@
 ### Breaking changes
 
 * Remove support for Python 3.5, 3.6 and add support for Python 3.8, 3.9.
-  [(#14)](https://github.com/XanaduAI/pennylane-aqt/pull/14)
+  [(#15)](https://github.com/XanaduAI/pennylane-aqt/pull/15)
   
 ### Contributors
 
