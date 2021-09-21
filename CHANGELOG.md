@@ -4,6 +4,7 @@
 
 * Add support for the `CNOT` gate by using a decomposition with the `MS` gate.
   [(#14)](https://github.com/XanaduAI/pennylane-aqt/pull/14)
+  [(#19)](https://github.com/XanaduAI/pennylane-aqt/pull/19)
   
 ### Breaking changes
 
@@ -14,7 +15,7 @@
 
 This release contains contributions from (in alphabetical order):
 
-Romain Moyard
+Romain Moyard, Antal Száva
 
 ---
 
