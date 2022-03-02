@@ -610,3 +610,16 @@ class TestAQTSimulatorDevices:
             return qml.expval(qml.PauliZ(0))
 
         assert circuit() == 1
+
+    @pytest.mark.skip("API key needs to be inputted")
+    def test_too_many_shots_for_aqt(self):
+        """Test >200 shots is invalid with AQT."""
+        dev = qml.device("aqt.sim", wires=2, api_key="<Insert API Key here>", shots=201)
+
+        @qml.qnode(dev)
+        def circuit():
+            qml.CNOT(wires=[0, 1])
+            return qml.expval(qml.PauliZ(0))
+
+        with pytest.raises(requests.HTTPError, match='Invalid number of repetitions provided!'):
+            circuit()
