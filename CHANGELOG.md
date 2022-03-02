@@ -10,9 +10,14 @@
 
 ### Bug fixes
 
+* Fixed `MS` gate parameter in `CNOT` gate decomposition
+  [(#26)](https://github.com/XanaduAI/pennylane-aqt/pull/26)
+
 ### Contributors
 
 This release contains contributions from (in alphabetical order):
+
+Tamás Varga
 
 ---
 

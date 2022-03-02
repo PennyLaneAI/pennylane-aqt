@@ -207,7 +207,7 @@ class TestAQTDevice:
         # Note: the original parameters used in PennyLane are divided by pi as per AQT convetion
         assert dev.circuit == [
             ["Y", 1 / 2, [wires[0]]],
-            ["MS", 1 / 4, wires],
+            ["MS", 1 / 2, wires],
             ["X", -1 / 2, [wires[0]]],
             ["X", -1 / 2, [wires[1]]],
             ["Y", -1 / 2, [wires[0]]],
