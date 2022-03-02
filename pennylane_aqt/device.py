@@ -235,7 +235,7 @@ class AQTDevice(QubitDevice):
 
         if op_name == "CNOT":
             self._append_op_to_queue("RY", np.pi / 2, [device_wire_labels[0]])
-            self._append_op_to_queue("MS", np.pi / 4, device_wire_labels)
+            self._append_op_to_queue("MS", np.pi / 2, device_wire_labels)
             self._append_op_to_queue("RX", -np.pi / 2, [device_wire_labels[0]])
             self._append_op_to_queue("RX", -np.pi / 2, [device_wire_labels[1]])
             self._append_op_to_queue("RY", -np.pi / 2, [device_wire_labels[0]])

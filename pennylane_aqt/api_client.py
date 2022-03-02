@@ -55,7 +55,7 @@ def verify_valid_status(response):
         requests.HTTPError: if the status is not valid
     """
     if response.status_code not in VALID_STATUS_CODES:
-        raise requests.HTTPError
+        raise requests.HTTPError(response, response.text)
 
 
 def submit(request_type, url, request, headers):
