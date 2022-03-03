@@ -6,18 +6,22 @@
 
 ### Improvements
 
+* Raising an `HTTPError` now provides more information about the exact issues
+  by using the underlying response object.
+  [(#27)](https://github.com/XanaduAI/pennylane-aqt/pull/27)
+
 ### Documentation
 
 ### Bug fixes
 
-* Fixed `MS` gate parameter in `CNOT` gate decomposition
+* Fixed `MS` gate parameter in `CNOT` gate decomposition.
   [(#26)](https://github.com/XanaduAI/pennylane-aqt/pull/26)
 
 ### Contributors
 
 This release contains contributions from (in alphabetical order):
 
-Tamás Varga
+Christina Lee, Antal Száva, Tamás Varga
 
 ---
 
