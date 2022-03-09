@@ -1,16 +1,10 @@
-# Release 0.19.0-dev
-
-### New features since last release
-
-### Breaking changes
+# Release 0.22.0
 
 ### Improvements
 
 * Raising an `HTTPError` now provides more information about the exact issues
   by using the underlying response object.
   [(#27)](https://github.com/XanaduAI/pennylane-aqt/pull/27)
-
-### Documentation
 
 ### Bug fixes
 
