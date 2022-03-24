@@ -1,7 +1,7 @@
 name: Automated Release Version Bumps
 
 on:
-  push:
+  push: #
   #release:
   #  types: [published]
 
