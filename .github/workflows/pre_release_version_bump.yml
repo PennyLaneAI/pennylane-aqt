@@ -1,8 +1,7 @@
 name: Manually Triggered Version Bumps
 
 on:
-  push:
-  #workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   pre_release_version_bump:
