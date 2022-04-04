@@ -2,6 +2,8 @@
 
 ### New features since last release
 
+* Adds Python 3.10 support.
+
 ### Breaking changes
 
 ### Improvements
@@ -13,6 +15,8 @@
 ### Contributors
 
 This release contains contributions from (in alphabetical order):
+
+Christina Lee
 
 ---
 
