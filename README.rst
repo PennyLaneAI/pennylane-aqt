@@ -15,7 +15,7 @@ PennyLane-AQT Plugin
 
 .. image:: https://img.shields.io/readthedocs/pennylane-aqt.svg?logo=read-the-docs&style=flat-square
     :alt: Read the Docs
-    :target: https://pennylane-aqt.readthedocs.io
+    :target: https://docs.pennylane.ai/projects/aqt
 
 .. image:: https://img.shields.io/pypi/v/PennyLane-aqt.svg?style=flat-square
     :alt: PyPI
@@ -38,7 +38,7 @@ company offering access to quantum computing devices over the cloud.
 
 .. header-end-inclusion-marker-do-not-remove
 
-The plugin documentation can be found here: `PennyLane-AQT <https://pennylane-aqt.readthedocs.io/en/latest/>`__.
+The plugin documentation can be found here: `PennyLane-AQT <https://docs.pennylane.ai/projects/aqt>`__.
 
 Features
 ========
