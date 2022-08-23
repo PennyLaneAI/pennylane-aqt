@@ -13,9 +13,9 @@ PennyLane-AQT Plugin
     :alt: CodeFactor Grade
     :target: https://www.codefactor.io/repository/github/pennylaneai/pennylane-aqt
 
-.. image:: https://img.shields.io/readthedocs/pennylane-aqt.svg?logo=read-the-docs&style=flat-square
+.. image:: https://readthedocs.com/projects/xanaduai-pennylane-aqt/badge/?version=latest&style=flat-square
     :alt: Read the Docs
-    :target: https://pennylane-aqt.readthedocs.io
+    :target: https://docs.pennylane.ai/projects/aqt
 
 .. image:: https://img.shields.io/pypi/v/PennyLane-aqt.svg?style=flat-square
     :alt: PyPI
