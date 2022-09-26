@@ -16,12 +16,12 @@ Devices
 
 PennyLane-AQT provides two AQT devices for PennyLane:
 
-.. devicegalleryitem::
+.. title-card::
     :name: 'aqt.sim'
     :description: Ideal noiseless ion-trap simulator.
     :link: devices.html#ideal-ion-trap-simulator
 
-.. devicegalleryitem::
+.. title-card::
     :name: 'aqt.noisy_sim'
     :description: Noisy ion-trap simulator.
     :link: devices.html#noisy-ion-trap-simulator
