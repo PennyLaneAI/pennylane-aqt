@@ -74,7 +74,6 @@ class TestAQTDevice:
         assert dev.num_wires == num_wires
         assert dev.shots == shots
         assert dev.retry_delay == retry_delay
-        assert dev.analytic == False
         assert dev.circuit == []
         assert dev.circuit_json == ""
         assert dev.samples is None
@@ -425,7 +424,6 @@ class TestAQTDeviceIntegration:
 
         assert dev.num_wires == num_wires
         assert dev.shots == shots
-        assert dev.analytic == False
         assert dev.circuit == []
         assert dev.circuit_json == ""
         assert dev.samples is None
@@ -572,7 +570,6 @@ class TestAQTSimulatorDevices:
 
         assert dev.num_wires == num_wires
         assert dev.shots == shots
-        assert dev.analytic == False
         assert dev.circuit == []
         assert dev.circuit_json == ""
         assert dev.samples is None
@@ -590,7 +587,6 @@ class TestAQTSimulatorDevices:
 
         assert dev.num_wires == num_wires
         assert dev.shots == shots
-        assert dev.analytic == False
         assert dev.circuit == []
         assert dev.circuit_json == ""
         assert dev.samples is None
