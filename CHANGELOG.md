@@ -1,17 +1,9 @@
-# Release 0.23.0-dev
+# Release 0.27.0
 
 ### New features since last release
 
 * Adds Python 3.10 support.
   [(#33)](https://github.com/PennyLaneAI/pennylane-aqt/pull/33)
-
-### Breaking changes
-
-### Improvements
-
-### Documentation
-
-### Bug fixes
 
 ### Contributors
 
