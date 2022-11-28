@@ -3,10 +3,12 @@
 ### New features since last release
 
 * Adds Python 3.11 support.
+  [(#43)](https://github.com/PennyLaneAI/pennylane-aqt/pull/43)
 
 ### Breaking changes
 
 * Drops Python 3.7 support.
+  [(#43)](https://github.com/PennyLaneAI/pennylane-aqt/pull/43)
 
 ### Improvements
 
