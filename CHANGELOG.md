@@ -2,7 +2,11 @@
 
 ### New features since last release
 
+* Adds Python 3.11 support.
+
 ### Breaking changes
+
+* Drops Python 3.7 support.
 
 ### Improvements
 
@@ -13,6 +17,8 @@
 ### Contributors
 
 This release contains contributions from (in alphabetical order):
+
+Christina Lee
 
 ---
 # Release 0.27.0
