@@ -1,4 +1,4 @@
-# Release 0.28.0-dev
+# Release 0.28.0
 
 ### New features since last release
 
@@ -9,12 +9,6 @@
 
 * Drops Python 3.7 support.
   [(#43)](https://github.com/PennyLaneAI/pennylane-aqt/pull/43)
-
-### Improvements
-
-### Documentation
-
-### Bug fixes
 
 ### Contributors
 
