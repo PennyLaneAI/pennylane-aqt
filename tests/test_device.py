@@ -351,7 +351,7 @@ class TestAQTDevice:
         unparametrized ops."""
 
         dev = AQTDevice(2, api_key=SOME_API_KEY)
-        dev._apply_operation(op(wires=wires).inv())
+        dev._apply_operation(qml.adjoint(op(wires=wires)))
 
         assert dev.circuit == expected_circuit
 
@@ -372,7 +372,7 @@ class TestAQTDevice:
         parametrized ops."""
 
         dev = AQTDevice(2, api_key=SOME_API_KEY)
-        dev._apply_operation(op(*pars, wires=wires).inv())
+        dev._apply_operation(qml.adjoint(op(*pars, wires=wires)))
 
         assert dev.circuit == expected_circuit
 
