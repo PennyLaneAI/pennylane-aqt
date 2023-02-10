@@ -10,10 +10,17 @@
 * Drops Python 3.7 support.
   [(#43)](https://github.com/PennyLaneAI/pennylane-aqt/pull/43)
 
+### Bug fixes
+
+* For compatibility with PennyLane v0.29, the use of ``Operation.inv()`` has been removed, 
+  and replaced with ``qml.adjoint``.
+  [(#45)](https://github.com/PennyLaneAI/pennylane-aqt/pull/45)
+
 ### Contributors
 
 This release contains contributions from (in alphabetical order):
 
+Lillian M. A. Frederiksen
 Christina Lee
 
 ---

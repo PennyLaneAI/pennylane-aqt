@@ -24,6 +24,7 @@ from time import sleep
 
 import numpy as np
 from pennylane import QubitDevice, DeviceError
+from pennylane.ops import Adjoint
 
 from ._version import __version__
 from .api_client import verify_valid_status, submit
@@ -54,7 +55,6 @@ class AQTDevice(QubitDevice):
     _capabilities = {
         "model": "qubit",
         "tensor_observables": True,
-        "inverse_operations": True,
     }
 
     short_name = "aqt.base_device"
@@ -74,6 +74,18 @@ class AQTDevice(QubitDevice):
         # additional operations not native to PennyLane but present in AQT
         "R": "R",
         "MS": "MS",
+        # adjoint versions of operators are also allowed
+        "Adjoint(RX)": None,
+        "Adjoint(RY)": None,
+        "Adjoint(RZ)": None,
+        "Adjoint(PauliX)": None,
+        "Adjoint(PauliY)": None,
+        "Adjoint(PauliZ)": None,
+        "Adjoint(Hadamard)": None,
+        "Adjoint(S)": None,
+        "Adjoint(CNOT)": None,
+        "Adjoint(R)": None,
+        "Adjoint(MS)": None,
     }
 
     BASE_HOSTNAME = "https://gateway.aqt.eu/marmot"
@@ -195,6 +207,9 @@ class AQTDevice(QubitDevice):
             operation[pennylane.operation.Operation]: the operation instance to be applied
         """
         op_name = operation.name
+        if isinstance(operation, Adjoint):
+            op_name = operation.base.name
+
         if len(operation.parameters) == 1:
             par = operation.parameters[0]
         elif len(operation.parameters) == 2:
@@ -206,16 +221,8 @@ class AQTDevice(QubitDevice):
         device_wires = self.map_wires(operation.wires)
         device_wire_labels = device_wires.tolist()
 
-        name_parts = op_name.split(".")
-        if len(name_parts) == 1:
-            op_name = name_parts[0]
-            inv = False
-        elif len(name_parts) == 2 and name_parts[1] == "inv":
-            op_name = name_parts[0]
-            inv = True
-
         if op_name == "R":
-            if inv:
+            if isinstance(operation, Adjoint):
                 par = [-p for p in par]
             self.circuit.append([op_name, par[0], par[1], device_wire_labels])
             return
@@ -225,14 +232,13 @@ class AQTDevice(QubitDevice):
                     self._append_op_to_queue("RX", np.pi, device_wire_labels=[label])
             return
         if op_name == "Hadamard":
-            if inv:
+            if isinstance(operation, Adjoint):
                 self._append_op_to_queue("RY", np.pi / 2, device_wire_labels)
                 self._append_op_to_queue("RX", np.pi, device_wire_labels)
             else:
                 self._append_op_to_queue("RX", np.pi, device_wire_labels)
                 self._append_op_to_queue("RY", -np.pi / 2, device_wire_labels)
             return
-
         if op_name == "CNOT":
             self._append_op_to_queue("RY", np.pi / 2, [device_wire_labels[0]])
             self._append_op_to_queue("MS", np.pi / 2, device_wire_labels)
@@ -240,7 +246,6 @@ class AQTDevice(QubitDevice):
             self._append_op_to_queue("RX", -np.pi / 2, [device_wire_labels[1]])
             self._append_op_to_queue("RY", -np.pi / 2, [device_wire_labels[0]])
             return
-
         if op_name == "S":
             op_name = "RZ"
             par = 0.5 * np.pi
@@ -250,7 +255,7 @@ class AQTDevice(QubitDevice):
         elif op_name == "MS":
             par *= np.pi
 
-        if inv:
+        if isinstance(operation, Adjoint):
             par *= -1
 
         self._append_op_to_queue(op_name, par, device_wire_labels)
