@@ -5,7 +5,7 @@
 ### Breaking changes
 
 * Drops Python 3.8 support.
-[(#)]()
+[(#51)](https://github.com/PennyLaneAI/pennylane-aqt/pull/51)
 
 ### Improvements
 
