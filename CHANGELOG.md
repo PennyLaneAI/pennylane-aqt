@@ -4,6 +4,9 @@
 
 ### Breaking changes 💔
 
+* Drops Python 3.8 support.
+  [(#51)](https://github.com/PennyLaneAI/pennylane-aqt/pull/51)
+
 ### Improvements 🛠
 
 * Added support for `qml.StatePrep` as a state preparation operation.
@@ -17,7 +20,8 @@
 
 This release contains contributions from (in alphabetical order):
 
- Jay Soni
+Mudit Pandey,
+Jay Soni
 
 ---
 # Release 0.29.0
