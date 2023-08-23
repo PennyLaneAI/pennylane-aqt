@@ -164,7 +164,7 @@ class AQTDevice(QubitDevice):
         rotations = kwargs.pop("rotations", [])
 
         for i, operation in enumerate(operations):
-            if i > 0 and operation.name in {"BasisState", "QubitStateVector"}:
+            if i > 0 and operation.name in {"BasisState", "QubitStateVector", "StatePrep"}:
                 raise DeviceError(
                     "The operation {} is only supported at the beginning of a circuit.".format(
                         operation.name
