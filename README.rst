@@ -1,7 +1,7 @@
 PennyLane-AQT Plugin
 ####################
 
-.. image:: https://img.shields.io/github/workflow/status/PennyLaneAI/pennylane-aqt/Tests/master?logo=github&style=flat-square
+.. image:: https://img.shields.io/github/actions/workflow/status/PennyLaneAI/pennylane-aqt/tests.yml?branch=master&logo=github&style=flat-square
     :alt: GitHub Workflow Status (branch)
     :target: https://github.com/PennyLaneAI/pennylane-aqt/actions?query=workflow%3ATests
 
