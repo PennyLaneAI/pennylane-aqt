@@ -38,7 +38,7 @@ company offering access to quantum computing devices over the cloud.
 
 .. header-end-inclusion-marker-do-not-remove
 
-The plugin documentation can be found here: `PennyLane-AQT <https://pennylane-aqt.readthedocs.io/en/latest/>`__.
+The plugin documentation can be found here: `PennyLane-AQT <https://docs.pennylane.ai/projects/aqt>`__.
 
 Features
 ========
