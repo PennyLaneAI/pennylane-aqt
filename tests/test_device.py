@@ -425,7 +425,7 @@ class TestAQTDeviceIntegration:
         dev = qml.device("aqt.sim", wires=num_wires, shots=shots, api_key=SOME_API_KEY)
 
         assert dev.num_wires == num_wires
-        assert dev.shots == shots
+        assert dev.shots.total_shots == shots
         assert dev.analytic == False
         assert dev.circuit == []
         assert dev.circuit_json == ""
@@ -463,7 +463,7 @@ class TestAQTDeviceIntegration:
 
         dev = qml.device("aqt.sim", wires=2)
 
-        assert dev.shots == 99
+        assert dev.shots.total_shots == 99
         assert API_HEADER_KEY in dev.header.keys()
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
 
@@ -622,5 +622,5 @@ class TestAQTSimulatorDevices:
             qml.CNOT(wires=[0, 1])
             return qml.expval(qml.PauliZ(0))
 
-        with pytest.raises(requests.HTTPError, match='Invalid number of repetitions provided!'):
+        with pytest.raises(requests.HTTPError, match="Invalid number of repetitions provided!"):
             circuit()
