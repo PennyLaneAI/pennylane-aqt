@@ -22,7 +22,7 @@ PennyLane-Lightning==0.31.0
 Pygments==2.11.2
 pyparsing==3.0.8
 pytz==2022.1
-requests==2.27.1
+requests==2.32.2
 retworkx==0.11.0
 scipy==1.8.0
 semantic-version==2.7.0
