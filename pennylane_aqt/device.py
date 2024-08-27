@@ -47,6 +47,7 @@ class AQTDevice(QubitDevice):
             to the remote server when checking for completion of circuit
             execution.
     """
+
     # pylint: disable=too-many-instance-attributes
     name = "Alpine Quantum Technologies PennyLane plugin"
     pennylane_requires = ">=0.15.0"
