@@ -5,7 +5,7 @@
 # Required
 version: 2
 
-# Set the OS, Python version and other tools required for building the documentation
+# Set the OS, Python version and other tools required
 build:
   os: ubuntu-22.04
   tools:
