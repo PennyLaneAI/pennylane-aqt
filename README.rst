@@ -33,7 +33,7 @@ quantum computing backends with PennyLane.
 `PennyLane <https://pennylane.ai>`_ provides open-source tools for
 quantum machine learning, quantum computing, quantum chemistry, and hybrid quantum-classical computing.
 
-`Alpine Quantum Technologies <https://www.aqt.eu>`_ is a ion-trap quantum computing
+`Alpine Quantum Technologies <https://www.aqt.eu>`_ is an ion-trap quantum computing
 company offering access to quantum computing devices over the cloud.
 
 .. header-end-inclusion-marker-do-not-remove

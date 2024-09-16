@@ -9,7 +9,7 @@ PennyLane-AQT Plugin
 
 
 Once the PennyLane-AQT plugin is installed, the two provided AQT devices can be accessed
-straight away in PennyLane, without the need to import any additional packages.
+directly using PennyLane, without the need to import any additional packages.
 
 Devices
 =======
