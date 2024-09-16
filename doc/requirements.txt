@@ -39,4 +39,4 @@ urllib3==1.26.9
 pennylane-sphinx-theme
 zipp==3.8
 PennyLane
-PennyLane-Lightninggit
+PennyLane-Lightning
