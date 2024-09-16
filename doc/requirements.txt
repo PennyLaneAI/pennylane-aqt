@@ -1,7 +1,7 @@
 alabaster==0.7.12
 appdirs==1.4.4
 autograd==1.4
-autoray==0.6.3
+autoray
 Babel==2.10.1
 cachetools==5.0.0
 certifi==2021.10.8
@@ -39,4 +39,4 @@ urllib3==1.26.9
 pennylane-sphinx-theme
 zipp==3.8
 PennyLane
-PennyLane-Lightninggit
+PennyLane-Lightning
