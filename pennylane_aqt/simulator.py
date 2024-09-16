@@ -46,6 +46,7 @@ class AQTSimulatorDevice(AQTDevice):
             variable ``AQT_TOKEN`` is used.
 
     """
+
     name = "AQT Simulator device for PennyLane"
     short_name = "pennylane_aqt.Simulator"
 
@@ -65,6 +66,7 @@ class AQTNoisySimulatorDevice(AQTDevice):
         api_key (str): The AQT API key. If not provided, the environment
             variable ``AQT_TOKEN`` is used.
     """
+
     name = "AQT Noisy Simulator device for PennyLane"
     short_name = "pennylane_aqt.NoisySimulator"
 

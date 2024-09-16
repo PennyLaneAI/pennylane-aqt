@@ -1,7 +1,7 @@
 PennyLane-AQT Plugin
 ####################
 
-.. image:: https://img.shields.io/github/workflow/status/PennyLaneAI/pennylane-aqt/Tests/master?logo=github&style=flat-square
+.. image:: https://img.shields.io/github/actions/workflow/status/PennyLaneAI/pennylane-aqt/tests.yml?branch=master&logo=github&style=flat-square
     :alt: GitHub Workflow Status (branch)
     :target: https://github.com/PennyLaneAI/pennylane-aqt/actions?query=workflow%3ATests
 
@@ -13,7 +13,7 @@ PennyLane-AQT Plugin
     :alt: CodeFactor Grade
     :target: https://www.codefactor.io/repository/github/pennylaneai/pennylane-aqt
 
-.. image:: https://img.shields.io/readthedocs/pennylane-aqt.svg?logo=read-the-docs&style=flat-square
+.. image:: https://readthedocs.com/projects/xanaduai-pennylane-aqt/badge/?version=latest&style=flat-square
     :alt: Read the Docs
     :target: https://docs.pennylane.ai/projects/aqt
 

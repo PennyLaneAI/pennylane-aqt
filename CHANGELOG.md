@@ -1,17 +1,74 @@
-# Release 0.23.0-dev
+# Release 0.33.0-dev
+
+### New features since last release
+
+### Improvements 🛠
+
+### Breaking changes 💔
+
+### Deprecations 👋
+
+### Documentation 📝
+
+### Bug fixes 🐛
+
+### Contributors ✍️
+
+This release contains contributions from (in alphabetical order):
+
+---
+# Release 0.32.0
+
+### Breaking changes 💔
+
+* Drops Python 3.8 support.
+  [(#51)](https://github.com/PennyLaneAI/pennylane-aqt/pull/51)
+
+### Improvements 🛠
+
+* Added support for `qml.StatePrep` as a state preparation operation.
+  [(#50)](https://github.com/PennyLaneAI/pennylane-aqt/pull/50)
+
+### Contributors ✍️
+
+This release contains contributions from (in alphabetical order):
+
+Mudit Pandey,
+Jay Soni
+
+---
+# Release 0.29.0
+
+### New features since last release
+
+* Adds Python 3.11 support.
+  [(#43)](https://github.com/PennyLaneAI/pennylane-aqt/pull/43)
+
+### Breaking changes
+
+* Drops Python 3.7 support.
+  [(#43)](https://github.com/PennyLaneAI/pennylane-aqt/pull/43)
+
+### Bug fixes
+
+* For compatibility with PennyLane v0.29, the use of ``Operation.inv()`` has been removed, 
+  and replaced with ``qml.adjoint``.
+  [(#45)](https://github.com/PennyLaneAI/pennylane-aqt/pull/45)
+
+### Contributors
+
+This release contains contributions from (in alphabetical order):
+
+Lillian M. A. Frederiksen
+Christina Lee
+
+---
+# Release 0.27.0
 
 ### New features since last release
 
 * Adds Python 3.10 support.
   [(#33)](https://github.com/PennyLaneAI/pennylane-aqt/pull/33)
-
-### Breaking changes
-
-### Improvements
-
-### Documentation
-
-### Bug fixes
 
 ### Contributors
 

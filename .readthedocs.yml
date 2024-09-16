@@ -20,4 +20,4 @@ sphinx:
 # Optional: declare the Python requirements required to build the documentation
 python:
   install:
-    - requirements: docs/requirements.txt
+    - requirements: doc/requirements.txt

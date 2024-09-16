@@ -37,6 +37,7 @@ class R(Operation):
     Args:
         wires (int): the subsystem the gate acts on
     """
+
     num_params = 2
     num_wires = 1
     par_domain = "R"
@@ -64,6 +65,7 @@ class MS(Operation):
     Args:
         wires (int): the subsystem the gate acts on
     """
+
     num_params = 1
     num_wires = 2
     par_domain = "R"

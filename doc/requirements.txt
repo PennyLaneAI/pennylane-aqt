@@ -1,7 +1,7 @@
 alabaster==0.7.12
 appdirs==1.4.4
 autograd==1.4
-autoray==0.2.5
+autoray==0.6.3
 Babel==2.10.1
 cachetools==5.0.0
 certifi==2021.10.8
@@ -16,16 +16,16 @@ MarkupSafe==2.1.1
 networkx==2.8
 ninja==1.10.2.3
 numpy==1.22.3
-packaging==21.3
-PennyLane==0.23.0
-PennyLane-Lightning==0.23.0
+packaging>24
+PennyLane==0.31.0
+PennyLane-Lightning==0.31.0
 Pygments==2.11.2
 pyparsing==3.0.8
 pytz==2022.1
 requests==2.27.1
 retworkx==0.11.0
 scipy==1.8.0
-semantic-version==2.6.0
+semantic-version==2.7.0
 snowballstemmer==2.2.0
 Sphinx==4.5.0
 sphinx-automodapi==0.14.1
@@ -37,4 +37,6 @@ sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.5
 toml==0.10.2
 urllib3==1.26.9
-zipp==3.8.
+# do not pin
+pennylane-sphinx-theme
+zipp==3.8

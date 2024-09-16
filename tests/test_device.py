@@ -307,15 +307,16 @@ class TestAQTDevice:
         with pytest.raises(qml.DeviceError, match="only supported at the beginning of a circuit"):
             dev.apply([qml.RX(0.5, wires=1), qml.BasisState(np.array([1, 1, 1]), wires=[0, 1, 2])])
 
-    def test_apply_qubitstatevector_not_first_exception(self):
-        """Tests that the apply method raises an exception when QubitStateVector
+    @pytest.mark.parametrize("op", [qml.StatePrep, qml.QubitStateVector])
+    def test_apply_statevector_not_first_exception(self, op):
+        """Tests that the apply method raises an exception when QubitStateVector or StatePrep
         is not the first operation."""
 
         dev = AQTDevice(2, api_key=SOME_API_KEY)
 
         state = np.ones(8) / np.sqrt(8)
         with pytest.raises(qml.DeviceError, match="only supported at the beginning of a circuit"):
-            dev.apply([qml.RX(0.5, wires=1), qml.QubitStateVector(state, wires=[0, 1, 2])])
+            dev.apply([qml.RX(0.5, wires=1), op(state, wires=[0, 1, 2])])
 
     def test_apply_raises_for_error(self, monkeypatch):
         """Tests that the apply method raises an exception when an Error has
@@ -351,7 +352,7 @@ class TestAQTDevice:
         unparametrized ops."""
 
         dev = AQTDevice(2, api_key=SOME_API_KEY)
-        dev._apply_operation(op(wires=wires).inv())
+        dev._apply_operation(qml.adjoint(op(wires=wires)))
 
         assert dev.circuit == expected_circuit
 
@@ -372,7 +373,7 @@ class TestAQTDevice:
         parametrized ops."""
 
         dev = AQTDevice(2, api_key=SOME_API_KEY)
-        dev._apply_operation(op(*pars, wires=wires).inv())
+        dev._apply_operation(qml.adjoint(op(*pars, wires=wires)))
 
         assert dev.circuit == expected_circuit
 
@@ -424,7 +425,7 @@ class TestAQTDeviceIntegration:
         dev = qml.device("aqt.sim", wires=num_wires, shots=shots, api_key=SOME_API_KEY)
 
         assert dev.num_wires == num_wires
-        assert dev.shots == shots
+        assert dev.shots.total_shots == shots
         assert dev.analytic == False
         assert dev.circuit == []
         assert dev.circuit_json == ""
@@ -462,7 +463,7 @@ class TestAQTDeviceIntegration:
 
         dev = qml.device("aqt.sim", wires=2)
 
-        assert dev.shots == 99
+        assert dev.shots.total_shots == 99
         assert API_HEADER_KEY in dev.header.keys()
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
 
@@ -621,5 +622,5 @@ class TestAQTSimulatorDevices:
             qml.CNOT(wires=[0, 1])
             return qml.expval(qml.PauliZ(0))
 
-        with pytest.raises(requests.HTTPError, match='Invalid number of repetitions provided!'):
+        with pytest.raises(requests.HTTPError, match="Invalid number of repetitions provided!"):
             circuit()
