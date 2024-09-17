@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Clone repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Run pre-release version bump
         uses: PennyLaneAI/automation/version_bump_action@main
