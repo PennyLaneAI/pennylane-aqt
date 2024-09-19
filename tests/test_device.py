@@ -307,16 +307,15 @@ class TestAQTDevice:
         with pytest.raises(qml.DeviceError, match="only supported at the beginning of a circuit"):
             dev.apply([qml.RX(0.5, wires=1), qml.BasisState(np.array([1, 1, 1]), wires=[0, 1, 2])])
 
-    @pytest.mark.parametrize("op", [qml.StatePrep, qml.QubitStateVector])
-    def test_apply_statevector_not_first_exception(self, op):
-        """Tests that the apply method raises an exception when QubitStateVector or StatePrep
+    def test_apply_statevector_not_first_exception(self):
+        """Tests that the apply method raises an exception when StatePrep
         is not the first operation."""
 
         dev = AQTDevice(2, api_key=SOME_API_KEY)
 
         state = np.ones(8) / np.sqrt(8)
         with pytest.raises(qml.DeviceError, match="only supported at the beginning of a circuit"):
-            dev.apply([qml.RX(0.5, wires=1), op(state, wires=[0, 1, 2])])
+            dev.apply([qml.RX(0.5, wires=1), qml.StatePrep(state, wires=[0, 1, 2])])
 
     def test_apply_raises_for_error(self, monkeypatch):
         """Tests that the apply method raises an exception when an Error has
