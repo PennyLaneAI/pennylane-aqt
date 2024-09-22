@@ -11,7 +11,7 @@ ninja==1.10.2.3
 numpy==1.22.3
 PennyLane==0.23.0
 PennyLane-Lightning==0.23.0
-requests==2.27.1
+requests==2.32.2
 retworkx==0.11.0
 scipy==1.8.0
 semantic-version==2.6.0
