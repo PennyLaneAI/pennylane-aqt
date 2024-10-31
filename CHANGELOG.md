@@ -12,9 +12,14 @@
 
 ### Bug fixes 🐛
 
+* Fix deprecated import path for `QubitDevice`.
+  [(#66)](https://github.com/PennyLaneAI/pennylane-aqt/pull/66)
+
 ### Contributors ✍️
 
 This release contains contributions from (in alphabetical order):
+
+Astral Cai
 
 ---
 # Release 0.32.0
