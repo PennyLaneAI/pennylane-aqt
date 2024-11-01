@@ -1,5 +1,10 @@
 # Release 0.39.0
 
+### Breaking changes 💔
+
+* Drops Python 3.9 support.
+  [(#70)](https://github.com/PennyLaneAI/pennylane-aqt/pull/70)
+
 ### Bug fixes 🐛
 
 * Fix deprecated import path for `QubitDevice`.
@@ -9,6 +14,7 @@
 
 This release contains contributions from (in alphabetical order):
 
+Andrija Paurevic
 Astral Cai
 
 ---
