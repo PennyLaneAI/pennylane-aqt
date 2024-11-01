@@ -55,7 +55,9 @@ Features
 Installation
 ============
 
-.. note::
+PennyLane-AQT requires Python >= 3.10.
+
+.. warning::
     
     If you are using Python 3.12, ensure `setuptools` is up to date prior to installation:
     ::
