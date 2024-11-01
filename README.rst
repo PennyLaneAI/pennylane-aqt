@@ -55,10 +55,12 @@ Features
 Installation
 ============
 
-**Note:** If you are using Python 3.12, ensure `setuptools` is up to date by running:
-::
+.. note::
+    
+    If you are using Python 3.12, ensure `setuptools` is up to date prior to installation:
+    ::
 
-    $ python3 -m pip install --upgrade setuptools
+        $ python3 -m pip install --upgrade setuptools
 
 PennyLane-AQT only requires PennyLane for use, no additional external frameworks are needed.
 The plugin can be installed via ``pip``:
