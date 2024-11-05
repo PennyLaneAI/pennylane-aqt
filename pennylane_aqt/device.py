@@ -51,7 +51,7 @@ class AQTDevice(QubitDevice):
 
     # pylint: disable=too-many-instance-attributes
     name = "Alpine Quantum Technologies PennyLane plugin"
-    pennylane_requires = ">=0.39.0"
+    pennylane_requires = ">=0.38.0"
     version = __version__
     author = "Xanadu Inc."
     _capabilities = {
