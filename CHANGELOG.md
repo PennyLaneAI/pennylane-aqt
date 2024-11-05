@@ -2,6 +2,9 @@
 
 ### Breaking changes 💔
 
+* Change minimum supported version of Pennylane to v0.39.0
+  [(#)](https://github.com/PennyLaneAI/pennylane-aqt/pull/)
+
 * Drops Python 3.9 support.
   [(#70)](https://github.com/PennyLaneAI/pennylane-aqt/pull/70)
 
@@ -14,8 +17,8 @@
 
 This release contains contributions from (in alphabetical order):
 
-Andrija Paurevic
 Astral Cai
+Andrija Paurevic
 
 ---
 # Release 0.32.0
