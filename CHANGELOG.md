@@ -2,8 +2,8 @@
 
 ### Breaking changes 💔
 
-* Bump minimum supported version of Pennylane to v0.39.0.
-  [(#)](https://github.com/PennyLaneAI/pennylane-aqt/pull/)
+* Upgrade minimum supported version of PennyLane to 0.38.0.
+  [(#75)](https://github.com/PennyLaneAI/pennylane-aqt/pull/75)
 
 * Drops Python 3.9 support.
   [(#70)](https://github.com/PennyLaneAI/pennylane-aqt/pull/70)
