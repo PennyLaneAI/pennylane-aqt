@@ -26,7 +26,6 @@ with open("pennylane_aqt/_version.py") as f:
 # only where required.
 requirements = ["pennylane>=0.38", "requests"]
 
-
 info = {
     # 'name' is the name that will be used by pip for installation
     "name": "PennyLane-AQT",
