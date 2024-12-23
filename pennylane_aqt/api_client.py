@@ -11,8 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-API Client
+"""API Client
 ==========
 
 **Module name:** :mod:`pennylane_aqt.api_client`
@@ -40,8 +39,7 @@ DEFAULT_TIMEOUT = 1.0
 
 
 def verify_valid_status(response):
-    """
-    Check a HTTP response for valid status codes, and raise an exception if
+    """Check a HTTP response for valid status codes, and raise an exception if
     the code is invalid
 
     Args:
@@ -52,6 +50,7 @@ def verify_valid_status(response):
 
     Raises:
         requests.HTTPError: if the status is not valid
+
     """
     if response.status_code not in VALID_STATUS_CODES:
         raise requests.HTTPError(response, response.text)
@@ -68,6 +67,7 @@ def submit(request_type, url, request, headers):
 
     Returns:
         requests.models.Response: the response from the API
+
     """
     if request_type not in SUPPORTED_HTTP_REQUESTS:
         raise ValueError("""Invalid HTTP request method provided. Options are "PUT" or "POST".""")

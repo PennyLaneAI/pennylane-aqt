@@ -11,15 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-Alpine Quantum Technologies device class
+"""Alpine Quantum Technologies device class
 ========================================
 
 This module contains an abstract base class for constructing AQT devices for PennyLane.
 
 """
-import os
 import json
+import os
 from time import sleep
 
 import numpy as np
@@ -28,7 +27,7 @@ from pennylane.devices import QubitDevice
 from pennylane.ops import Adjoint
 
 from ._version import __version__
-from .api_client import verify_valid_status, submit
+from .api_client import submit, verify_valid_status
 
 BASE_SHOTS = 200
 
@@ -47,6 +46,7 @@ class AQTDevice(QubitDevice):
         retry_delay (float): The time (in seconds) to wait between requests
             to the remote server when checking for completion of circuit
             execution.
+
     """
 
     # pylint: disable=too-many-instance-attributes
@@ -97,7 +97,7 @@ class AQTDevice(QubitDevice):
     def __init__(self, wires, shots=BASE_SHOTS, api_key=None, retry_delay=1):
         if shots is None:
             raise ValueError(
-                "The aqt.base_device device does not support analytic expectation values"
+                "The aqt.base_device device does not support analytic expectation values",
             )
 
         super().__init__(wires=wires, shots=shots)
@@ -116,8 +116,7 @@ class AQTDevice(QubitDevice):
         self.samples = None
 
     def set_api_configs(self):
-        """
-        Set the configurations needed to connect to AQT API.
+        """Set the configurations needed to connect to AQT API.
         """
         self._api_key = self._api_key or os.getenv("AQT_TOKEN")
         if not self._api_key:
@@ -128,8 +127,7 @@ class AQTDevice(QubitDevice):
 
     @property
     def retry_delay(self):
-        """
-        The time (in seconds) to wait between requests
+        """The time (in seconds) to wait between requests
         to the remote server when checking for completion of circuit
         execution.
 
@@ -145,10 +143,11 @@ class AQTDevice(QubitDevice):
 
         Raises:
             DeviceError: if the retry delay is not a positive number
+
         """
         if time <= 0:
             raise DeviceError(
-                "The specified retry delay needs to be positive. Got {}.".format(time)
+                f"The specified retry delay needs to be positive. Got {time}.",
             )
 
         self._retry_delay = float(time)
@@ -159,6 +158,7 @@ class AQTDevice(QubitDevice):
 
         Returns:
             set[str]: the set of PennyLane operation names the device supports
+
         """
         return set(self._operation_map.keys())
 
@@ -168,9 +168,7 @@ class AQTDevice(QubitDevice):
         for i, operation in enumerate(operations):
             if i > 0 and operation.name in {"BasisState", "StatePrep"}:
                 raise DeviceError(
-                    "The operation {} is only supported at the beginning of a circuit.".format(
-                        operation.name
-                    )
+                    f"The operation {operation.name} is only supported at the beginning of a circuit.",
                 )
             self._apply_operation(operation)
 
@@ -196,17 +194,17 @@ class AQTDevice(QubitDevice):
 
         if error_msg:
             raise ValueError(
-                f"Something went wrong with the request, got the error message: {error_msg}"
+                f"Something went wrong with the request, got the error message: {error_msg}",
             )
 
         self.samples = job["samples"]
 
     def _apply_operation(self, operation):
-        """
-        Add the specified operation to ``self.circuit`` with the native AQT op name.
+        """Add the specified operation to ``self.circuit`` with the native AQT op name.
 
         Args:
             operation[pennylane.operation.Operation]: the operation instance to be applied
+
         """
         op_name = operation.name
         if isinstance(operation, Adjoint):
@@ -229,7 +227,7 @@ class AQTDevice(QubitDevice):
             self.circuit.append([op_name, par[0], par[1], device_wire_labels])
             return
         if op_name == "BasisState":
-            for bit, label in zip(par, device_wire_labels):
+            for bit, label in zip(par, device_wire_labels, strict=False):
                 if bit == 1:
                     self._append_op_to_queue("RX", np.pi, device_wire_labels=[label])
             return
@@ -252,7 +250,7 @@ class AQTDevice(QubitDevice):
             op_name = "RZ"
             par = 0.5 * np.pi
         elif op_name in ("PauliX", "PauliY", "PauliZ"):
-            op_name = "R{}".format(op_name[-1])
+            op_name = f"R{op_name[-1]}"
             par = np.pi
         elif op_name == "MS":
             par *= np.pi
@@ -263,13 +261,13 @@ class AQTDevice(QubitDevice):
         self._append_op_to_queue(op_name, par, device_wire_labels)
 
     def _append_op_to_queue(self, op_name, par, device_wire_labels):
-        """
-        Append the given operation to the circuit queue in the correct format for AQT API.
+        """Append the given operation to the circuit queue in the correct format for AQT API.
 
         Args:
             op_name[str]: the PennyLane name of the op
             par[float]: the numeric parameter value for the op
             device_wire_labels[list[int]]: wire labels on the device which the op is to be applied on
+
         """
         if op_name not in self.operations:
             raise DeviceError("Operation {} is not supported on AQT devices.")
@@ -279,12 +277,12 @@ class AQTDevice(QubitDevice):
 
     @staticmethod
     def serialize(circuit):
-        """
-        Serialize ``circuit`` to a valid AQT-formatted JSON string.
+        """Serialize ``circuit`` to a valid AQT-formatted JSON string.
 
         Args:
              circuit[list[list]]: a list of lists of the form
                  [["X", 0.3, [0]], ["Z", 0.1, [2]], ...]
+
         """
         return json.dumps(circuit)
 

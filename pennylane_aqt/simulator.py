@@ -11,8 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-AQT Simulator Devices
+"""AQT Simulator Devices
 =====================
 
 **Module name:** :mod:`pennylane_aqt.simulator`
@@ -65,6 +64,7 @@ class AQTNoisySimulatorDevice(AQTDevice):
             to estimate expectation values of observables
         api_key (str): The AQT API key. If not provided, the environment
             variable ``AQT_TOKEN`` is used.
+
     """
 
     name = "AQT Noisy Simulator device for PennyLane"

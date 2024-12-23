@@ -11,8 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-This module contains custom AQT operations, designed to be used in PennyLane
+"""This module contains custom AQT operations, designed to be used in PennyLane
 QNodes when using the PennyLane-AQT devices.
 """
 from pennylane.operation import Operation
@@ -36,6 +35,7 @@ class R(Operation):
 
     Args:
         wires (int): the subsystem the gate acts on
+
     """
 
     num_params = 2
@@ -64,6 +64,7 @@ class MS(Operation):
 
     Args:
         wires (int): the subsystem the gate acts on
+
     """
 
     num_params = 1
