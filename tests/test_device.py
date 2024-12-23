@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Tests for the AQTDevice class"""
+"""Tests for the AQTDevice class."""
 import os
 
 import numpy as np
@@ -69,13 +69,13 @@ class TestAQTDevice:
         assert dev.num_wires == num_wires
         assert dev.shots == shots
         assert dev.retry_delay == retry_delay
-        assert dev.analytic == False
+        assert dev.analytic is False
         assert dev.circuit == []
         assert dev.circuit_json == ""
         assert dev.samples is None
         assert dev.BASE_HOSTNAME == BASE_HOSTNAME
         assert dev.HTTP_METHOD == HTTP_METHOD
-        assert API_HEADER_KEY in dev.header.keys()
+        assert API_HEADER_KEY in dev.header
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
 
     def test_reset(self):
@@ -92,7 +92,7 @@ class TestAQTDevice:
 
         assert dev.circuit == []
         assert dev.circuit_json == ""
-        assert dev.samples == None
+        assert dev.samples is None
         assert dev.shots == 55  # should not be reset
 
     def test_retry_delay(self):
@@ -131,10 +131,10 @@ class TestAQTDevice:
             "pennylane.default_config", qml.Configuration("config.toml"),
         )  # force loading of config
         with pytest.raises(ValueError, match="No valid api key for AQT platform found"):
-            dev = AQTDevice(2)
+            AQTDevice(2)
 
     @pytest.mark.parametrize(
-        "circuit, expected",
+        ("circuit", "expected"),
         [
             ([["X", 0.33, [1]], ["Y", 1.55, [2]]], '[["X", 0.33, [1]], ["Y", 1.55, [2]]]'),
             ([["MS", 1.2, [0, 1]], ["Y", 1.55, [2]]], '[["MS", 1.2, [0, 1]], ["Y", 1.55, [2]]]'),
@@ -150,7 +150,7 @@ class TestAQTDevice:
         assert res == expected
 
     @pytest.mark.parametrize(
-        "samples, indices",
+        ("samples", "indices"),
         [
             (REF_SAMPLES_000, [0, 0, 0]),
             (REF_SAMPLES_001, [0, 0, 1]),
@@ -220,7 +220,7 @@ class TestAQTDevice:
 
     @pytest.mark.parametrize("wires", [[0], [1], [2]])
     @pytest.mark.parametrize(
-        "op, aqt_name", [(qml.PauliX, "X"), (qml.PauliY, "Y"), (qml.PauliZ, "Z")],
+        ("op", "aqt_name"), [(qml.PauliX, "X"), (qml.PauliY, "Y"), (qml.PauliZ, "Z")],
     )
     def test_apply_operation_pauli(self, wires, op, aqt_name):
         """Tests that the _apply_operation method correctly populates the circuit
@@ -234,7 +234,7 @@ class TestAQTDevice:
         assert dev.circuit == [[aqt_name, 1.0, wires]]
 
     @pytest.mark.parametrize(
-        "op,par,wires,aqt_name",
+        ("op", "par", "wires", "aqt_name"),
         [
             (qml.RX, 0.51, [0], "X"),
             (qml.RX, 0.22, [1], "X"),
@@ -257,7 +257,7 @@ class TestAQTDevice:
         assert dev.circuit == [[aqt_name, aqt_par, wires]]
 
     @pytest.mark.parametrize(
-        "wires,state",
+        ("wires", "state"),
         [
             ([0], [0]),
             ([0], [1]),
@@ -330,7 +330,7 @@ class TestAQTDevice:
             dev.apply([])
 
     @pytest.mark.parametrize(
-        "op, wires, expected_circuit",
+        ("op", "wires", "expected_circuit"),
         [
             (qml.PauliX, [0], [["X", -1.0, [0]]]),
             (qml.PauliY, [1], [["Y", -1.0, [1]]]),
@@ -349,7 +349,7 @@ class TestAQTDevice:
         assert dev.circuit == expected_circuit
 
     @pytest.mark.parametrize(
-        "op, pars, wires, expected_circuit",
+        ("op", "pars", "wires", "expected_circuit"),
         [
             (qml.RX, [0.5], [0], [["X", -0.5 / np.pi, [0]]]),
             (qml.RY, [1.3], [1], [["Y", -1.3 / np.pi, [1]]]),
@@ -407,7 +407,7 @@ class TestAQTDevice:
 
 
 class TestAQTDeviceIntegration:
-    """Integration tests of AQTDevice base class with PennyLane"""
+    """Integration tests of AQTDevice base class with PennyLane."""
 
     @pytest.mark.parametrize("num_wires", [1, 3])
     @pytest.mark.parametrize("shots", [1, 200])
@@ -417,13 +417,13 @@ class TestAQTDeviceIntegration:
 
         assert dev.num_wires == num_wires
         assert dev.shots.total_shots == shots
-        assert dev.analytic == False
+        assert dev.analytic is False
         assert dev.circuit == []
         assert dev.circuit_json == ""
         assert dev.samples is None
         assert dev.BASE_HOSTNAME == BASE_HOSTNAME
         assert dev.HTTP_METHOD == HTTP_METHOD
-        assert API_HEADER_KEY in dev.header.keys()
+        assert API_HEADER_KEY in dev.header
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
 
     def test_api_key_not_found_error(self, monkeypatch, tmpdir):
@@ -438,7 +438,7 @@ class TestAQTDeviceIntegration:
             "pennylane.default_config", qml.Configuration("config.toml"),
         )  # force loading of config
         with pytest.raises(ValueError, match="No valid api key for AQT platform found"):
-            dev = qml.device("aqt.sim", 2)
+            qml.device("aqt.sim", 2)
 
     def test_device_gets_local_config(self, monkeypatch, tmpdir):
         """Tests that the device successfully reads a config from the local directory."""
@@ -454,7 +454,7 @@ class TestAQTDeviceIntegration:
         dev = qml.device("aqt.sim", wires=2)
 
         assert dev.shots.total_shots == 99
-        assert API_HEADER_KEY in dev.header.keys()
+        assert API_HEADER_KEY in dev.header
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
 
     def test_device_gets_api_key_default_config_directory(self, monkeypatch, tmpdir):
@@ -477,7 +477,7 @@ class TestAQTDeviceIntegration:
 
         dev = qml.device("aqt.sim", wires=2)
 
-        assert API_HEADER_KEY in dev.header.keys()
+        assert API_HEADER_KEY in dev.header
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
 
     def test_device_gets_api_key_pennylane_conf_env_var(self, monkeypatch, tmpdir):
@@ -497,7 +497,7 @@ class TestAQTDeviceIntegration:
 
         dev = qml.device("aqt.sim", wires=2)
 
-        assert API_HEADER_KEY in dev.header.keys()
+        assert API_HEADER_KEY in dev.header
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
 
     def test_device_gets_api_key_aqt_token_env_var(self, monkeypatch):
@@ -510,7 +510,7 @@ class TestAQTDeviceIntegration:
 
         dev = qml.device("aqt.sim", wires=2)
 
-        assert API_HEADER_KEY in dev.header.keys()
+        assert API_HEADER_KEY in dev.header
         assert dev.header[API_HEADER_KEY] == NEW_API_KEY
 
     def test_executes_with_online_api(self, monkeypatch):
@@ -547,9 +547,9 @@ class TestAQTDeviceIntegration:
         assert dev.samples == MOCK_SAMPLES
 
     def test_analytic_error(self):
-        """Test that instantiating the device with `shots=None` results in an error"""
+        """Test that instantiating the device with `shots=None` results in an error."""
         with pytest.raises(ValueError, match="does not support analytic"):
-            dev = qml.device("aqt.sim", wires=2, shots=None)
+            qml.device("aqt.sim", wires=2, shots=None)
 
 
 class TestAQTSimulatorDevices:
@@ -563,13 +563,13 @@ class TestAQTSimulatorDevices:
 
         assert dev.num_wires == num_wires
         assert dev.shots == shots
-        assert dev.analytic == False
+        assert dev.analytic is False
         assert dev.circuit == []
         assert dev.circuit_json == ""
         assert dev.samples is None
         assert dev.hostname == BASE_HOSTNAME + "/sim"
         assert dev.HTTP_METHOD == HTTP_METHOD
-        assert API_HEADER_KEY in dev.header.keys()
+        assert API_HEADER_KEY in dev.header
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
 
     @pytest.mark.parametrize("num_wires", [1, 3])
@@ -580,13 +580,13 @@ class TestAQTSimulatorDevices:
 
         assert dev.num_wires == num_wires
         assert dev.shots == shots
-        assert dev.analytic == False
+        assert dev.analytic is False
         assert dev.circuit == []
         assert dev.circuit_json == ""
         assert dev.samples is None
         assert dev.hostname == BASE_HOSTNAME + "/sim/noise-model-1"
         assert dev.HTTP_METHOD == HTTP_METHOD
-        assert API_HEADER_KEY in dev.header.keys()
+        assert API_HEADER_KEY in dev.header
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
 
     @pytest.mark.skip("API key needs to be inputted")
