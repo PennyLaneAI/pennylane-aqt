@@ -13,17 +13,15 @@
 # limitations under the License.
 """Tests for the AQTDevice class"""
 import os
-import pytest
-import appdirs
-import requests
 
-import pennylane as qml
 import numpy as np
-
+import pennylane as qml
 import pennylane_aqt.device
+import pytest
+import requests
 from pennylane_aqt import ops
 from pennylane_aqt.device import AQTDevice
-from pennylane_aqt.simulator import AQTSimulatorDevice, AQTNoisySimulatorDevice
+from pennylane_aqt.simulator import AQTNoisySimulatorDevice, AQTSimulatorDevice
 
 API_HEADER_KEY = "Ocp-Apim-Subscription-Key"
 BASE_HOSTNAME = "https://gateway.aqt.eu/marmot"
@@ -31,7 +29,7 @@ HTTP_METHOD = "PUT"
 
 SOME_API_KEY = "ABC123"
 
-test_config = """\
+test_config = f"""\
 [main]
 shots = 1000
 
@@ -40,10 +38,8 @@ hbar = 2
 
 [aqt.sim]
 shots = 99
-api_key = "{}"
-""".format(
-    SOME_API_KEY
-)
+api_key = "{SOME_API_KEY}"
+"""
 
 # samples obtained directly from AQT platform
 # for a three-qubit circuit ([q0, q1, q2])
@@ -68,7 +64,6 @@ class TestAQTDevice:
     @pytest.mark.parametrize("retry_delay", [0.1, 1.0])
     def test_default_init(self, num_wires, shots, retry_delay):
         """Tests that the device is properly initialized."""
-
         dev = AQTDevice(num_wires, shots, SOME_API_KEY, retry_delay)
 
         assert dev.num_wires == num_wires
@@ -85,7 +80,6 @@ class TestAQTDevice:
 
     def test_reset(self):
         """Tests that the ``reset`` method corretly resets data."""
-
         dev = AQTDevice(3, api_key=SOME_API_KEY)
         assert dev.circuit == []
 
@@ -103,7 +97,6 @@ class TestAQTDevice:
 
     def test_retry_delay(self):
         """Tests that the ``retry_delay`` property can be set manually."""
-
         dev = AQTDevice(3, api_key=SOME_API_KEY, retry_delay=2.5)
         assert dev.retry_delay == 2.5
 
@@ -115,7 +108,6 @@ class TestAQTDevice:
 
     def test_set_api_configs(self):
         """Tests that the ``set_api_configs`` method properly (re)sets the API configs."""
-
         dev = AQTDevice(3, api_key=SOME_API_KEY)
         new_api_key = "ZZZ000"
         dev._api_key = new_api_key
@@ -129,14 +121,14 @@ class TestAQTDevice:
 
     def test_api_key_not_found_error(self, monkeypatch, tmpdir):
         """Tests that an error is thrown with the device is created without
-        a valid API token."""
-
+        a valid API token.
+        """
         monkeypatch.setenv("AQT_TOKEN", "")
         monkeypatch.setenv("PENNYLANE_CONF", "")
         monkeypatch.setattr("os.curdir", tmpdir.join("folder_without_a_config_file"))
 
         monkeypatch.setattr(
-            "pennylane.default_config", qml.Configuration("config.toml")
+            "pennylane.default_config", qml.Configuration("config.toml"),
         )  # force loading of config
         with pytest.raises(ValueError, match="No valid api key for AQT platform found"):
             dev = AQTDevice(2)
@@ -151,7 +143,8 @@ class TestAQTDevice:
     )
     def test_serialize(self, circuit, expected):
         """Tests that the ``serialize`` static method correctly converts
-        from a list of lists into an acceptable JSON string."""
+        from a list of lists into an acceptable JSON string.
+        """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
         res = dev.serialize(circuit)
         assert res == expected
@@ -171,8 +164,8 @@ class TestAQTDevice:
     )
     def test_generate_samples(self, samples, indices):
         """Tests that the generate_samples function of AQTDevice provides samples in
-        the correct format expected by PennyLane."""
-
+        the correct format expected by PennyLane.
+        """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
         dev.shots = 10
         dev.samples = samples
@@ -185,8 +178,8 @@ class TestAQTDevice:
     @pytest.mark.parametrize("wires", [[0], [1], [2]])
     def test_apply_operation_hadamard(self, wires):
         """Tests that the _apply_operation method correctly populates the circuit
-        queue when a PennyLane Hadamard operation is provided."""
-
+        queue when a PennyLane Hadamard operation is provided.
+        """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
         assert dev.circuit == []
 
@@ -197,8 +190,8 @@ class TestAQTDevice:
     @pytest.mark.parametrize("wires", [[0, 1], [1, 0], [1, 2], [2, 1], [0, 2], [2, 0]])
     def test_operation_cnot(self, wires):
         """Tests that the _apply_operation method correctly populates the circuit
-        queue when a PennyLane CNOT operation is provided."""
-
+        queue when a PennyLane CNOT operation is provided.
+        """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
         assert dev.circuit == []
 
@@ -216,8 +209,8 @@ class TestAQTDevice:
     @pytest.mark.parametrize("wires", [[0], [1], [2]])
     def test_apply_operation_S(self, wires):
         """Tests that the _apply_operation method correctly populates the circuit
-        queue when a PennyLane S operation is provided."""
-
+        queue when a PennyLane S operation is provided.
+        """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
         assert dev.circuit == []
 
@@ -227,12 +220,12 @@ class TestAQTDevice:
 
     @pytest.mark.parametrize("wires", [[0], [1], [2]])
     @pytest.mark.parametrize(
-        "op, aqt_name", [(qml.PauliX, "X"), (qml.PauliY, "Y"), (qml.PauliZ, "Z")]
+        "op, aqt_name", [(qml.PauliX, "X"), (qml.PauliY, "Y"), (qml.PauliZ, "Z")],
     )
     def test_apply_operation_pauli(self, wires, op, aqt_name):
         """Tests that the _apply_operation method correctly populates the circuit
-        queue when a PennyLane Pauli operation is provided."""
-
+        queue when a PennyLane Pauli operation is provided.
+        """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
         assert dev.circuit == []
 
@@ -253,8 +246,8 @@ class TestAQTDevice:
     )
     def test_apply_operation_rotations(self, op, par, wires, aqt_name):
         """Tests that the _apply_operation method correctly populates the circuit
-        queue when a PennyLane RX, RY, or RZ operation is provided."""
-
+        queue when a PennyLane RX, RY, or RZ operation is provided.
+        """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
         assert dev.circuit == []
 
@@ -285,8 +278,8 @@ class TestAQTDevice:
     )
     def test_apply_operation_basisstate(self, wires, state):
         """Tests that the _apply_operation method correctly populates the circuit
-        queue when a PennyLane BasisState operation is provided."""
-
+        queue when a PennyLane BasisState operation is provided.
+        """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
         assert dev.circuit == []
 
@@ -300,8 +293,8 @@ class TestAQTDevice:
 
     def test_apply_basisstate_not_first_exception(self):
         """Tests that the apply method raises an exception when BasisState
-        is not the first operation."""
-
+        is not the first operation.
+        """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
 
         with pytest.raises(qml.DeviceError, match="only supported at the beginning of a circuit"):
@@ -309,8 +302,8 @@ class TestAQTDevice:
 
     def test_apply_statevector_not_first_exception(self):
         """Tests that the apply method raises an exception when StatePrep
-        is not the first operation."""
-
+        is not the first operation.
+        """
         dev = AQTDevice(2, api_key=SOME_API_KEY)
 
         state = np.ones(8) / np.sqrt(8)
@@ -319,8 +312,8 @@ class TestAQTDevice:
 
     def test_apply_raises_for_error(self, monkeypatch):
         """Tests that the apply method raises an exception when an Error has
-        been recorded in the response."""
-
+        been recorded in the response.
+        """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
 
         some_error_msg = "Error happened."
@@ -348,8 +341,8 @@ class TestAQTDevice:
     )
     def test_apply_unparametrized_operation_inverse(self, op, wires, expected_circuit):
         """Tests that inverse operations get recognized and converted to correct parameters for
-        unparametrized ops."""
-
+        unparametrized ops.
+        """
         dev = AQTDevice(2, api_key=SOME_API_KEY)
         dev._apply_operation(qml.adjoint(op(wires=wires)))
 
@@ -369,8 +362,8 @@ class TestAQTDevice:
     )
     def test_apply_parametrized_operation_inverse(self, op, pars, wires, expected_circuit):
         """Tests that inverse operations get recognized and converted to correct parameters for
-        parametrized ops."""
-
+        parametrized ops.
+        """
         dev = AQTDevice(2, api_key=SOME_API_KEY)
         dev._apply_operation(qml.adjoint(op(*pars, wires=wires)))
 
@@ -380,8 +373,8 @@ class TestAQTDevice:
     @pytest.mark.parametrize("par", [0.5, 0.3, -1.1])
     def test_apply_operation_MS(self, wires, par):
         """Tests that the _apply_operation method correctly populates the circuit
-        queue when a MS gate operation is provided."""
-
+        queue when a MS gate operation is provided.
+        """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
         assert dev.circuit == []
 
@@ -394,8 +387,8 @@ class TestAQTDevice:
     @pytest.mark.parametrize("par1", [1.1, -0.8, 0.0])
     def test_apply_operation_R(self, wires, par0, par1):
         """Tests that the _apply_operation method correctly populates the circuit
-        queue when a R gate operation is provided."""
-
+        queue when a R gate operation is provided.
+        """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
         assert dev.circuit == []
 
@@ -405,8 +398,8 @@ class TestAQTDevice:
 
     def test_unsupported_operation_exception(self):
         """Tests whether an exception is raised if an unsupported operation
-        is attempted to be appended to queue."""
-
+        is attempted to be appended to queue.
+        """
         dev = AQTDevice(1, api_key=SOME_API_KEY)
 
         with pytest.raises(qml.DeviceError, match="is not supported on AQT devices"):
@@ -420,7 +413,6 @@ class TestAQTDeviceIntegration:
     @pytest.mark.parametrize("shots", [1, 200])
     def test_load_from_device_function(self, num_wires, shots):
         """Tests that the AQTDevice can be loaded from PennyLane `device` function."""
-
         dev = qml.device("aqt.sim", wires=num_wires, shots=shots, api_key=SOME_API_KEY)
 
         assert dev.num_wires == num_wires
@@ -436,28 +428,27 @@ class TestAQTDeviceIntegration:
 
     def test_api_key_not_found_error(self, monkeypatch, tmpdir):
         """Tests that an error is thrown with the device is created without
-        a valid API token."""
-
+        a valid API token.
+        """
         monkeypatch.setenv("AQT_TOKEN", "")
         monkeypatch.setenv("PENNYLANE_CONF", "")
         monkeypatch.setattr("os.curdir", tmpdir.join("folder_without_a_config_file"))
 
         monkeypatch.setattr(
-            "pennylane.default_config", qml.Configuration("config.toml")
+            "pennylane.default_config", qml.Configuration("config.toml"),
         )  # force loading of config
         with pytest.raises(ValueError, match="No valid api key for AQT platform found"):
             dev = qml.device("aqt.sim", 2)
 
     def test_device_gets_local_config(self, monkeypatch, tmpdir):
         """Tests that the device successfully reads a config from the local directory."""
-
         monkeypatch.setenv("PENNYLANE_CONF", "")
         monkeypatch.setenv("AQT_TOKEN", "")
 
         tmpdir.join("config.toml").write(test_config)
         monkeypatch.setattr("os.curdir", tmpdir)
         monkeypatch.setattr(
-            "pennylane.default_config", qml.Configuration("config.toml")
+            "pennylane.default_config", qml.Configuration("config.toml"),
         )  # force loading of config
 
         dev = qml.device("aqt.sim", wires=2)
@@ -468,14 +459,15 @@ class TestAQTDeviceIntegration:
 
     def test_device_gets_api_key_default_config_directory(self, monkeypatch, tmpdir):
         """Tests that the device gets an api key that is stored in the default
-        config directory."""
+        config directory.
+        """
         monkeypatch.setenv("AQT_TOKEN", "")
         monkeypatch.setenv("PENNYLANE_CONF", "")
 
         config_dir = tmpdir.mkdir("pennylane")  # fake default config directory
         config_dir.join("config.toml").write(test_config)
         monkeypatch.setenv(
-            "XDG_CONFIG_HOME", os.path.expanduser(tmpdir)
+            "XDG_CONFIG_HOME", os.path.expanduser(tmpdir),
         )  # HACK: only works on linux
 
         monkeypatch.setattr("os.curdir", tmpdir.join("folder_without_a_config_file"))
@@ -490,7 +482,8 @@ class TestAQTDeviceIntegration:
 
     def test_device_gets_api_key_pennylane_conf_env_var(self, monkeypatch, tmpdir):
         """Tests that the device gets an api key via the PENNYLANE_CONF
-        environment variable."""
+        environment variable.
+        """
         monkeypatch.setenv("AQT_TOKEN", "")
 
         filepath = tmpdir.join("config.toml")
@@ -499,7 +492,7 @@ class TestAQTDeviceIntegration:
 
         monkeypatch.setattr("os.curdir", tmpdir.join("folder_without_a_config_file"))
         monkeypatch.setattr(
-            "pennylane.default_config", qml.Configuration("config.toml")
+            "pennylane.default_config", qml.Configuration("config.toml"),
         )  # force loading of config
 
         dev = qml.device("aqt.sim", wires=2)
@@ -509,8 +502,8 @@ class TestAQTDeviceIntegration:
 
     def test_device_gets_api_key_aqt_token_env_var(self, monkeypatch):
         """Tests that the device gets an api key that is stored in AQT_TOKEN
-        environment variable."""
-
+        environment variable.
+        """
         NEW_API_KEY = SOME_API_KEY + "XYZ987"
         monkeypatch.setenv("PENNYLANE_CONF", "")
         monkeypatch.setenv("AQT_TOKEN", SOME_API_KEY + "XYZ987")
@@ -522,8 +515,8 @@ class TestAQTDeviceIntegration:
 
     def test_executes_with_online_api(self, monkeypatch):
         """Tests that a PennyLane QNode successfully executes with a
-        mocked out online API."""
-
+        mocked out online API.
+        """
         dev = qml.device("aqt.sim", wires=2, shots=10, api_key=SOME_API_KEY)
 
         @qml.qnode(dev)
@@ -545,8 +538,7 @@ class TestAQTDeviceIntegration:
                 if self.num_calls == 0:
                     self.num_calls = 1
                     return self.mock_json1
-                else:
-                    return self.mock_json2
+                return self.mock_json2
 
         mock_response = MockResponse()
         monkeypatch.setattr(requests, "put", lambda *args, **kwargs: mock_response)
@@ -567,7 +559,6 @@ class TestAQTSimulatorDevices:
     @pytest.mark.parametrize("shots", [1, 100])
     def test_simulator_default_init(self, num_wires, shots):
         """Tests that the device is properly initialized."""
-
         dev = AQTSimulatorDevice(num_wires, shots, SOME_API_KEY)
 
         assert dev.num_wires == num_wires
@@ -585,7 +576,6 @@ class TestAQTSimulatorDevices:
     @pytest.mark.parametrize("shots", [1, 100])
     def test_simulator_default_init(self, num_wires, shots):
         """Tests that the device is properly initialized."""
-
         dev = AQTNoisySimulatorDevice(num_wires, shots, SOME_API_KEY)
 
         assert dev.num_wires == num_wires
