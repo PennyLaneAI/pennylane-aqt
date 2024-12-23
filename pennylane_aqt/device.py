@@ -123,7 +123,7 @@ class AQTDevice(QubitDevice):
             raise ValueError("No valid api key for AQT platform found.")
         self.header = {"Ocp-Apim-Subscription-Key": self._api_key, "SDK": "pennylane"}
         self.data = {"access_token": self._api_key, "no_qubits": self.num_wires}
-        self.hostname = "/".join([self.BASE_HOSTNAME, self.TARGET_PATH])
+        self.hostname = f"{self.BASE_HOSTNAME}/{self.TARGET_PATH}"
 
     @property
     def retry_delay(self):
@@ -146,8 +146,9 @@ class AQTDevice(QubitDevice):
 
         """
         if time <= 0:
+            msg = f"The specified retry delay needs to be positive. Got {time}."
             raise DeviceError(
-                f"The specified retry delay needs to be positive. Got {time}.",
+                msg,
             )
 
         self._retry_delay = float(time)
@@ -167,8 +168,9 @@ class AQTDevice(QubitDevice):
 
         for i, operation in enumerate(operations):
             if i > 0 and operation.name in {"BasisState", "StatePrep"}:
+                msg = f"The operation {operation.name} is only supported at the beginning of a circuit."
                 raise DeviceError(
-                    f"The operation {operation.name} is only supported at the beginning of a circuit.",
+                    msg,
                 )
             self._apply_operation(operation)
 
@@ -193,12 +195,14 @@ class AQTDevice(QubitDevice):
         error_msg = job.get("ERROR", None)
 
         if error_msg:
+            msg = f"Something went wrong with the request, got the error message: {error_msg}"
             raise ValueError(
-                f"Something went wrong with the request, got the error message: {error_msg}",
+                msg,
             )
 
         self.samples = job["samples"]
 
+    # ruff: noqa: PLR0912, Too many branches
     def _apply_operation(self, operation):
         """Add the specified operation to ``self.circuit`` with the native AQT op name.
 
@@ -288,5 +292,4 @@ class AQTDevice(QubitDevice):
 
     def generate_samples(self):
         # AQT indexes in reverse scheme to PennyLane, so we have to specify "F" ordering
-        samples_array = np.stack(np.unravel_index(self.samples, [2] * self.num_wires, order="F")).T
-        return samples_array
+        return np.stack(np.unravel_index(self.samples, [2] * self.num_wires, order="F")).T

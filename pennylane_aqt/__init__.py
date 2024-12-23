@@ -13,11 +13,9 @@
 # limitations under the License.
 """This is the top level module from which all PennyLane-AQT device classes can be directly imported.
 """
-from . import ops as ops
-from ._version import __version__ as __version__
+from . import ops
+from ._version import __version__
 from .simulator import (
-    AQTNoisySimulatorDevice as AQTNoisySimulatorDevice,
-)
-from .simulator import (
-    AQTSimulatorDevice as AQTSimulatorDevice,
+    AQTNoisySimulatorDevice,
+    AQTSimulatorDevice,
 )
