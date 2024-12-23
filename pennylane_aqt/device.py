@@ -11,7 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""Alpine Quantum Technologies device class
+"""Alpine Quantum Technologies device class.
 ========================================
 
 This module contains an abstract base class for constructing AQT devices for PennyLane.
@@ -116,8 +116,7 @@ class AQTDevice(QubitDevice):
         self.samples = None
 
     def set_api_configs(self):
-        """Set the configurations needed to connect to AQT API.
-        """
+        """Set the configurations needed to connect to AQT API."""
         self._api_key = self._api_key or os.getenv("AQT_TOKEN")
         if not self._api_key:
             raise ValueError("No valid api key for AQT platform found.")
