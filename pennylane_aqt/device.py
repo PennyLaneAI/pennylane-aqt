@@ -37,7 +37,7 @@ class AQTDevice(QubitDevice):
 
     Args:
         wires (int or Iterable[Number, str]]): Number of subsystems represented by the device,
-            or iterable that contains unique labels for the subsystems as numbers (i.e., ``[-1, 0, 2]``)
+            or iterable that contains unique number labels for the subsystems (i.e., ``[-1, 0, 2]``)
             or strings (``['ancilla', 'q1', 'q2']``).
         shots (int): number of circuit evaluations/random samples used
             to estimate expectation values of observables
@@ -168,7 +168,7 @@ class AQTDevice(QubitDevice):
 
         for i, operation in enumerate(operations):
             if i > 0 and operation.name in {"BasisState", "StatePrep"}:
-                msg = f"The operation {operation.name} is only supported at the beginning of a circuit."
+                msg = f"Operation {operation.name} is only supported at the beginning of a circuit."
                 raise DeviceError(
                     msg,
                 )
@@ -203,6 +203,7 @@ class AQTDevice(QubitDevice):
         self.samples = job["samples"]
 
     # ruff: noqa: PLR0912, Too many branches
+    # ruff: noqa: C901, Too complex
     def _apply_operation(self, operation):
         """Add the specified operation to ``self.circuit`` with the native AQT op name.
 
@@ -270,7 +271,7 @@ class AQTDevice(QubitDevice):
         Args:
             op_name[str]: the PennyLane name of the op
             par[float]: the numeric parameter value for the op
-            device_wire_labels[list[int]]: wire labels on the device which the op is to be applied on
+            device_wire_labels[list[int]]: device wire labels for which the op is to be applied on
 
         """
         if op_name not in self.operations:
