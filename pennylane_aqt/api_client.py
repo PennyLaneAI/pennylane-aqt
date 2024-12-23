@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+# ruff: noqa: D205
 """API Client.
 ==========
 
@@ -39,14 +40,10 @@ DEFAULT_TIMEOUT = 1.0
 
 
 def verify_valid_status(response):
-    """Check a HTTP response for valid status codes, and raise an exception if
-    the code is invalid.
+    """Check a HTTP response for valid status codes, and raise an exception if the code is invalid.
 
     Args:
-        response[requests.model.Response]: the response containing the error
-
-    Returns:
-        bool: whether the response has an acceptable HTTP status code
+        response (requests.model.Response): the response containing the error
 
     Raises:
         requests.HTTPError: if the status is not valid
@@ -64,6 +61,9 @@ def submit(request_type, url, request, headers):
         url (str): the API's online URL
         request (str): JSON-formatted payload
         headers (dict): HTTP request header
+
+    Raises:
+        ValueError: if invalid HTTP request was provided
 
     Returns:
         requests.models.Response: the response from the API
