@@ -38,6 +38,8 @@ clean:
 	rm -rf build
 	rm -rf .pytest_cache
 	rm -rf .coverage coverage_html_report/
+	rm -rf .ruff_cache
+	rm -rf tests/.ruff_cache
 
 docs:
 	make -C doc html
