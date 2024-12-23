@@ -71,7 +71,7 @@ class TestAQTDevice:
         assert dev.retry_delay == retry_delay
         assert dev.analytic is False
         assert dev.circuit == []
-        assert dev.circuit_json == ""
+        assert not dev.circuit_json
         assert dev.samples is None
         assert dev.BASE_HOSTNAME == BASE_HOSTNAME
         assert dev.HTTP_METHOD == HTTP_METHOD
@@ -91,7 +91,7 @@ class TestAQTDevice:
         dev.reset()
 
         assert dev.circuit == []
-        assert dev.circuit_json == ""
+        assert not dev.circuit_json
         assert dev.samples is None
         assert dev.shots == 55  # should not be reset
 
@@ -325,6 +325,7 @@ class TestAQTDevice:
             def json(self):
                 return {"ERROR": some_error_msg, "status": "finished", "id": 1}
 
+        # ruff: noqa: ARG005
         monkeypatch.setattr(pennylane_aqt.device, "submit", lambda *args, **kwargs: MockResponse())
         with pytest.raises(ValueError, match="Something went wrong with the request"):
             dev.apply([])
@@ -419,7 +420,7 @@ class TestAQTDeviceIntegration:
         assert dev.shots.total_shots == shots
         assert dev.analytic is False
         assert dev.circuit == []
-        assert dev.circuit_json == ""
+        assert not dev.circuit_json
         assert dev.samples is None
         assert dev.BASE_HOSTNAME == BASE_HOSTNAME
         assert dev.HTTP_METHOD == HTTP_METHOD
@@ -541,6 +542,7 @@ class TestAQTDeviceIntegration:
                 return self.mock_json2
 
         mock_response = MockResponse()
+        # ruff: noqa: ARG005
         monkeypatch.setattr(requests, "put", lambda *args, **kwargs: mock_response)
 
         circuit(0.5, 1.2)
@@ -557,7 +559,7 @@ class TestAQTSimulatorDevices:
 
     @pytest.mark.parametrize("num_wires", [1, 3])
     @pytest.mark.parametrize("shots", [1, 100])
-    def test_simulator_default_init(self, num_wires, shots):
+    def test_simulator_default_initialization(self, num_wires, shots):
         """Tests that the device is properly initialized."""
         dev = AQTSimulatorDevice(num_wires, shots, SOME_API_KEY)
 
@@ -565,7 +567,7 @@ class TestAQTSimulatorDevices:
         assert dev.shots == shots
         assert dev.analytic is False
         assert dev.circuit == []
-        assert dev.circuit_json == ""
+        assert not dev.circuit_json
         assert dev.samples is None
         assert dev.hostname == BASE_HOSTNAME + "/sim"
         assert dev.HTTP_METHOD == HTTP_METHOD
@@ -582,7 +584,7 @@ class TestAQTSimulatorDevices:
         assert dev.shots == shots
         assert dev.analytic is False
         assert dev.circuit == []
-        assert dev.circuit_json == ""
+        assert not dev.circuit_json
         assert dev.samples is None
         assert dev.hostname == BASE_HOSTNAME + "/sim/noise-model-1"
         assert dev.HTTP_METHOD == HTTP_METHOD
