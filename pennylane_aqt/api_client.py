@@ -32,7 +32,6 @@ Code details
 ~~~~~~~~~~~~
 """
 
-import urllib
 import requests
 
 SUPPORTED_HTTP_REQUESTS = ["PUT", "POST"]

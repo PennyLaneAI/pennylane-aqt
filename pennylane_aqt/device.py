@@ -271,7 +271,7 @@ class AQTDevice(QubitDevice):
             par[float]: the numeric parameter value for the op
             device_wire_labels[list[int]]: wire labels on the device which the op is to be applied on
         """
-        if not op_name in self.operations:
+        if op_name not in self.operations:
             raise DeviceError("Operation {} is not supported on AQT devices.")
         par = par / np.pi  # AQT convention: all gates differ from PennyLane by factor of pi
         aqt_op_name = self._operation_map[op_name]
