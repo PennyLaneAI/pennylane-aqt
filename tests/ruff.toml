@@ -1,0 +1,60 @@
+target-version = "py310"
+
+line-length = 100
+
+[format]
+
+[lint]
+select = ["ALL"]
+
+ignore = [
+    "ANN001", # Missing type annotation for function argument
+    "ANN002", # Missing type annotation for `*args`
+    "ANN003", # Missing type annotation for `**kwargs`
+    "ANN201", # Missing return type annotation for public function
+    "ANN202", # Missing return type annotation for private function
+    "ANN204", # Missing return type annotation for special method `__init__` 
+    "ANN205", # Missing return type annotation for staticmethod
+    "ANN401", # Dynamical typed expressions (typing.Any) are disallowed
+    "B905", # `zip()` without an explicit `strict=` parameter
+    "D101", # Missing docstring in public method
+    "D102", # Missing docstring in public class
+    "D103", # Missing docstring in public function 
+    "D107", # Missing docstring in `__init__` 
+    "D203", # One blank line before class 
+    "D205", # 1 blank line required between summary line and description
+    "D212", # Multi-line docstring summary should start at the first line
+    "D213", # Multi-line docstring summary should start at the second line
+    "D404", # First word of the docstring should not be "This"
+    "DOC201", # `return` is not documented in docstring 
+    "DOC402", # `yield` is not documented in docstring
+    "E741", # Ambiguous variable name
+    "E501", # Line too long
+    "EM101", # Exception must not use a string literal, assign to variable first
+    "EXE002", # The file is executable but no shebang is present
+    "TRY003", # Avoid specifying long messages outside the exception class
+    "S101", # Use of `assert` detected
+    "SLF001", # Private member accessed
+    "PLR0913", # pylint: too-many-arguments, Too many arguments in function definition
+    "PLR2004", # pylint: magic-value-comparison, Magic value used in comparison, consider replacing with a constant variable
+    "PLR6301", # pylint: no-self-use, Method could be a function, class method, or static method
+    "PLR0917", # pylint: too-many-positional-arguments, Too many positional arguments
+    "PLR0914", # pylint: too-many-locals, Too many local variables
+    "PLC0415", # pylint: import-outside-toplevel, `import` should be at the top-level of the file
+    "PLC2701", # pylint: import-private-name, Private name import from external module
+    "PLR0915", # pylint: too-many-statements, Too many statements
+    "PLR0904", # pylint: too-many-public-methods, Too many public methods
+    "N806", # Variable in function should be lowercase
+    "N802", # Function name should be lowercase 
+    "FIX002", # Line contains TODO, consider resolving the issue
+    "FIX004", # Line contains HACK, consider resolving the issue
+    "TD002", # Missing author in TODO
+    "TD003", # Missing issue link on the line following this TODO
+    "FURB101", # `open` and `read` should be replaced by `Path(X).read_text(encoding="utf")`
+    "FURB103", # `open` and `write` should be replaced by `Path(X)....`
+    "PTH123", # `open()` should be replaced by `Path.open()`
+    "PTH111", # `os.path.expanduser()` should be replaced by `Path.expanduser()`
+    "UP015", # Unnecessary open mode parameters
+    "NPY002", # Replace legacy `np.random.seed` call with `np.random.Generator`
+    "I", # Import related checks
+]
