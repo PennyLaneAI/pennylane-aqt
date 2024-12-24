@@ -237,6 +237,7 @@ class AQTDevice(QubitDevice):
             self._apply_operation(operation)
 
         # create circuit job for submission
+        # pylint: disable = attribute-defined-outside-init
         self.circuit_json = self.serialize(self.circuit)
         self.data["repetitions"] = self.shots
         job_submission = {**self.data, "data": self.circuit_json}
@@ -258,10 +259,12 @@ class AQTDevice(QubitDevice):
                 msg,
             )
 
+        # pylint: disable = attribute-defined-outside-init
         self.samples = job["samples"]
 
     # ruff: noqa: PLR0912
     # ruff: noqa: C901
+    # pylint: disable = too-many-branches
     def _apply_operation(self, operation):
         """Add the specified operation to ``self.circuit`` with the native AQT op name.
 

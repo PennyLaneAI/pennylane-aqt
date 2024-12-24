@@ -22,7 +22,7 @@ SOME_URL = "http://www.corgis.org"
 SOME_PAYLOAD = json.dumps({"data": 0, "stuff": "more_stuff"})
 SOME_HEADER = {"Auth-token": "ABC123"}
 
-
+# pylint: disable = missing-class-docstring, too-few-public-methods
 class MockResponse:
     def __init__(self, *args, **kwargs):
         self.args = args
@@ -34,14 +34,14 @@ class TestAPIClient:
 
     @pytest.mark.parametrize("status_code", [200, 201, 202])
     def test_verify_valid_status_codes(self, status_code):
-        """Tests that the function ``verify_valid_status` returns does not raise exceptions for responses with valid status codes."""
+        """Tests that not exceptions are raised for responses with valid status codes."""
         resp = requests.Response()
         resp.status_code = status_code
         api_client.verify_valid_status(resp)
 
     @pytest.mark.parametrize("status_code", [404, 123, 400])
     def test_raise_invalid_status_exception(self, status_code):
-        """Tests that the function ``verify_valid_status`` raises HTTPError exceptions for bad status codes."""
+        """Tests that HTTPError is raised for bad status codes."""
         resp = requests.Response()
         resp.status_code = status_code
         with pytest.raises(requests.HTTPError):

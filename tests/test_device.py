@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Tests for the AQTDevice class."""
+# pylint: disable = protected-access, missing-class-docstring, missing-function-docstring, too-few-public-methods, too-many-public-methods
 import os
 
 import numpy as np
@@ -70,7 +71,7 @@ class TestAQTDevice:
         assert dev.shots == shots
         assert dev.retry_delay == retry_delay
         assert dev.analytic is False
-        assert dev.circuit == []
+        assert not dev.circuit
         assert not dev.circuit_json
         assert dev.samples is None
         assert dev.BASE_HOSTNAME == BASE_HOSTNAME
@@ -81,7 +82,7 @@ class TestAQTDevice:
     def test_reset(self):
         """Tests that the ``reset`` method corretly resets data."""
         dev = AQTDevice(3, api_key=SOME_API_KEY)
-        assert dev.circuit == []
+        assert not dev.circuit
 
         dev.circuit = [["RX", 0.5, [0]]]
         dev.circuit_json = "some dummy string"
@@ -90,7 +91,7 @@ class TestAQTDevice:
 
         dev.reset()
 
-        assert dev.circuit == []
+        assert not dev.circuit
         assert not dev.circuit_json
         assert dev.samples is None
         assert dev.shots == 55  # should not be reset
@@ -181,7 +182,7 @@ class TestAQTDevice:
         queue when a PennyLane Hadamard operation is provided.
         """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
-        assert dev.circuit == []
+        assert not dev.circuit
 
         dev._apply_operation(qml.Hadamard(wires=wires))
 
@@ -193,7 +194,7 @@ class TestAQTDevice:
         queue when a PennyLane CNOT operation is provided.
         """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
-        assert dev.circuit == []
+        assert not dev.circuit
 
         dev._apply_operation(qml.CNOT(wires=wires))
 
@@ -212,7 +213,7 @@ class TestAQTDevice:
         queue when a PennyLane S operation is provided.
         """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
-        assert dev.circuit == []
+        assert not dev.circuit
 
         dev._apply_operation(qml.S(wires=wires))
 
@@ -227,7 +228,7 @@ class TestAQTDevice:
         queue when a PennyLane Pauli operation is provided.
         """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
-        assert dev.circuit == []
+        assert not dev.circuit
 
         dev._apply_operation(op(wires=wires))
 
@@ -249,7 +250,7 @@ class TestAQTDevice:
         queue when a PennyLane RX, RY, or RZ operation is provided.
         """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
-        assert dev.circuit == []
+        assert not dev.circuit
 
         dev._apply_operation(op(par, wires=wires))
         aqt_par = par / np.pi
@@ -281,7 +282,7 @@ class TestAQTDevice:
         queue when a PennyLane BasisState operation is provided.
         """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
-        assert dev.circuit == []
+        assert not dev.circuit
 
         dev._apply_operation(qml.BasisState(np.array(state), wires=wires))
         expected_circuit = []
@@ -377,7 +378,7 @@ class TestAQTDevice:
         queue when a MS gate operation is provided.
         """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
-        assert dev.circuit == []
+        assert not dev.circuit
 
         dev._apply_operation(ops.MS(par, wires=wires))
 
@@ -391,7 +392,7 @@ class TestAQTDevice:
         queue when a R gate operation is provided.
         """
         dev = AQTDevice(3, api_key=SOME_API_KEY)
-        assert dev.circuit == []
+        assert not dev.circuit
 
         dev._apply_operation(ops.R(par0, par1, wires=wires))
 
@@ -419,7 +420,7 @@ class TestAQTDeviceIntegration:
         assert dev.num_wires == num_wires
         assert dev.shots.total_shots == shots
         assert dev.analytic is False
-        assert dev.circuit == []
+        assert not dev.circuit
         assert not dev.circuit_json
         assert dev.samples is None
         assert dev.BASE_HOSTNAME == BASE_HOSTNAME
@@ -566,7 +567,7 @@ class TestAQTSimulatorDevices:
         assert dev.num_wires == num_wires
         assert dev.shots == shots
         assert dev.analytic is False
-        assert dev.circuit == []
+        assert not dev.circuit
         assert not dev.circuit_json
         assert dev.samples is None
         assert dev.hostname == BASE_HOSTNAME + "/sim"
@@ -583,7 +584,7 @@ class TestAQTSimulatorDevices:
         assert dev.num_wires == num_wires
         assert dev.shots == shots
         assert dev.analytic is False
-        assert dev.circuit == []
+        assert not dev.circuit
         assert not dev.circuit_json
         assert dev.samples is None
         assert dev.hostname == BASE_HOSTNAME + "/sim/noise-model-1"
