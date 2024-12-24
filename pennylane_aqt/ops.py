@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 """Contains custom AQT operations, designed to be used in PennyLane QNodes."""
+# pylint: disable = too-few-public-methods
 from pennylane.operation import Operation
 
 
