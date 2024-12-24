@@ -3,11 +3,27 @@ on:
 - pull_request
 
 jobs:
-  black:
+  formatting:
     runs-on: ubuntu-latest
     steps:
+    - name: Check-out code
     - uses: actions/checkout@v1
-    - name: Black Code Formatter
-      uses: lgeiger/black-action@v1.0.1
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
-        args: "-l 100 pennylane_aqt/ --check"
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: pip install black pylint isort
+
+    - name: Run Black
+      run: |
+        black -t py310 -t py311 -t py312 -l 100 pennylane_aqt/ --check
+        black -t py310 -t py311 -t py312 -l 100 tests/ --check
+
+    - name: Run isort
+      run: |
+        isort --py 312 --profile black -l 100 -o autoray -p ./pennylane --skip __init__.py --filter-files ./pennylane_aqt --check
+        isort --py 312 --profile black -l 100 -o autoray -p ./pennylane --skip __init__.py --filter-files ./tests --check
+
