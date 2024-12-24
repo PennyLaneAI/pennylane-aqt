@@ -77,8 +77,13 @@ Alternatively, you can install PennyLane-AQT from the source code by navigating 
 Software tests
 ~~~~~~~~~~~~~~
 
-To ensure that PennyLane-AQT is working correctly after installation, the test suite can be
-run by navigating to the source code folder and running
+To ensure that PennyLane-AQT is working correctly after installation, the test suite should be
+run. Begin by installing the required packages via ``pip``
+::
+
+    $ pip install -r requirements-ci.txt
+
+Then navigate to the source code folder and run
 ::
 
     $ make test
@@ -128,6 +133,29 @@ All contributers to PennyLane-AQT will be listed as contributors on the releases
 
 We also encourage bug reports, suggestions for new features and enhancements, and even links to cool
 projects or applications built on PennyLane and AQT.
+
+The PennyLane-AQT repository provide a top-level file (``.pre-commit-config.yaml``) 
+for configuring `pre-commit <https://pre-commit.com/>`_ to run ``black``, ``isort`` and ``pylint`` as a ``git``
+pre-commit hook. Once configured, issuing ``git commit`` will run the tools
+automatically. If any of the checks fail, committing fails too. A failed
+``black`` check will reformat the required files. Running the pre-commit hook
+mechanisms can be disabled for a commit by passing the ``-n/--no-verify``
+option.
+
+The ``pre-commit`` package can be installed e.g., via ``pip``:
+
+.. code-block:: bash
+
+    pip install pre-commit
+
+Then, it can be installed for a specific repository by running
+
+.. code-block:: bash
+
+    pre-commit install
+
+in the folder where the ``.pre-commit-config.yaml`` file exists (the top-level
+folder for PennyLane).
 
 
 Contributors
