@@ -28,4 +28,4 @@ ignored-classes=numpy,scipy,autograd
 # can either give multiple identifiers separated by comma (,) or put this option
 # multiple times (only on the command line, not in the configuration file where
 # it should appear only once).
-disable=invalid-name,too-many-locals,duplicate-code
+disable=too-few-public-methods, too-many-public-methods, invalid-name
