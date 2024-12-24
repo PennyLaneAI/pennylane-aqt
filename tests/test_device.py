@@ -130,7 +130,8 @@ class TestAQTDevice:
         monkeypatch.setattr("os.curdir", tmpdir.join("folder_without_a_config_file"))
 
         monkeypatch.setattr(
-            "pennylane.default_config", qml.Configuration("config.toml"),
+            "pennylane.default_config",
+            qml.Configuration("config.toml"),
         )  # force loading of config
         with pytest.raises(ValueError, match="No valid api key for AQT platform found"):
             AQTDevice(2)
@@ -222,7 +223,8 @@ class TestAQTDevice:
 
     @pytest.mark.parametrize("wires", [[0], [1], [2]])
     @pytest.mark.parametrize(
-        ("op", "aqt_name"), [(qml.PauliX, "X"), (qml.PauliY, "Y"), (qml.PauliZ, "Z")],
+        ("op", "aqt_name"),
+        [(qml.PauliX, "X"), (qml.PauliY, "Y"), (qml.PauliZ, "Z")],
     )
     def test_apply_operation_pauli(self, wires, op, aqt_name):
         """Tests that the _apply_operation method correctly populates the circuit
@@ -438,7 +440,8 @@ class TestAQTDeviceIntegration:
         monkeypatch.setattr("os.curdir", tmpdir.join("folder_without_a_config_file"))
 
         monkeypatch.setattr(
-            "pennylane.default_config", qml.Configuration("config.toml"),
+            "pennylane.default_config",
+            qml.Configuration("config.toml"),
         )  # force loading of config
         with pytest.raises(ValueError, match="No valid api key for AQT platform found"):
             qml.device("aqt.sim", 2)
@@ -451,7 +454,8 @@ class TestAQTDeviceIntegration:
         tmpdir.join("config.toml").write(test_config)
         monkeypatch.setattr("os.curdir", tmpdir)
         monkeypatch.setattr(
-            "pennylane.default_config", qml.Configuration("config.toml"),
+            "pennylane.default_config",
+            qml.Configuration("config.toml"),
         )  # force loading of config
 
         dev = qml.device("aqt.sim", wires=2)
@@ -470,7 +474,8 @@ class TestAQTDeviceIntegration:
         config_dir = tmpdir.mkdir("pennylane")  # fake default config directory
         config_dir.join("config.toml").write(test_config)
         monkeypatch.setenv(
-            "XDG_CONFIG_HOME", os.path.expanduser(tmpdir),
+            "XDG_CONFIG_HOME",
+            os.path.expanduser(tmpdir),
         )  # HACK: only works on linux
 
         monkeypatch.setattr("os.curdir", tmpdir.join("folder_without_a_config_file"))
@@ -495,7 +500,8 @@ class TestAQTDeviceIntegration:
 
         monkeypatch.setattr("os.curdir", tmpdir.join("folder_without_a_config_file"))
         monkeypatch.setattr(
-            "pennylane.default_config", qml.Configuration("config.toml"),
+            "pennylane.default_config",
+            qml.Configuration("config.toml"),
         )  # force loading of config
 
         dev = qml.device("aqt.sim", wires=2)
