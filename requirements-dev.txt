@@ -1,0 +1,5 @@
+ruff
+pylint
+black
+isort
+pre-commit

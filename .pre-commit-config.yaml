@@ -1,0 +1,64 @@
+repos:
+-   repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+    - id: black
+      args: [
+              "--line-length=100",
+              "-t", "py39",
+              "-t", "py310",
+              "-t", "py311",
+            ]
+      exclude: ^doc/
+-   repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+    - id: isort
+      args:
+        [
+          "--py",
+          "311",
+          "--profile",
+          "black",
+          "-l",
+          "100",
+          "-o",
+          "autoray",
+          "-p",
+          "./pennylane_aqt",
+          "--skip",
+          "__init__.py",
+          "--filter-files",
+        ]
+      files: ^(pennylane_aqt/|tests/)
+-   repo: https://github.com/gauge-sh/tach-pre-commit
+    rev: v0.19.1
+    hooks:
+    -   id: tach
+- repo: local
+  hooks:
+    - id: pylint
+      name: pylint
+      entry: pylint
+      language: system
+      types: [python]
+      args:
+        [
+          "-rn", # Only display messages
+          "-sn", # Don't display the score
+          "--rcfile=.pylintrc", # Link to your config file
+        ]
+      exclude: ^(doc/|tests/)
+    - id: pylint-test
+      name: pylint-test
+      entry: pylint
+      language: system
+      types: [python]
+      args:
+        [
+          "-rn", # Only display messages
+          "-sn", # Don't display the score
+          "--rcfile=tests/.pylintrc", # Link to your config file
+        ]
+      files: ^(tests/)
+

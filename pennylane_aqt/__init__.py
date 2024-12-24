@@ -11,9 +11,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-This is the top level module from which all PennyLane-AQT device classes can be directly imported.
-"""
-from .simulator import AQTSimulatorDevice, AQTNoisySimulatorDevice
-from ._version import __version__
+"""Top level module from which all PennyLane-AQT device classes can be directly imported."""
 from . import ops
+from ._version import __version__
+from .simulator import AQTNoisySimulatorDevice, AQTSimulatorDevice
+
+__all__ = ["AQTNoisySimulatorDevice", "AQTSimulatorDevice", "__version__", "ops"]

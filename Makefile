@@ -32,12 +32,15 @@ dist:
 
 .PHONY : clean
 clean:
-	rm -rf pennylane-aqt/__pycache__
+	rm -rf __pycache__
+	rm -rf pennylane_aqt/__pycache__
 	rm -rf tests/__pycache__
 	rm -rf dist
 	rm -rf build
 	rm -rf .pytest_cache
 	rm -rf .coverage coverage_html_report/
+	rm -rf .ruff_cache
+	rm -rf tests/.ruff_cache
 
 docs:
 	make -C doc html

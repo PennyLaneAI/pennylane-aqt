@@ -1,0 +1,33 @@
+name: Linting check
+on:
+  - pull_request
+
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check-out code
+      uses: actions/checkout@v1
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install ruff pylint
+
+    - name: Ruff Linter (source-code)
+      run: ruff check pennylane_aqt/ --preview
+    
+    - name: Ruff Linter (test-suite)
+      run: ruff check tests/ --preview
+
+    - name: Pylint Linter (source-code)
+      run: pylint --rcfile .pylintrc pennylane_aqt/
+      
+    - name: Pylint Linter (test-suite)
+      run: pylint --rcfile tests/.pylintrc tests/
+

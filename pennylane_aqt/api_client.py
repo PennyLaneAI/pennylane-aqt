@@ -11,8 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-API Client
+# ruff: noqa: D205
+"""API Client.
 ==========
 
 **Module name:** :mod:`pennylane_aqt.api_client`
@@ -32,7 +32,6 @@ Code details
 ~~~~~~~~~~~~
 """
 
-import urllib
 import requests
 
 SUPPORTED_HTTP_REQUESTS = ["PUT", "POST"]
@@ -41,18 +40,14 @@ DEFAULT_TIMEOUT = 1.0
 
 
 def verify_valid_status(response):
-    """
-    Check a HTTP response for valid status codes, and raise an exception if
-    the code is invalid
+    """Check a HTTP response for valid status codes, and raise an exception if the code is invalid.
 
     Args:
-        response[requests.model.Response]: the response containing the error
-
-    Returns:
-        bool: whether the response has an acceptable HTTP status code
+        response (requests.model.Response): the response containing the error
 
     Raises:
         requests.HTTPError: if the status is not valid
+
     """
     if response.status_code not in VALID_STATUS_CODES:
         raise requests.HTTPError(response, response.text)
@@ -67,8 +62,12 @@ def submit(request_type, url, request, headers):
         request (str): JSON-formatted payload
         headers (dict): HTTP request header
 
+    Raises:
+        ValueError: if invalid HTTP request was provided
+
     Returns:
         requests.models.Response: the response from the API
+
     """
     if request_type not in SUPPORTED_HTTP_REQUESTS:
         raise ValueError("""Invalid HTTP request method provided. Options are "PUT" or "POST".""")
@@ -76,3 +75,4 @@ def submit(request_type, url, request, headers):
         return requests.put(url, request, headers=headers, timeout=DEFAULT_TIMEOUT)
     if request_type == "POST":
         return requests.post(url, request, headers=headers, timeout=DEFAULT_TIMEOUT)
+    return None  # pragma: no cover

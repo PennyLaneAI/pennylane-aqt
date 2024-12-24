@@ -11,16 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-"""
-This module contains custom AQT operations, designed to be used in PennyLane
-QNodes when using the PennyLane-AQT devices.
-"""
+"""Contains custom AQT operations, designed to be used in PennyLane QNodes."""
+# pylint: disable = too-few-public-methods
 from pennylane.operation import Operation
 
 
 class R(Operation):
-    r"""R(wires)
-    Two-parameter rotation gate.
+    r"""R(wires), Two-parameter rotation gate.
 
     .. math:: R(t,p) = \begin{bmatrix}
                            \cos(t\tfrac{\pi}{2}) & -i e^{-ip\pi}\sin(t\tfrac{\pi}{2}) \\
@@ -36,6 +33,7 @@ class R(Operation):
 
     Args:
         wires (int): the subsystem the gate acts on
+
     """
 
     num_params = 2
@@ -45,8 +43,7 @@ class R(Operation):
 
 
 class MS(Operation):
-    r"""MS(wires)
-    Mølmer-Sørenson gate.
+    r"""MS(wires), Mølmer-Sørenson gate.
 
     .. math:: MS(t) = \begin{bmatrix}
                           \cos(t\tfrac{\pi}{2}) & 0 & 0 & -i\sin(t\tfrac{\pi}{2}) \\
@@ -64,6 +61,7 @@ class MS(Operation):
 
     Args:
         wires (int): the subsystem the gate acts on
+
     """
 
     num_params = 1
