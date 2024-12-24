@@ -75,4 +75,4 @@ def submit(request_type, url, request, headers):
         return requests.put(url, request, headers=headers, timeout=DEFAULT_TIMEOUT)
     if request_type == "POST":
         return requests.post(url, request, headers=headers, timeout=DEFAULT_TIMEOUT)
-    return None
+    return None  # pragma: no cover
