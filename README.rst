@@ -155,7 +155,7 @@ Then, it can be installed for a specific repository by running
     pre-commit install
 
 in the folder where the ``.pre-commit-config.yaml`` file exists (the top-level
-folder for PennyLane).
+folder for PennyLane-AQT).
 
 
 Contributors
