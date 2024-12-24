@@ -17,9 +17,10 @@ import os
 
 import numpy as np
 import pennylane as qml
-import pennylane_aqt.device
 import pytest
 import requests
+
+import pennylane_aqt.device
 from pennylane_aqt import ops
 from pennylane_aqt.device import AQTDevice
 from pennylane_aqt.simulator import AQTNoisySimulatorDevice, AQTSimulatorDevice

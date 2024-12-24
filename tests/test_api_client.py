@@ -16,11 +16,13 @@ import json
 
 import pytest
 import requests
+
 from pennylane_aqt import api_client
 
 SOME_URL = "http://www.corgis.org"
 SOME_PAYLOAD = json.dumps({"data": 0, "stuff": "more_stuff"})
 SOME_HEADER = {"Auth-token": "ABC123"}
+
 
 # pylint: disable = missing-class-docstring, too-few-public-methods
 class MockResponse:
