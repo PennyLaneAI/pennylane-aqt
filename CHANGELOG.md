@@ -4,6 +4,9 @@
 
 ### Improvements 🛠
 
+* Add support for `ruff` and `pylint`.
+  [(#78)](https://github.com/PennyLaneAI/pennylane-aqt/pull/78)
+
 ### Breaking changes 💔
 
 * The ``qml.QubitStateVector`` template has been removed. Instead, use :class:`~pennylane.StatePrep`.
