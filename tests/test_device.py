@@ -110,7 +110,7 @@ class TestAQTDevice:
         dev.retry_delay = 1.0
         assert dev.retry_delay == 1.0
 
-        with pytest.raises(qml.DeviceError, match="needs to be positive"):
+        with pytest.raises(qml.exceptions.DeviceError, match="needs to be positive"):
             dev.retry_delay = -5
 
     def test_set_api_configs(self):
@@ -304,7 +304,9 @@ class TestAQTDevice:
 
         dev = AQTDevice(3, api_key=SOME_API_KEY)
 
-        with pytest.raises(qml.DeviceError, match="only supported at the beginning of a circuit"):
+        with pytest.raises(
+            qml.exceptions.DeviceError, match="only supported at the beginning of a circuit"
+        ):
             dev.apply([qml.RX(0.5, wires=1), qml.BasisState(np.array([1, 1, 1]), wires=[0, 1, 2])])
 
     def test_apply_statevector_not_first_exception(self):
@@ -314,7 +316,9 @@ class TestAQTDevice:
         dev = AQTDevice(2, api_key=SOME_API_KEY)
 
         state = np.ones(8) / np.sqrt(8)
-        with pytest.raises(qml.DeviceError, match="only supported at the beginning of a circuit"):
+        with pytest.raises(
+            qml.exceptions.DeviceError, match="only supported at the beginning of a circuit"
+        ):
             dev.apply([qml.RX(0.5, wires=1), qml.StatePrep(state, wires=[0, 1, 2])])
 
     def test_apply_raises_for_error(self, monkeypatch):
@@ -409,7 +413,7 @@ class TestAQTDevice:
 
         dev = AQTDevice(1, api_key=SOME_API_KEY)
 
-        with pytest.raises(qml.DeviceError, match="is not supported on AQT devices"):
+        with pytest.raises(qml.exceptions.DeviceError, match="is not supported on AQT devices"):
             dev._append_op_to_queue("BAD_GATE", 0.5, [0])
 
 
