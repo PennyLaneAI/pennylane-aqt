@@ -20,4 +20,4 @@ sphinx:
 # Optional: declare the Python requirements required to build the documentation
 python:
   install:
-    - requirements: git+https://github.com/PennyLaneAI/pennylane.git@master
+    - requirements: doc/requirements.txt
