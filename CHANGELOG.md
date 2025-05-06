@@ -9,7 +9,7 @@
  ### Deprecations 👋
 
  ### Internal changes ⚙️
- - Bumped `.readthedocs.yml` up to Ubuntu-24.04
+ - Bumped `.readthedocs.yml` up to Ubuntu-24.04 [(#88)](https://github.com/PennyLaneAI/pennylane-aqt/pull/88)
  
  ### Documentation 📝
  
