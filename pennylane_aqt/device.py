@@ -23,7 +23,7 @@ import json
 from time import sleep
 
 import numpy as np
-from pennylane import DeviceError
+from pennylane.exceptions import DeviceError
 from pennylane.devices import QubitDevice
 from pennylane.ops import Adjoint
 
