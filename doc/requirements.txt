@@ -38,5 +38,4 @@ urllib3==1.26.19
 # do not pin
 pennylane-sphinx-theme
 zipp==3.19.1
-PennyLane
-PennyLane-Lightning
+git+https://github.com/PennyLaneAI/pennylane.git@master#egg=pennylane
