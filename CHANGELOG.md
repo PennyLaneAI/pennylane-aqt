@@ -5,6 +5,9 @@
  ### Improvements 🛠
  
  ### Breaking changes 💔
+
+ * Upgrade minimum supported version of PennyLane to 0.42.0.
+  [(#92)](https://github.com/PennyLaneAI/pennylane-aqt/pull/92)
  
  ### Deprecations 👋
 
