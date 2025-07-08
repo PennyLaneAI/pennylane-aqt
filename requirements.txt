@@ -1,1 +1,1 @@
-pennylane
+pennylane>=0.42.0
