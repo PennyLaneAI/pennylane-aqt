@@ -12,6 +12,9 @@
 
  * Bumped the `readthedocs.yml` action up to Ubuntu-24.04.
    [(#88)](https://github.com/PennyLaneAI/pennylane-aqt/pull/88)
+
+ * Use new `pennylane.exceptions` module for custom exceptions.
+   [(#86)](https://github.com/PennyLaneAI/pennylane-aqt/pull/86)
  
  ### Documentation 📝
  
@@ -21,7 +24,7 @@
  
  This release contains contributions from (in alphabetical order):
  
- Runor Agbaire
+ Runor Agbaire, Andrija Paurevic
  ---
 # Release 0.41.0
 
