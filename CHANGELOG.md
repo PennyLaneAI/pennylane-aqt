@@ -7,6 +7,7 @@
 ### Breaking changes 💔
 
 * Remove support for Python 3.10 and add support for Python 3.13.
+  [(#93)](https://github.com/PennyLaneAI/pennylane-aqt/pull/93)
 
 ### Deprecations 👋
 
