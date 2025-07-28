@@ -1,6 +1,6 @@
 alabaster==0.7.12
 appdirs==1.4.4
-autograd==1.4
+autograd
 autoray
 Babel==2.10.1
 cachetools==5.0.0
