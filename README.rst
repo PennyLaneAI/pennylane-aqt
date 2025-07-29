@@ -55,9 +55,9 @@ Features
 Installation
 ============
 
-PennyLane-AQT requires Python >= 3.10. If you currently do not have Python 3 installed,
+PennyLane-AQT requires Python >= 3.11. If you currently do not have Python 3 installed,
 we recommend `Anaconda for Python 3 <https://www.anaconda.com/download/>`_, a distributed
-version of Python packaged for scientific computation. If you are using Python 3.12, 
+version of Python packaged for scientific computation. If you are using Python >= 3.12,
 ensure `setuptools` is up to date prior to installation:
 ::
 
