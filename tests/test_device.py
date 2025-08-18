@@ -425,7 +425,10 @@ class TestAQTDeviceIntegration:
     def test_load_from_device_function(self, num_wires, shots):
         """Tests that the AQTDevice can be loaded from PennyLane `device` function."""
 
-        dev = qml.device("aqt.sim", wires=num_wires, shots=shots, api_key=SOME_API_KEY)
+        with pytest.warns(
+            qml.exceptions.PennyLaneDeprecationWarning, match="shots on device is deprecated"
+        ):
+            dev = qml.device("aqt.sim", wires=num_wires, shots=shots, api_key=SOME_API_KEY)
 
         assert dev.num_wires == num_wires
         assert dev.shots.total_shots == shots
@@ -464,7 +467,10 @@ class TestAQTDeviceIntegration:
             "pennylane.default_config", qml.Configuration("config.toml")
         )  # force loading of config
 
-        dev = qml.device("aqt.sim", wires=2)
+        with pytest.warns(
+            qml.exceptions.PennyLaneDeprecationWarning, match="shots on device is deprecated"
+        ):
+            dev = qml.device("aqt.sim", wires=2)
 
         assert dev.shots.total_shots == 99
         assert API_HEADER_KEY in dev.header.keys()
@@ -487,7 +493,10 @@ class TestAQTDeviceIntegration:
         c = qml.Configuration("config.toml")
         monkeypatch.setattr("pennylane.default_config", c)  # force loading of config
 
-        dev = qml.device("aqt.sim", wires=2)
+        with pytest.warns(
+            qml.exceptions.PennyLaneDeprecationWarning, match="shots on device is deprecated"
+        ):
+            dev = qml.device("aqt.sim", wires=2)
 
         assert API_HEADER_KEY in dev.header.keys()
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
@@ -506,7 +515,10 @@ class TestAQTDeviceIntegration:
             "pennylane.default_config", qml.Configuration("config.toml")
         )  # force loading of config
 
-        dev = qml.device("aqt.sim", wires=2)
+        with pytest.warns(
+            qml.exceptions.PennyLaneDeprecationWarning, match="shots on device is deprecated"
+        ):
+            dev = qml.device("aqt.sim", wires=2)
 
         assert API_HEADER_KEY in dev.header.keys()
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
@@ -528,8 +540,9 @@ class TestAQTDeviceIntegration:
         """Tests that a PennyLane QNode successfully executes with a
         mocked out online API."""
 
-        dev = qml.device("aqt.sim", wires=2, shots=10, api_key=SOME_API_KEY)
+        dev = qml.device("aqt.sim", wires=2, api_key=SOME_API_KEY)
 
+        @qml.set_shots(10)
         @qml.qnode(dev)
         def circuit(x, y):
             qml.RX(x, wires=0)
