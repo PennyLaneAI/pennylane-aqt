@@ -104,6 +104,7 @@ class AQTDevice(QubitDevice):
         self.reset()
 
     def expand_fn(self, circuit, max_expansion=10):
+        """Expand the circuit"""
         if not circuit.shots:
             raise ValueError(
                 "The aqt.base_device device does not support analytic expectation values"
