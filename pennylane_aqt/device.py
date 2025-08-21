@@ -104,7 +104,7 @@ class AQTDevice(QubitDevice):
         self.reset()
 
     def batch_transform(self, circuit):
-        """Expand the circuit"""
+        """Transform the batch of circuits"""
         if not circuit.shots:
             raise ValueError(
                 "The aqt.base_device device does not support analytic expectation values"
