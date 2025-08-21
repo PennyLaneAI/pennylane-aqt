@@ -421,10 +421,8 @@ class TestAQTDeviceIntegration:
     def test_load_from_device_function(self, num_wires, shots):
         """Tests that the AQTDevice can be loaded from PennyLane `device` function."""
 
-        with pytest.warns(
-            qml.exceptions.PennyLaneDeprecationWarning, match="shots on device is deprecated"
-        ):
-            dev = qml.device("aqt.sim", wires=num_wires, shots=shots, api_key=SOME_API_KEY)
+        dev = qml.device("aqt.sim", wires=num_wires, api_key=SOME_API_KEY)
+
 
         assert dev.num_wires == num_wires
         assert dev.shots.total_shots == shots
