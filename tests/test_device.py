@@ -32,14 +32,10 @@ HTTP_METHOD = "PUT"
 SOME_API_KEY = "ABC123"
 
 test_config = """\
-[main]
-shots = 1000
-
 [default.gaussian]
 hbar = 2
 
 [aqt.sim]
-shots = 99
 api_key = "{}"
 """.format(
     SOME_API_KEY
@@ -425,11 +421,12 @@ class TestAQTDeviceIntegration:
     def test_load_from_device_function(self, num_wires, shots):
         """Tests that the AQTDevice can be loaded from PennyLane `device` function."""
 
-        dev = qml.device("aqt.sim", wires=num_wires, shots=shots, api_key=SOME_API_KEY)
+        dev = qml.device("aqt.sim", wires=num_wires, api_key=SOME_API_KEY)
 
         assert dev.num_wires == num_wires
-        assert dev.shots.total_shots == shots
-        assert dev.analytic == False
+        # Due to the deprecation of device.shots, the following two properties (shots, analytic) should be changed.
+        assert dev.shots.total_shots is None
+        assert dev.analytic == True
         assert dev.circuit == []
         assert dev.circuit_json == ""
         assert dev.samples is None
@@ -466,7 +463,7 @@ class TestAQTDeviceIntegration:
 
         dev = qml.device("aqt.sim", wires=2)
 
-        assert dev.shots.total_shots == 99
+        assert dev.shots.total_shots is None  # note that dev.shots is deprecated
         assert API_HEADER_KEY in dev.header.keys()
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
 
@@ -528,8 +525,9 @@ class TestAQTDeviceIntegration:
         """Tests that a PennyLane QNode successfully executes with a
         mocked out online API."""
 
-        dev = qml.device("aqt.sim", wires=2, shots=10, api_key=SOME_API_KEY)
+        dev = qml.device("aqt.sim", wires=2, api_key=SOME_API_KEY)
 
+        @qml.set_shots(10)
         @qml.qnode(dev)
         def circuit(x, y):
             qml.RX(x, wires=0)
@@ -559,9 +557,17 @@ class TestAQTDeviceIntegration:
         assert dev.samples == MOCK_SAMPLES
 
     def test_analytic_error(self):
-        """Test that instantiating the device with `shots=None` results in an error"""
+        """Test that run the circuit with `shots=None` results in an error"""
+        dev = qml.device("aqt.sim", wires=2, api_key=SOME_API_KEY)
+
+        @qml.qnode(dev)
+        def circuit():
+            qml.RX(0.5, wires=0)
+            qml.RY(1.2, wires=1)
+            return qml.expval(qml.PauliZ(0))
+
         with pytest.raises(ValueError, match="does not support analytic"):
-            dev = qml.device("aqt.sim", wires=2, shots=None)
+            circuit()
 
 
 class TestAQTSimulatorDevices:

@@ -30,8 +30,6 @@ from pennylane.ops import Adjoint
 from ._version import __version__
 from .api_client import verify_valid_status, submit
 
-BASE_SHOTS = 200
-
 
 class AQTDevice(QubitDevice):
     r"""AQT device for PennyLane.
@@ -94,11 +92,7 @@ class AQTDevice(QubitDevice):
     TARGET_PATH = ""
     HTTP_METHOD = "PUT"
 
-    def __init__(self, wires, shots=BASE_SHOTS, api_key=None, retry_delay=1):
-        if shots is None:
-            raise ValueError(
-                "The aqt.base_device device does not support analytic expectation values"
-            )
+    def __init__(self, wires, shots=None, api_key=None, retry_delay=1):
 
         super().__init__(wires=wires, shots=shots)
         self.shots = shots
@@ -108,6 +102,14 @@ class AQTDevice(QubitDevice):
         self.set_api_configs()
 
         self.reset()
+
+    def batch_transform(self, circuit):
+        """Transform the batch of circuits"""
+        if not circuit.shots:
+            raise ValueError(
+                "The aqt.base_device device does not support analytic expectation values"
+            )
+        return super().batch_transform(circuit)
 
     def reset(self):
         """Reset the device and reload configurations."""
