@@ -109,7 +109,7 @@ class AQTDevice(QubitDevice):
             raise ValueError(
                 "The aqt.base_device device does not support analytic expectation values"
             )
-        return super().expand_fn(circuit, max_expansion)
+        return super().batch_transform(circuit)
 
     def reset(self):
         """Reset the device and reload configurations."""
