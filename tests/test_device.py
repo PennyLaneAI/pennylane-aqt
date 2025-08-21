@@ -32,14 +32,10 @@ HTTP_METHOD = "PUT"
 SOME_API_KEY = "ABC123"
 
 test_config = """\
-[main]
-shots = 1000
-
 [default.gaussian]
 hbar = 2
 
 [aqt.sim]
-shots = 99
 api_key = "{}"
 """.format(
     SOME_API_KEY
@@ -467,12 +463,9 @@ class TestAQTDeviceIntegration:
             "pennylane.default_config", qml.Configuration("config.toml")
         )  # force loading of config
 
-        with pytest.warns(
-            qml.exceptions.PennyLaneDeprecationWarning, match="shots on device is deprecated"
-        ):
-            dev = qml.device("aqt.sim", wires=2)
+        dev = qml.device("aqt.sim", wires=2)
 
-        assert dev.shots.total_shots == 99
+        assert dev.shots.total_shots is None  # note that dev.shots is deprecated
         assert API_HEADER_KEY in dev.header.keys()
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
 
@@ -493,10 +486,7 @@ class TestAQTDeviceIntegration:
         c = qml.Configuration("config.toml")
         monkeypatch.setattr("pennylane.default_config", c)  # force loading of config
 
-        with pytest.warns(
-            qml.exceptions.PennyLaneDeprecationWarning, match="shots on device is deprecated"
-        ):
-            dev = qml.device("aqt.sim", wires=2)
+        dev = qml.device("aqt.sim", wires=2)
 
         assert API_HEADER_KEY in dev.header.keys()
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
@@ -515,10 +505,7 @@ class TestAQTDeviceIntegration:
             "pennylane.default_config", qml.Configuration("config.toml")
         )  # force loading of config
 
-        with pytest.warns(
-            qml.exceptions.PennyLaneDeprecationWarning, match="shots on device is deprecated"
-        ):
-            dev = qml.device("aqt.sim", wires=2)
+        dev = qml.device("aqt.sim", wires=2)
 
         assert API_HEADER_KEY in dev.header.keys()
         assert dev.header[API_HEADER_KEY] == SOME_API_KEY
