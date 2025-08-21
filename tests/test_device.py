@@ -423,10 +423,10 @@ class TestAQTDeviceIntegration:
 
         dev = qml.device("aqt.sim", wires=num_wires, api_key=SOME_API_KEY)
 
-
         assert dev.num_wires == num_wires
-        assert dev.shots.total_shots == shots
-        assert dev.analytic == False
+        # Due to the deprecation of device.shots, the following two properties (shots, analytic) should be changed.
+        assert dev.shots.total_shots is None
+        assert dev.analytic == True
         assert dev.circuit == []
         assert dev.circuit_json == ""
         assert dev.samples is None
