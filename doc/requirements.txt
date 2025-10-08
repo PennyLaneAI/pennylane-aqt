@@ -2,7 +2,7 @@ alabaster==0.7.16
 appdirs==1.4.4
 astunparse==1.6.3
 autograd==1.8.0
-autoray==0.7.2
+autoray==0.8.0
 babel==2.17.0
 cachetools==6.1.0
 certifi==2025.7.14
