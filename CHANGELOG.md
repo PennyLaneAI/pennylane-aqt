@@ -4,6 +4,9 @@
 
 ### Improvements 🛠
 
+* Overload the batch_transform to carry over the validation of no analytic execution.
+  [(#95)](https://github.com/PennyLaneAI/pennylane-aqt/pull/95)
+
 ### Breaking changes 💔
 
 * Remove support for Python 3.10 and add support for Python 3.13.
@@ -19,7 +22,7 @@
 
 This release contains contributions from (in alphabetical order):
 
-Andrija Paurevic.
+Yushao Chen, Andrija Paurevic.
 
 ---
 # Release 0.42.0
