@@ -7,6 +7,9 @@
 
 ### Breaking changes 💔
 
+* Minimum supported version of PennyLane is now v0.43.0.
+  [(#99)](https://github.com/PennyLaneAI/pennylane-aqt/pull/99)
+
 * Remove support for Python 3.10 and add support for Python 3.13.
   [(#93)](https://github.com/PennyLaneAI/pennylane-aqt/pull/93)
 
