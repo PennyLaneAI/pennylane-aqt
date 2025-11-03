@@ -460,6 +460,9 @@ class TestAQTDeviceIntegration:
         monkeypatch.setattr(
             "pennylane.default_config", qml.Configuration("config.toml")
         )  # force loading of config
+        monkeypatch.setattr(
+            "pennylane.devices.device_constructor.default_config", qml.Configuration("config.toml")
+        )  # force loading of config
 
         dev = qml.device("aqt.sim", wires=2)
 
@@ -483,6 +486,7 @@ class TestAQTDeviceIntegration:
 
         c = qml.Configuration("config.toml")
         monkeypatch.setattr("pennylane.default_config", c)  # force loading of config
+        monkeypatch.setattr("pennylane.devices.device_constructor.default_config", c)  # force loading of config
 
         dev = qml.device("aqt.sim", wires=2)
 
@@ -501,6 +505,9 @@ class TestAQTDeviceIntegration:
         monkeypatch.setattr("os.curdir", tmpdir.join("folder_without_a_config_file"))
         monkeypatch.setattr(
             "pennylane.default_config", qml.Configuration("config.toml")
+        )  # force loading of config
+        monkeypatch.setattr(
+            "pennylane.devices.device_constructor.default_config", qml.Configuration("config.toml")
         )  # force loading of config
 
         dev = qml.device("aqt.sim", wires=2)
