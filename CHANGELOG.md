@@ -1,4 +1,16 @@
-# Release 0.44.0
+# Release 0.44.0-dev
+
+### New features since last release
+
+### Improvements 🛠
+
+### Breaking changes 💔
+
+### Deprecations 👋
+
+### Documentation 📝
+
+### Bug fixes 🐛
 
 ### Contributors ✍️
 
