@@ -1,20 +1,24 @@
-# Release 0.44.0-dev
-
-### New features since last release
+# Release 0.44.0
 
 ### Improvements 🛠
 
-### Breaking changes 💔
+* Added support for Python 3.14.
+  [(#106)](https://github.com/PennyLaneAI/pennylane-aqt/pull/106)
 
-### Deprecations 👋
+### Internal changes ⚙️
 
-### Documentation 📝
+* Upgraded Sphinx to version 8.1.
+  [(#101)](https://github.com/PennyLaneAI/pennylane-aqt/pull/101)
 
-### Bug fixes 🐛
+* Fix `default_config` access in tests.
+  [(#102)](https://github.com/PennyLaneAI/pennylane-aqt/pull/102)
 
 ### Contributors ✍️
 
 This release contains contributions from (in alphabetical order):
+
+Runor Agbaire,
+Yushao Chen.
 
 ---
 # Release 0.43.0
