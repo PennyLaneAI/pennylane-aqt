@@ -17,6 +17,9 @@
 
 This release contains contributions from (in alphabetical order):
 
+Runor Agbaire,
+Yushao Chen.
+
 ---
 # Release 0.43.0
 
