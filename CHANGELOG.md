@@ -2,7 +2,7 @@
 
 ### Improvements 🛠
 
-* Added support for PennyLane v0.44.0.
+* Added support for Python 3.14.
   [(#106)](https://github.com/PennyLaneAI/pennylane-aqt/pull/106)
 
 ### Internal changes ⚙️
