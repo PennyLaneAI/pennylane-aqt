@@ -43,4 +43,4 @@ wheel==0.45.1
 
 # do not pin
 pennylane-sphinx-theme
-pennylane @ git+https://github.com/PennyLaneAI/pennylane.git@master
+pennylane @ git+https://github.com/PennyLaneAI/pennylane.git@main
