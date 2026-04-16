@@ -15,6 +15,7 @@
 This module contains custom AQT operations, designed to be used in PennyLane
 QNodes when using the PennyLane-AQT devices.
 """
+
 from pennylane.operation import Operation
 
 
