@@ -14,6 +14,7 @@
 """
 This is the top level module from which all PennyLane-AQT device classes can be directly imported.
 """
+
 from .simulator import AQTSimulatorDevice, AQTNoisySimulatorDevice
 from ._version import __version__
 from . import ops
