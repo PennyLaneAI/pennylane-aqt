@@ -26,8 +26,8 @@ scipy==1.16.1
 scipy-openblas32==0.3.30.0.2
 six==1.17.0
 snowballstemmer==3.0.1
-sphinx==8.1
-sphinx-automodapi==0.19
+sphinx==9.0
+sphinx-automodapi==0.21
 sphinx-gallery==0.16.0
 sphinxcontrib-applehelp==2.0.0
 sphinxcontrib-devhelp==2.0.0
