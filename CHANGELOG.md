@@ -6,6 +6,9 @@
 
 ### Breaking changes 💔
 
+* Dropped support for Python 3.11.
+  [(#111)](https://github.com/PennyLaneAI/pennylane-aqt/pull/111)
+
 ### Deprecations 👋
 
 ### Documentation 📝
