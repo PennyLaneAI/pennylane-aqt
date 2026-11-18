@@ -101,9 +101,8 @@ Getting started
 
 Once PennyLane is installed, the provided AQT devices can be accessed straight
 away in PennyLane. However, the user will need access credentials for the AQT platform in order to
-use these remote devices. These credentials should be provided to PennyLane via a
-`configuration file or environment variable <https://pennylane.readthedocs.io/en/stable/introduction/configuration.html>`_.
-Specifically, the variable ``AQT_TOKEN`` must contain a valid access key for AQT's online platform.
+use these remote devices. These credentials should be provided via the ``AQT_TOKEN`` environment variable
+or the ``api_key`` device argument, and must contain a valid access key for AQT's online platform.
 
 You can instantiate the AQT devices for PennyLane as follows:
 

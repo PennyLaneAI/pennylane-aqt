@@ -31,15 +31,6 @@ HTTP_METHOD = "PUT"
 
 SOME_API_KEY = "ABC123"
 
-test_config = """\
-[default.gaussian]
-hbar = 2
-
-[aqt.sim]
-api_key = "{}"
-""".format(
-    SOME_API_KEY
-)
 
 # samples obtained directly from AQT platform
 # for a three-qubit circuit ([q0, q1, q2])
@@ -131,9 +122,6 @@ class TestAQTDevice:
         monkeypatch.setenv("PENNYLANE_CONF", "")
         monkeypatch.setattr("os.curdir", tmpdir.join("folder_without_a_config_file"))
 
-        monkeypatch.setattr(
-            "pennylane.default_config", qml.Configuration("config.toml")
-        )  # force loading of config
         with pytest.raises(ValueError, match="No valid api key for AQT platform found"):
             dev = AQTDevice(2)
 
@@ -443,70 +431,8 @@ class TestAQTDeviceIntegration:
         monkeypatch.setenv("PENNYLANE_CONF", "")
         monkeypatch.setattr("os.curdir", tmpdir.join("folder_without_a_config_file"))
 
-        monkeypatch.setattr(
-            "pennylane.default_config", qml.Configuration("config.toml")
-        )  # force loading of config
         with pytest.raises(ValueError, match="No valid api key for AQT platform found"):
             dev = qml.device("aqt.sim", 2)
-
-    def test_device_gets_local_config(self, monkeypatch, tmpdir):
-        """Tests that the device successfully reads a config from the local directory."""
-
-        monkeypatch.setenv("PENNYLANE_CONF", "")
-        monkeypatch.setenv("AQT_TOKEN", "")
-
-        tmpdir.join("config.toml").write(test_config)
-        monkeypatch.setattr("os.curdir", tmpdir)
-        monkeypatch.setattr(
-            "pennylane.devices.device_constructor.default_config", qml.Configuration("config.toml")
-        )  # force loading of config
-
-        dev = qml.device("aqt.sim", wires=2)
-
-        assert dev.shots.total_shots is None  # note that dev.shots is deprecated
-        assert API_HEADER_KEY in dev.header.keys()
-        assert dev.header[API_HEADER_KEY] == SOME_API_KEY
-
-    def test_device_gets_api_key_default_config_directory(self, monkeypatch, tmpdir):
-        """Tests that the device gets an api key that is stored in the default
-        config directory."""
-        monkeypatch.setenv("AQT_TOKEN", "")
-        monkeypatch.setenv("PENNYLANE_CONF", "")
-
-        config_dir = tmpdir.mkdir("pennylane")  # fake default config directory
-        config_dir.join("config.toml").write(test_config)
-        monkeypatch.setenv(
-            "XDG_CONFIG_HOME", os.path.expanduser(tmpdir)
-        )  # HACK: only works on linux
-
-        monkeypatch.setattr("os.curdir", tmpdir.join("folder_without_a_config_file"))
-
-        c = qml.Configuration("config.toml")
-        monkeypatch.setattr("pennylane.devices.device_constructor.default_config", c)  # force loading of config
-
-        dev = qml.device("aqt.sim", wires=2)
-
-        assert API_HEADER_KEY in dev.header.keys()
-        assert dev.header[API_HEADER_KEY] == SOME_API_KEY
-
-    def test_device_gets_api_key_pennylane_conf_env_var(self, monkeypatch, tmpdir):
-        """Tests that the device gets an api key via the PENNYLANE_CONF
-        environment variable."""
-        monkeypatch.setenv("AQT_TOKEN", "")
-
-        filepath = tmpdir.join("config.toml")
-        filepath.write(test_config)
-        monkeypatch.setenv("PENNYLANE_CONF", str(tmpdir))
-
-        monkeypatch.setattr("os.curdir", tmpdir.join("folder_without_a_config_file"))
-        monkeypatch.setattr(
-            "pennylane.devices.device_constructor.default_config", qml.Configuration("config.toml")
-        )  # force loading of config
-
-        dev = qml.device("aqt.sim", wires=2)
-
-        assert API_HEADER_KEY in dev.header.keys()
-        assert dev.header[API_HEADER_KEY] == SOME_API_KEY
 
     def test_device_gets_api_key_aqt_token_env_var(self, monkeypatch):
         """Tests that the device gets an api key that is stored in AQT_TOKEN
