@@ -13,7 +13,7 @@
 * The AQT API key can no longer be read from a PennyLane configuration file, since
   PennyLane has removed `qp.Configuration`. The documentation and tests now use the
   `AQT_TOKEN` environment variable or the `api_key` device argument.
-  [(#XXX)](https://github.com/PennyLaneAI/pennylane-aqt/pull/XXX)
+  [(#112)](https://github.com/PennyLaneAI/pennylane-aqt/pull/112)
 
 ### Bug fixes 🐛
 
